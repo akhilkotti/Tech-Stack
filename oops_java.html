@@ -16,63 +16,89 @@
     h1 {
       border-bottom: 2px solid #2e6da4;
       padding-bottom: 5px;
-    }
-    pre {
-      background-color: #f1f1f1;
-      padding: 15px;
-      border-radius: 5px;
-      overflow-x: auto;
-    }
-    code {
-      font-family: Consolas, monospace;
-    }
-    .section {
-      margin-bottom: 60px;
-    }
-    .output {
-      background-color: #eef;
-      padding: 10px;
-      margin-top: 10px;
-      border-left: 5px solid #2e6da4;
+	  margin-bottom: 8px;   /* 🔥 reduce gap */
     }
 	
+    /* =========================
+       CODE BLOCKS
+       ========================= */
+    pre {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 14px 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 12px 0;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+	
+    /* =========================
+       SECTIONS
+       ========================= */
+    .section {
+      margin-bottom: 50px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+	  font-size: 15px;
+    }
+	
+    /* =========================
+       OUTPUT BOX
+       ========================= */
+    .output {
+      background-color: #f0f6ff;
+      padding: 12px 15px;
+      margin-top: 12px;
+      border-left: 4px solid #2e6da4;
+      font-size: 13px;
+    }
+	ul {
+	  margin-top: 2px;      /* 🔥 reduce space from line */
+	}	
 	header {
 		padding: 25px 20px;
+		text-align: center;
 	}
 
-	.features-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-		gap: 20px;
-		padding: 30px;
-	}
-	
-	.feature-card {
-		background: white;
-		border-radius: 10px;
-		overflow: hidden;
-		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-		transition: all 0.3s ease;
-		border: 1px solid #eaeaea;
-		display: block; /* Changed from default inline for anchor */
-		text-decoration: none; /* Remove underline */
-	}	
-	
-   .feature-header {
-		background: linear-gradient(to right, #3498db, #2c3e50);
-		color: white;
-		padding: 15px 20px;
-		font-size: 1.4rem;
-		font-weight: 600;
-		display: block;
-		text-decoration: none;
-	}
+    /* =========================
+       FEATURE CARDS
+       ========================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 280px);
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
 
-	/* Add hover effect */
-	.clickable-header:hover {
-		background: linear-gradient(to right, #2980b9, #1a252f);
-		cursor: pointer;
-	}
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eaeaea;
+      transition: all 0.3s ease;
+    }
+
+    .feature-header {
+      display: block;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      color: white;
+      padding: 12px 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .feature-header:hover {
+      background: linear-gradient(to right, #2980b9, #1a252f);
+    }
 	
 	/* Active/focus states */
 	.clickable-header:active,
@@ -123,26 +149,34 @@
   </style>
 </head>
 <body>
-
-  
   	<header>
 		<h1>OOPs in Java</h1>
 	</header>
-  <p>“OOPS” stands for “Object-Oriented Programming System.”.It is a programming paradigm that is based on the concept of “objects,” which can contain data in the form of fields (often known as attributes or properties) and code, in the form of procedures (often known as methods).The basic concept of OOPS is to create objects, which can hold both data and functions. Objects are instances of a class, a blueprint for an object. A class defines the properties and methods of an object, and an object is an instance of a class. The properties of an object are the data it stores, and the methods are the functions that operate on that data.</p>
+
 	<div class="features-grid" id="features-overview">
 		<div class="feature-card">
-			<a href="#Encapsulation-section" class="feature-header clickable-header">Encapsulationn</a>
+			<a href="#Encapsulation-section" class="feature-header">Encapsulationn</a>
 		</div>		
 		<div class="feature-card">
-			<a href="#Inheritance-section" class="feature-header clickable-header">Inheritance</a>
+			<a href="#Inheritance-section" class="feature-header">Inheritance</a>
 		</div>
 		<div class="feature-card">
-			<a href="#Polymorphism-section" class="feature-header clickable-header">Polymorphism</a>
+			<a href="#Polymorphism-section" class="feature-header">Polymorphism</a>
 		</div>
 		<div class="feature-card">
-			<a href="#Abstraction-section" class="feature-header clickable-header">Abstraction</a>
+			<a href="#Abstraction-section" class="feature-header">Abstraction</a>
 		</div>
 	</div>
+	<div class="section">
+		<ul>
+			<li><strong>OOPS</strong> stands for <strong>Object-Oriented Programming System.</strong></li>
+			<li>It is a programming paradigm that is based on the concept of <strong>objects,</strong> which can contain data in the form of fields (often known as <strong>attributes</strong> or <strong>properties</strong>) and code, in the form of procedures (often known as <strong>methods)</strong>.</li>
+			<li>The basic concept of OOPS is to <strong>create objects,</strong> which can hold both <strong>data and functions</strong>. </li>
+			<li><strong>Objects are instances of a class</strong>, a blueprint for an object. </li>
+			<li>A class defines the <strong>properties and methods</strong> of an object, and an object is an instance of a class. </li>
+			<li>The <strong>properties</strong> of an object are the data it stores, and the <strong>methods</strong> are the functions that operate on that data.</li>
+		</ul>	
+  </div>
   <div class="section">
 	<h2 id="Encapsulation-section">🔹 Encapsulation</h2>
 	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
