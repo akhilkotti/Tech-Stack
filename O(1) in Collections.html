@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Time Complexity in Java Collections – O(1), O(log n), O(n log n)</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background-color: #f7f8fa;
+            color: #1f2937;
+            line-height: 1.6;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            color: #2563eb;
+            border-left: 5px solid #2563eb;
+            padding-left: 12px;
+        }
+
+        h3 {
+            margin-top: 20px;
+            color: #111827;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 8px 0 16px 25px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 14px 0;
+            font-size: 14px;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        .danger {
+            background: #fee2e2;
+            border-left: 5px solid #ef4444;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        .success {
+            background: #dcfce7;
+            border-left: 5px solid #22c55e;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+		
+		header {
+			padding: 25px 20px;
+		}
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #eaeaea;
+			display: block; /* Changed from default inline for anchor */
+            text-decoration: none; /* Remove underline */
+        }	
+		
+       .feature-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: block;
+            text-decoration: none;
+        }
+
+		/* Add hover effect */
+        .clickable-header:hover {
+            background: linear-gradient(to right, #2980b9, #1a252f);
+            cursor: pointer;
+        }
+        
+        /* Active/focus states */
+        .clickable-header:active,
+        .clickable-header:focus {
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+        }
+		
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #c0392b;
+        }	
+
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }			
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    
+	<header>
+		<h1>Time Complexity in Java Collections</h1>
+	</header>
+	
+	<div class="features-grid" id="features-overview">
+		<div class="feature-card">
+			<a href="#Collections-section" class="feature-header clickable-header">O(1) in Collections&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#Tree-section" class="feature-header clickable-header">O(log n) – Tree-Based Collections</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Sorting-section" class="feature-header clickable-header">O(n log n) – Sorting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Chart-section" class="feature-header clickable-header">Collection Selection Decision Chart</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Rules-section" class="feature-header clickable-header">Golden Rules&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Comparison-section" class="feature-header clickable-header">Final Comparison Table&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		</div>
+	</div>	
+    <!-- O(1) -->
+	<h2 id="Collections-section">🔹 O(n) in Collections</h2>
+	<a href="#Collections-overview" class="back-to-top-btn">↑ Back to Features</a>	
+
+    <h3>Basics</h3>
+    <ul>
+        <li><b>O(1)</b> means constant time</li>
+        <li>Execution time does not depend on collection size</li>
+        <li>Fastest possible complexity</li>
+    </ul>
+
+    <div class="note">
+        <b>Simple meaning:</b><br>
+        “Direct access — no looping, no scanning”
+    </div>
+
+    <h3>Advanced</h3>
+    <p><b>O(1)</b> happens when collections use:</p>
+    <ul>
+        <li>Index-based access</li>
+        <li>Hashing</li>
+        <li>Direct pointer/reference</li>
+    </ul>
+
+    <h3>Where O(1) Exists</h3>
+    <table>
+        <tr>
+            <th>Collection</th>
+            <th>Operation</th>
+            <th>Why</th>
+        </tr>
+        <tr><td>ArrayList</td><td>get(index)</td><td>Direct array index</td></tr>
+        <tr><td>HashMap</td><td>get(key)</td><td>Hash → bucket</td></tr>
+        <tr><td>HashSet</td><td>add()</td><td>Hash calculation</td></tr>
+        <tr><td>ArrayDeque</td><td>addFirst()</td><td>Head pointer</td></tr>
+        <tr><td>Stack</td><td>push()/pop()</td><td>Top pointer</td></tr>
+    </table>
+
+    <pre><code>list.get(5);           // O(1)
+map.get("orderId");    // O(1)</code></pre>
+
+    <div class="danger">
+        <b>⚠️ Reality Check</b>
+        <ul>
+            <li>Hash-based collections are O(1) on average</li>
+            <li>Worst case degrades due to bad <code>hashCode()</code> or collisions</li>
+        </ul>
+    </div>
+
+    <!-- O(log n) -->
+	<h2 id="Tree-section">🔹 O(log n) – Tree-Based Collections</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+
+    <h3>Basics</h3>
+    <ul>
+        <li>Problem size halves every step</li>
+        <li>Highly efficient for large datasets</li>
+    </ul>
+
+    <div class="note">
+        <b>Simple analogy:</b><br>
+        Dictionary search (binary search)
+    </div>
+
+    <h3>Advanced</h3>
+    <p>Occurs due to <b>balanced tree structures</b></p>
+
+    <table>
+        <tr>
+            <th>Collection</th>
+            <th>Internal Structure</th>
+        </tr>
+        <tr><td>TreeSet</td><td>Red-Black Tree</td></tr>
+        <tr><td>TreeMap</td><td>Red-Black Tree</td></tr>
+        <tr><td>ConcurrentSkipListMap</td><td>Skip List</td></tr>
+    </table>
+
+    <pre><code>treeMap.get(key);      // O(log n)
+treeSet.add(value);    // O(log n)</code></pre>
+
+    <ul>
+        <li>Tree height ≈ log₂(n)</li>
+        <li>Each comparison moves down one level</li>
+    </ul>
+
+    <div class="success">
+        <b>Advantages</b>
+        <ul>
+            <li>Sorted data</li>
+            <li>Range queries</li>
+            <li>floor / ceiling / subMap</li>
+        </ul>
+    </div>
+
+    <div class="note">
+        <b>Trade-off:</b> Slower than HashMap, faster than list scanning
+    </div>
+
+    <!-- O(n log n) -->
+	<h2 id="Sorting-section">🔹 O(n log n) – Sorting</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+
+    <h3>Basics</h3>
+    <ul>
+        <li>Divide data → log n</li>
+        <li>Process all elements → n</li>
+        <li>Most efficient comparison-based sorting</li>
+    </ul>
+
+    <h3>Advanced</h3>
+    <table>
+        <tr>
+            <th>Collection</th>
+            <th>Algorithm</th>
+            <th>Complexity</th>
+        </tr>
+        <tr><td>List</td><td>TimSort</td><td>O(n log n)</td></tr>
+        <tr><td>Arrays (primitive)</td><td>Dual-Pivot QuickSort</td><td>O(n log n)</td></tr>
+        <tr><td>Arrays (objects)</td><td>TimSort</td><td>O(n log n)</td></tr>
+        <tr><td>TreeMap insert</td><td>Tree balancing</td><td>O(n log n)</td></tr>
+    </table>
+
+    <pre><code>Collections.sort(list);   // O(n log n)</code></pre>
+
+    <div class="note">
+        <b>Best case:</b> Nearly sorted data → O(n) (TimSort optimization)
+    </div>
+
+    <!-- Decision Chart -->
+	<h2 id="Chart-section">🔹 Collection Selection Decision Chart</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+
+    <h3>Basics – Quick Choice</h3>
+    <table>
+        <tr><th>Requirement</th><th>Best Choice</th></tr>
+        <tr><td>Fast lookup</td><td>HashMap</td></tr>
+        <tr><td>Ordered data</td><td>TreeMap</td></tr>
+        <tr><td>Indexed access</td><td>ArrayList</td></tr>
+        <tr><td>Frequent insert/delete</td><td>LinkedList</td></tr>
+        <tr><td>Priority handling</td><td>PriorityQueue</td></tr>
+        <tr><td>Thread-safe</td><td>ConcurrentHashMap</td></tr>
+    </table>
+
+    <h3>Advanced – Performance Driven</h3>
+    <table>
+        <tr><th>Use Case</th><th>Collection</th><th>Reason</th></tr>
+        <tr><td>Search by ID</td><td>HashMap</td><td>O(1)</td></tr>
+        <tr><td>Sorted leaderboard</td><td>TreeSet</td><td>O(log n)</td></tr>
+        <tr><td>Batch iteration</td><td>ArrayList</td><td>Cache-friendly</td></tr>
+        <tr><td>Queue processing</td><td>ArrayDeque</td><td>No overhead</td></tr>
+        <tr><td>Scheduler</td><td>PriorityQueue</td><td>Heap</td></tr>
+        <tr><td>Concurrent reads</td><td>ConcurrentHashMap</td><td>Lock-free</td></tr>
+        <tr><td>Range queries</td><td>TreeMap</td><td>Navigable API</td></tr>
+    </table>
+
+    <!-- Golden Rules -->
+	<h2 id="Rules-section">🔹 Golden Rules</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+    <ul>
+        <li>Never search lists in loops → use Map</li>
+        <li>Bad hashCode = O(n)</li>
+        <li>Sorted requirement → TreeMap / TreeSet</li>
+        <li>Iteration always costs O(n)</li>
+        <li>Parallel streams reduce time, not complexity</li>
+    </ul>
+
+    <!-- Final Table -->
+	<h2 id="Comparison-section">🔹 Final Comparison Table</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+    <table>
+        <tr><th>Complexity</th><th>When to Use</th></tr>
+        <tr><td>O(1)</td><td>Lookup, cache, ID search</td></tr>
+        <tr><td>O(log n)</td><td>Sorted access, ranges</td></tr>
+        <tr><td>O(n)</td><td>Traversal, filtering</td></tr>
+        <tr><td>O(n log n)</td><td>Sorting</td></tr>
+        <tr><td>O(n²)</td><td>❌ Avoid in production</td></tr>
+    </table>
+
+</div>
+<a href="#" class="back-to-top">↑</a>
+</body>
+</html>
