@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bitbucket Pipeline – ReactJS (Yarn | develop)</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 30px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: #38bdf8;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 40px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 25px;
+    }
+
+    p {
+      color: #cbd5f5;
+    }
+
+    ul {
+      margin-left: 20px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .code-box {
+      background: #020617;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 15px;
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+    }
+
+    pre {
+      margin: 0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+
+    .highlight {
+      color: #22d3ee;
+    }
+
+    .note {
+      background: #020617;
+      border-left: 4px solid #38bdf8;
+      padding: 12px 16px;
+      margin-top: 20px;
+      border-radius: 6px;
+      color: #cbd5f5;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 Bitbucket Pipeline – ReactJS (Yarn | develop branch)</h1>
+<p>
+This document explains how to configure a <strong>Bitbucket Pipeline</strong> for a
+<strong>React.js project using Yarn</strong>, triggered automatically on the
+<strong>develop</strong> branch.
+</p>
+
+<h2>1️⃣ Create <code>bitbucket-pipelines.yml</code></h2>
+<p>
+Create a file named <span class="highlight">bitbucket-pipelines.yml</span> in the root
+directory of your React project.
+</p>
+
+<h2>2️⃣ Pipeline Configuration (Yarn)</h2>
+
+<div class="code-box">
+<pre>
+image: node:18
+
+pipelines:
+  branches:
+    develop:
+      - step:
+          name: Install Dependencies
+          caches:
+            - yarn
+          script:
+            - yarn install
+
+      - step:
+          name: Run Tests
+          caches:
+            - yarn
+          script:
+            - yarn test
+
+      - step:
+          name: Build Application
+          caches:
+            - yarn
+          script:
+            - yarn build
+          artifacts:
+            - build/**
+</pre>
+</div>
+
+<h2>3️⃣ Pipeline Breakdown</h2>
+
+<h3>🔹 Node Image</h3>
+<p>
+Uses the official <strong>Node.js 18</strong> Docker image with Yarn support.
+</p>
+
+<h3>🔹 Branch Trigger</h3>
+<p>
+Pipeline runs automatically whenever code is pushed to the
+<strong>develop</strong> branch.
+</p>
+
+<h3>🔹 Step 1: Install Dependencies</h3>
+<ul>
+  <li>Uses Yarn to install dependencies</li>
+  <li>Caches Yarn modules for faster builds</li>
+</ul>
+
+<h3>🔹 Step 2: Run Tests</h3>
+<ul>
+  <li>Executes <code>yarn test</code></li>
+  <li>Ensures code quality before build</li>
+</ul>
+
+<h3>🔹 Step 3: Build Application</h3>
+<ul>
+  <li>Runs <code>yarn build</code></li>
+  <li>Generates optimized production files</li>
+  <li>Saves <code>build/</code> as pipeline artifacts</li>
+</ul>
+
+<h2>4️⃣ Optional – Deploy to AWS S3</h2>
+
+<div class="code-box">
+<pre>
+- step:
+    name: Deploy to S3
+    deployment: development
+    script:
+      - pipe: atlassian/aws-s3-deploy:1.1.0
+        variables:
+          AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+          AWS_DEFAULT_REGION: "us-east-1"
+          S3_BUCKET: "your-s3-bucket-name"
+          LOCAL_PATH: "build"
+</pre>
+</div>
+
+<h2>5️⃣ Environment Variables</h2>
+
+<p>
+Add the following variables in
+<strong>Repository Settings → Pipelines → Environment variables</strong>:
+</p>
+
+<ul>
+  <li><code>AWS_ACCESS_KEY_ID</code></li>
+  <li><code>AWS_SECRET_ACCESS_KEY</code></li>
+</ul>
+
+<div class="note">
+⚠️ Never hardcode AWS credentials in your YAML file.
+</div>
+
+<h2>6️⃣ Commit & Run</h2>
+<ul>
+  <li>Commit <code>bitbucket-pipelines.yml</code></li>
+  <li>Push to <strong>develop</strong> branch</li>
+  <li>Pipeline triggers automatically</li>
+</ul>
+
+<h2>✅ Summary</h2>
+<ul>
+  <li>Automated dependency installation</li>
+  <li>Automated testing</li>
+  <li>Optimized React build</li>
+  <li>Optional AWS S3 deployment</li>
+</ul>
+
+<footer>
+  © Bitbucket CI/CD – ReactJS (Yarn) Documentation
+</footer>
+
+</body>
+</html>
+

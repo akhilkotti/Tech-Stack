@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bitbucket Pipelines – ReactJS Multi-Environment CI/CD</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 32px;
+      line-height: 1.65;
+    }
+
+    h1, h2, h3 {
+      color: #38bdf8;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 42px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 24px;
+    }
+
+    p {
+      color: #cbd5f5;
+    }
+
+    ul, ol {
+      margin-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      color: #22d3ee;
+    }
+
+    .code-box {
+      background: #020617;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 18px;
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+    }
+
+    pre {
+      margin: 0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 18px;
+    }
+
+    th, td {
+      border: 1px solid #1e293b;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #020617;
+      color: #38bdf8;
+    }
+
+    td {
+      color: #cbd5f5;
+    }
+
+    .note {
+      background: #020617;
+      border-left: 4px solid #38bdf8;
+      padding: 14px 18px;
+      margin-top: 22px;
+      border-radius: 6px;
+      color: #cbd5f5;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1e293b;
+      color: #22d3ee;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-left: 8px;
+    }
+
+    footer {
+      margin-top: 70px;
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 Bitbucket Pipelines – ReactJS (Multi-Environment CI/CD)</h1>
+
+<p>
+This document describes a <strong>secure, enterprise-grade CI/CD strategy</strong>
+for a <strong>React.js application using Yarn</strong> with
+<strong>environment-specific AWS credentials</strong>.
+</p>
+
+<ul>
+  <li><strong>Develop</strong> – Automatic build & deploy</li>
+  <li><strong>UAT</strong> – Automatic build & deploy</li>
+  <li><strong>Master</strong> – Manual, controlled production deployment</li>
+</ul>
+
+<h2>🔐 Environment-Specific AWS Credentials (Best Practice)</h2>
+
+<p>
+Each environment uses <strong>separate AWS IAM credentials</strong>:
+</p>
+
+<ul>
+  <li><code>$DEV_AWS_ACCESS_KEY_ID</code></li>
+  <li><code>$UAT_AWS_ACCESS_KEY_ID</code></li>
+  <li><code>$PROD_AWS_ACCESS_KEY_ID</code></li>
+</ul>
+
+<p>
+This ensures isolation, security, and compliance.
+</p>
+
+<h2>✅ FINAL <code>bitbucket-pipelines.yml</code></h2>
+
+<div class="code-box">
+<pre>
+image: node:18
+
+definitions:
+  caches:
+    yarn: ~/.cache/yarn
+
+pipelines:
+
+  branches:
+    develop:
+      - step:
+          name: Develop | Build & Deploy to S3
+          caches:
+            - yarn
+          script:
+            - yarn install
+            - yarn test --watch=false
+            - yarn build
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $DEV_AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $DEV_AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: "us-east-1"
+                S3_BUCKET: "myapp-dev-bucket"
+                LOCAL_PATH: "build"
+
+    uat:
+      - step:
+          name: UAT | Build & Deploy to S3
+          caches:
+            - yarn
+          script:
+            - yarn install
+            - yarn test --watch=false
+            - yarn build
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $UAT_AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $UAT_AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: "us-east-1"
+                S3_BUCKET: "myapp-uat-bucket"
+                LOCAL_PATH: "build"
+
+    master:
+      - step:
+          name: Master | Manual Deploy Only
+          script:
+            - echo "Production deployment is MANUAL only"
+
+  custom:
+    master-build-deploy:
+      - step:
+          name: Master | Build
+          caches:
+            - yarn
+          script:
+            - yarn install
+            - yarn test --watch=false
+            - yarn build
+          artifacts:
+            - build/**
+
+      - step:
+          name: Deploy to S3 (Production)
+          deployment: production
+          script:
+            - pipe: atlassian/aws-s3-deploy:1.1.0
+              variables:
+                AWS_ACCESS_KEY_ID: $PROD_AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $PROD_AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: "us-east-1"
+                S3_BUCKET: "myapp-prod-bucket"
+                LOCAL_PATH: "build"
+</pre>
+</div>
+
+<h2>🔧 Required Bitbucket Repository Variables</h2>
+
+<table>
+  <tr>
+    <th>Variable</th>
+    <th>Environment</th>
+  </tr>
+  <tr>
+    <td>DEV_AWS_ACCESS_KEY_ID</td>
+    <td>Development</td>
+  </tr>
+  <tr>
+    <td>DEV_AWS_SECRET_ACCESS_KEY</td>
+    <td>Development</td>
+  </tr>
+  <tr>
+    <td>UAT_AWS_ACCESS_KEY_ID</td>
+    <td>UAT</td>
+  </tr>
+  <tr>
+    <td>UAT_AWS_SECRET_ACCESS_KEY</td>
+    <td>UAT</td>
+  </tr>
+  <tr>
+    <td>PROD_AWS_ACCESS_KEY_ID</td>
+    <td>Production</td>
+  </tr>
+  <tr>
+    <td>PROD_AWS_SECRET_ACCESS_KEY</td>
+    <td>Production</td>
+  </tr>
+</table>
+
+<div class="note">
+🔒 Mark all variables as <strong>Secured</strong> in Bitbucket.
+</div>
+
+<h2>🎯 Why This Setup Is Enterprise-Grade</h2>
+
+<p><strong>Interview-ready answer:</strong></p>
+
+<ul>
+  <li>✔ Principle of least privilege</li>
+  <li>✔ Dev credentials cannot access prod</li>
+  <li>✔ Prevents accidental production deployment</li>
+  <li>✔ Environment isolation</li>
+  <li>✔ SOC-2 / ISO-27001 compliant</li>
+  <li>✔ Auditable CI/CD access</li>
+</ul>
+
+<h2>✅ CI/CD Flow Summary</h2>
+
+<ul>
+  <li><strong>Develop</strong> → Auto build & deploy to Dev S3</li>
+  <li><strong>UAT</strong> → Auto build & deploy to UAT S3</li>
+  <li><strong>Master</strong> → Manual build & production deploy</li>
+</ul>
+
+<footer>
+  © Bitbucket CI/CD – ReactJS Multi-Environment Pipeline Documentation
+</footer>
+
+</body>
+</html>
+
