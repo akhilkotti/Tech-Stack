@@ -1,0 +1,389 @@
+---
+
+# 🔥 Redis Internals — INTERVIEW DEEP DIVE
+
+---
+
+## 1️⃣ What is Redis? (Basic → Advanced)
+
+### ✅ Basic
+
+Redis = **REmote DIctionary Server**
+An **in-memory key-value data store** used for:
+
+* Caching
+* Sessions
+* Rate limiting
+* Pub/Sub
+* Leaderboards
+
+---
+
+### 🚀 Advanced
+
+Redis is:
+
+* **Single-threaded event loop** (by design)
+* **In-memory first**, disk persistence optional
+* **Extremely fast** (sub-millisecond latency)
+* Uses **non-blocking I/O (epoll)**
+
+📌 Why single-threaded?
+
+> Avoids locks → predictable latency → high throughput
+
+---
+
+## 2️⃣ Redis Data Structures (INTERVIEW FAVORITE)
+
+| Redis Type  | Java Equivalent | Use Case      |
+| ----------- | --------------- | ------------- |
+| String      | String          | Cache values  |
+| Hash        | Map             | User sessions |
+| List        | Deque           | Queues        |
+| Set         | Set             | Deduplication |
+| Sorted Set  | TreeSet         | Leaderboards  |
+| Bitmap      | BitSet          | Feature flags |
+| HyperLogLog | Approx set      | Unique counts |
+
+---
+
+### Example
+
+```bash
+SET user:1 "Akhil"
+HSET session:123 userId 1 role ADMIN
+```
+
+---
+
+## 3️⃣ Redis Architecture (VERY IMPORTANT)
+
+### Core Components
+
+```
+Client
+  ↓
+Event Loop (epoll)
+  ↓
+In-Memory Data Store
+  ↓
+Persistence (Optional)
+```
+
+---
+
+### Key Internals
+
+* Event loop (single thread)
+* Command queue
+* Memory allocator (jemalloc)
+* Expiry dictionary (TTL)
+
+---
+
+## 4️⃣ Redis Persistence (AOF vs RDB)
+
+### 🔹 RDB (Snapshot)
+
+* Periodic snapshots
+* Fast restart
+* Possible data loss
+
+```bash
+save 900 1
+```
+
+---
+
+### 🔹 AOF (Append Only File)
+
+* Logs every write
+* Safer
+* Slower
+
+```bash
+appendonly yes
+```
+
+---
+
+### 🔹 Interview Tip
+
+> **Production** usually uses **AOF + RDB hybrid**
+
+---
+
+## 5️⃣ Redis Replication & Clustering
+
+### Replication
+
+* One master
+* Multiple replicas
+* Async replication
+
+---
+
+### Redis Cluster
+
+* Sharding using **hash slots (16384)**
+* Horizontal scaling
+* No single point of failure
+
+---
+
+## 6️⃣ Redis Expiry & Eviction (IMPORTANT)
+
+### TTL
+
+```bash
+SET key value EX 60
+```
+
+---
+
+### Eviction Policies
+
+| Policy     | Meaning               |
+| ---------- | --------------------- |
+| LRU        | Least Recently Used   |
+| LFU        | Least Frequently Used |
+| noeviction | Error                 |
+
+📌 **Interview Tip**
+
+> Redis does NOT evict randomly by default.
+
+---
+
+## 7️⃣ Why Redis is Perfect for Rate Limiting
+
+✔ Atomic operations
+✔ Single-threaded → no race condition
+✔ TTL support
+✔ Extremely fast
+
+---
+
+# 🚦 RATE LIMITER USING REDIS (REAL-TIME DESIGN)
+
+---
+
+## 1️⃣ Problem Statement
+
+Limit:
+
+* **100 requests per minute per IP**
+
+---
+
+## 2️⃣ Approach Options (Interview Expectations)
+
+| Strategy       | Accuracy  | Complexity |
+| -------------- | --------- | ---------- |
+| Fixed Window   | Low       | Easy       |
+| Sliding Window | High      | Medium     |
+| Token Bucket   | Very High | Hard       |
+| Leaky Bucket   | High      | Hard       |
+
+👉 **Most interviews expect Sliding Window or Token Bucket**
+
+---
+
+## 3️⃣ Fixed Window (EASY — Explain Quickly)
+
+### Idea
+
+* Count requests per minute
+* Reset every minute
+
+---
+
+### Redis Commands
+
+```bash
+INCR rate:ip
+EXPIRE rate:ip 60
+```
+
+---
+
+### Java Code
+
+```java
+Long count = redis.incr(key);
+if (count == 1) {
+    redis.expire(key, 60);
+}
+
+if (count > 100) {
+    reject();
+}
+```
+
+---
+
+### ❌ Drawback
+
+Burst at boundary (59s + 1s issue)
+
+---
+
+## 4️⃣ Sliding Window (INTERVIEW FAVORITE)
+
+---
+
+### Concept
+
+Track timestamps of requests.
+
+---
+
+### Redis Data Structure
+
+**Sorted Set (ZSET)**
+
+---
+
+### Redis Logic
+
+```bash
+ZADD rate:ip timestamp timestamp
+ZREMRANGEBYSCORE rate:ip 0 (now - window)
+ZCARD rate:ip
+```
+
+---
+
+### Java (Spring Boot) Example
+
+```java
+String key = "rate:" + ip;
+long now = System.currentTimeMillis();
+
+redisTemplate.opsForZSet().add(key, now, now);
+redisTemplate.opsForZSet()
+             .removeRangeByScore(key, 0, now - 60000);
+
+Long count = redisTemplate.opsForZSet().zCard(key);
+
+if (count > 100) {
+    throw new RateLimitException();
+}
+```
+
+---
+
+### 🎯 Why this is good
+
+✔ Accurate
+✔ Smooth rate limiting
+✔ Industry standard
+
+---
+
+## 5️⃣ Token Bucket (ADVANCED / SENIOR)
+
+---
+
+### Concept
+
+* Bucket has tokens
+* Requests consume tokens
+* Tokens refill over time
+
+---
+
+### Redis + Lua (Atomicity)
+
+```lua
+local tokens = redis.call("GET", KEYS[1])
+-- logic here
+```
+
+---
+
+### Why Lua?
+
+✔ Atomic execution
+✔ No race conditions
+✔ Single Redis call
+
+📌 **INTERVIEW GOLD**
+
+> “We use Lua scripts in Redis to ensure atomic rate limiting.”
+
+---
+
+## 6️⃣ Redis Atomicity (VERY IMPORTANT)
+
+Redis guarantees:
+
+* **Single command atomicity**
+* Lua scripts are **fully atomic**
+
+So:
+
+```bash
+INCR + EXPIRE
+```
+
+is safe when used correctly.
+
+---
+
+## 7️⃣ Common Interview Traps
+
+### ❓ Why not DB-based rate limiting?
+
+❌ Slow
+❌ Lock contention
+❌ Poor scalability
+
+---
+
+### ❓ Why not in-memory map?
+
+❌ Not shared across pods
+
+---
+
+### ❓ Why Redis over Kafka?
+
+✔ Immediate response
+✔ Low latency
+
+---
+
+## 8️⃣ Production Best Practices
+
+### ✅ Do’s
+
+✔ Use Redis Cluster
+✔ Use TTL
+✔ Use Lua for atomic logic
+✔ Monitor memory
+
+### ❌ Don’ts
+
+❌ Hard-code limits
+❌ Forget eviction policy
+❌ Store large payloads
+
+---
+
+## 🎯 PERFECT INTERVIEW ANSWER (FINAL)
+
+> “Redis is an in-memory, single-threaded data store optimized for fast atomic operations. It is ideal for rate limiting using counters or sorted sets. For accurate rate limiting, sliding window or token bucket algorithms implemented with Redis and Lua scripts are used.”
+
+---
+
+## 🚀 Want Next?
+
+* Redis Lua scripts deep dive
+* Spring Boot Redis configuration
+* Distributed locking using Redis
+* Circuit breaker using Redis
+* Cache consistency strategies
+
+Just tell me 👍

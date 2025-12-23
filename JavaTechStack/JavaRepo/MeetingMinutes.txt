@@ -1,0 +1,19 @@
+Meeting Minutes (4/11/23): 
+1.    New Resource Akhil for testing.
+2.    MyShift Web Prod – Issue with URL – Ajay
+3.    MyShift Web UAT testing till Profile, and Screen differences on all screens – Raman - completed
+4.    Provide time line for MyShift Web defects. To be divided in sections – Ajay - by 4/11/23
+5.    Retest the MyShift Android & iOS UAT – Raman / Akhil – by 4/14/23
+6.    Load Test - Akhil
+7.    Compare of API’s between UAT and PROD – Ramana
+8.    Deployment information to be provided to Ramana by Ajay
+9.    Dry run on UAT Deployment – Ramana / Akhil
+10.    FE Code backup in Bit Bucket – 
+11.    Internal Audit checklist to be provided – by Ajay
+12.    Better communication on Discord on activity status - All
+13.    Prod iOS to be built, with the name “MyShiftHealth” - Ajay
+14.    App in Google Play Store - Ramana
+15.    App in App Store (Create Account, Create App, Add description) - Ramana
+16.    Implementing Jenkins – Ramana - Later
+17.    Read only Replica for PROD – Ramana - Later
+18.    System testing in PROD (Android & Web) and log defects – Raman (once UAT test is done)
