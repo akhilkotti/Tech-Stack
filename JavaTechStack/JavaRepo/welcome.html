@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Tech Stack</title>
+    <style>
+        /* 1. Make the body fill the entire screen */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6; /* Soft light background */
+        }
+
+        /* 2. Flexbox Center Container */
+        .welcome-container {
+            display: flex;
+            justify-content: center; /* Horizontal center */
+            align-items: center;     /* Vertical center */
+            height: 100vh;           /* 100% of Viewport Height */
+            text-align: center;
+        }
+
+        /* 3. Box styling for the content */
+        .welcome-card {
+            background: white;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-top: 5px solid #5a2ca0; /* Matching your sidebar color */
+        }
+
+        h1 {
+            color: #333;
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        p {
+            color: #666;
+            margin-top: 10px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <h1>Welcome to Java Tech Stack</h1>
+            <p>Select a topic from the sidebar to begin with.</p>
+        </div>
+    </div>
+
+</body>
+</html>
