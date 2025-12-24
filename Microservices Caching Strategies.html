@@ -121,6 +121,80 @@
             font-size: 14px;
             color: #6b7280;
         }
+		/* =========================
+		   FEATURE CARDS
+		   ========================= */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 5px;
+            padding: 5px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #eaeaea;
+			display: block; /* Changed from default inline for anchor */
+            text-decoration: none; /* Remove underline */
+        }	
+		
+       .feature-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.0rem;
+            font-weight: 600;
+            display: block;
+            text-decoration: none;
+        }
+
+		.feature-header:hover {
+		  background: linear-gradient(to right, #2980b9, #1a252f);
+		}		
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #c0392b;
+        }	
+
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }		
     </style>
 </head>
 
@@ -129,9 +203,40 @@
 <div class="container">
 
 <h1>🚀 Microservices Caching Strategies (Java / Spring Boot)</h1>
-
-<h2>1️⃣ In-Memory Cache (Local Cache)</h2>
-
+	<div class="features-grid" id="features-overview">	
+		<div class="feature-card">
+			<a href="#1-section" class="feature-header">In-Memory Cache</a>
+		</div>				
+		<div class="feature-card">
+			<a href="#2-section" class="feature-header">Spring Cache Abstraction</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#3-section" class="feature-header">Distributed Cache (Redis)</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#4-section" class="feature-header">Cache-Aside Pattern</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#5-section" class="feature-header">Write-Through Cache</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#6-section" class="feature-header">Write-Behind (Write-Back)</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#7-section" class="feature-header">TTL-Based Eviction</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#8-section" class="feature-header">Cache Invalidation</a>
+		</div>
+		<div class="feature-card">
+			<a href="#9-section" class="feature-header">Two-Level Cache</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#10-section" class="feature-header">What NOT to Cache</a>
+		</div>		
+	</div>
+<h2 id="1-section">1️⃣ In-Memory Cache (Local Cache)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <h3>Basic</h3>
 <p>
 Cache data <strong>inside the microservice JVM</strong> using collections.
@@ -180,8 +285,8 @@ public User getUser(String id) {
 
 <div class="divider"></div>
 
-<h2>2️⃣ Spring Cache Abstraction (@Cacheable)</h2>
-
+<h2 id="2-section">2️⃣ Spring Cache Abstraction (@Cacheable)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <h3>Basic</h3>
 <p>
 Spring provides <strong>declarative caching</strong> using annotations.
@@ -217,8 +322,8 @@ public User getUser(String id) {
 
 <div class="divider"></div>
 
-<h2>3️⃣ Distributed Cache (Redis) ⭐ Most Used</h2>
-
+<h2 id="3-section">3️⃣ Distributed Cache (Redis) ⭐ Most Used</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <h3>Basic</h3>
 <p>
 A <strong>shared cache</strong> accessible by all microservice instances.
@@ -257,8 +362,8 @@ public Product getProduct(String id) {
 
 <div class="divider"></div>
 
-<h2>4️⃣ Cache-Aside Pattern (MOST IMPORTANT)</h2>
-
+<h2 id="4-section">4️⃣ Cache-Aside Pattern (MOST IMPORTANT)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 User user = cache.get(id);
 if (user == null) {
@@ -284,8 +389,8 @@ return user;
 
 <div class="divider"></div>
 
-<h2>5️⃣ Write-Through Cache</h2>
-
+<h2 id="5-section">5️⃣ Write-Through Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 cache.put(id, user);
 db.save(user);
@@ -302,8 +407,8 @@ db.save(user);
 
 <div class="divider"></div>
 
-<h2>6️⃣ Write-Behind (Write-Back) Cache</h2>
-
+<h2 id="6-section">6️⃣ Write-Behind (Write-Back) Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 cache.put(id, user);
 // DB write happens asynchronously
@@ -319,8 +424,8 @@ cache.put(id, user);
 
 <div class="divider"></div>
 
-<h2>7️⃣ TTL-Based Eviction</h2>
-
+<h2 id="7-section">7️⃣ TTL-Based Eviction</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 spring.cache.redis.time-to-live=600000
 </pre>
@@ -331,8 +436,8 @@ spring.cache.redis.time-to-live=600000
 
 <div class="divider"></div>
 
-<h2>8️⃣ Cache Invalidation (HARDEST PROBLEM)</h2>
-
+<h2 id="8-section">8️⃣ Cache Invalidation (HARDEST PROBLEM)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 @CacheEvict(value = "users", key = "#id")
 public void updateUser(String id) {
@@ -346,8 +451,8 @@ public void updateUser(String id) {
 
 <div class="divider"></div>
 
-<h2>9️⃣ Two-Level Cache (L1 + L2)</h2>
-
+<h2 id="9-section">9️⃣ Two-Level Cache (L1 + L2)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <pre>
 Request → L1 (Local) → L2 (Redis) → DB
 </pre>
@@ -358,8 +463,8 @@ Request → L1 (Local) → L2 (Redis) → DB
 
 <div class="divider"></div>
 
-<h2>🔟 What NOT to Cache</h2>
-
+<h2 id="10-section">🔟 What NOT to Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
 <div class="danger">
     ❌ Highly transactional data<br>
     ❌ Frequently changing data<br>
@@ -401,7 +506,7 @@ Request → L1 (Local) → L2 (Redis) → DB
 </div>
 
 </div>
-
+<a href="#" class="back-to-top">↑</a>
 </body>
 </html>
 
