@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bitbucket Pipeline – ReactJS (Master | Manual Trigger)</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 30px;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      color: #38bdf8;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 40px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 6px;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: 25px;
+    }
+
+    p {
+      color: #cbd5f5;
+    }
+
+    ul {
+      margin-left: 22px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      color: #22d3ee;
+    }
+
+    .code-box {
+      background: #020617;
+      border-radius: 12px;
+      padding: 18px;
+      margin-top: 15px;
+      overflow-x: auto;
+      border: 1px solid #1e293b;
+    }
+
+    pre {
+      margin: 0;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 14px;
+      color: #e5e7eb;
+    }
+
+    .note {
+      background: #020617;
+      border-left: 4px solid #38bdf8;
+      padding: 12px 16px;
+      margin-top: 20px;
+      border-radius: 6px;
+      color: #cbd5f5;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 13px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 Bitbucket Pipeline – ReactJS (Master Branch | Manual Trigger)</h1>
+
+<p>
+This document describes how to configure a <strong>manual build pipeline</strong>
+for a <strong>React.js project using Yarn</strong> on the <strong>master</strong> branch.
+The pipeline executes only when explicitly triggered from the Bitbucket UI.
+</p>
+
+<h2>1️⃣ Create <code>bitbucket-pipelines.yml</code></h2>
+
+<p>
+Add a file named <code>bitbucket-pipelines.yml</code> in the root of your React project.
+</p>
+
+<h2>2️⃣ Pipeline Configuration (Manual Trigger)</h2>
+
+<div class="code-box">
+<pre>
+image: node:18
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build and Deploy (Manual Trigger)
+          caches:
+            - yarn
+          script:
+            - echo "This is a manual pipeline. Trigger it from the Bitbucket UI."
+
+  custom:
+    manual-build:
+      - step:
+          name: Install Dependencies
+          caches:
+            - yarn
+          script:
+            - yarn install
+
+      - step:
+          name: Run Tests
+          caches:
+            - yarn
+          script:
+            - yarn test
+
+      - step:
+          name: Build Application
+          caches:
+            - yarn
+          script:
+            - yarn build
+          artifacts:
+            - build/**
+</pre>
+</div>
+
+<h2>3️⃣ How This Pipeline Works</h2>
+
+<h3>🔹 Node Image</h3>
+<p>
+Uses the official <strong>Node.js 18</strong> Docker image with Yarn support.
+</p>
+
+<h3>🔹 Master Branch Behavior</h3>
+<ul>
+  <li>Pushes to <code>master</code> do NOT trigger a real build</li>
+  <li>Only a placeholder step runs</li>
+  <li>Ensures production builds are intentional</li>
+</ul>
+
+<h3>🔹 Custom Manual Pipeline</h3>
+<p>
+The <code>manual-build</code> pipeline is triggered manually from Bitbucket.
+</p>
+
+<ul>
+  <li><strong>Install Dependencies</strong> – <code>yarn install</code></li>
+  <li><strong>Run Tests</strong> – <code>yarn test</code></li>
+  <li><strong>Build Application</strong> – <code>yarn build</code></li>
+</ul>
+
+<h2>4️⃣ Triggering the Manual Pipeline</h2>
+
+<ol>
+  <li>Go to your repository in Bitbucket</li>
+  <li>Open the <strong>Pipelines</strong> tab</li>
+  <li>Click <strong>Run pipeline</strong></li>
+  <li>Select <code>manual-build</code></li>
+  <li>Click <strong>Run</strong></li>
+</ol>
+
+<h2>5️⃣ Optional – Deploy to AWS S3</h2>
+
+<div class="code-box">
+<pre>
+- step:
+    name: Deploy to S3
+    deployment: production
+    script:
+      - pipe: atlassian/aws-s3-deploy:1.1.0
+        variables:
+          AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+          AWS_DEFAULT_REGION: "us-east-1"
+          S3_BUCKET: "your-s3-bucket-name"
+          LOCAL_PATH: "build"
+</pre>
+</div>
+
+<h2>6️⃣ Environment Variables</h2>
+
+<p>
+Configure credentials under
+<strong>Repository Settings → Pipelines → Environment variables</strong>.
+</p>
+
+<ul>
+  <li><code>AWS_ACCESS_KEY_ID</code></li>
+  <li><code>AWS_SECRET_ACCESS_KEY</code></li>
+</ul>
+
+<div class="note">
+⚠️ Never store secrets directly inside the YAML file.
+</div>
+
+<h2>✅ Summary</h2>
+
+<ul>
+  <li>Master branch builds are manual and controlled</li>
+  <li>No accidental production deployments</li>
+  <li>Clean separation between CI (develop) and CD (master)</li>
+  <li>Ideal for production-grade workflows</li>
+</ul>
+
+<footer>
+  © Bitbucket CI/CD – ReactJS Manual Pipeline Documentation
+</footer>
+
+</body>
+</html>
+

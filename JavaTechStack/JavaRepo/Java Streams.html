@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 8 Streams Mastery</title>
+	<script>
+		function filterCard(input) {
+		const filter = input.value.toLowerCase();
+		const list = input.parentElement.querySelector('.searchable-list');
+		const items = list.getElementsByTagName('li');
+
+			for (let i = 0; i < items.length; i++) {
+				const text = items[i].textContent || items[i].innerText;
+				if (text.toLowerCase().indexOf(filter) > -1) {
+					items[i].classList.remove('hidden-item');
+				} else {
+					items[i].classList.add('hidden-item');
+				}
+			}
+		}
+	</script>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --bg-gradient: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #2c3e50, #4a6491);
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--secondary);
+        }
+        
+        /* Base Setup Container - Keeping it separate as requested */
+        .setup-section {
+            margin: 30px;
+            padding: 30px;
+            background: #f0f7ff;
+            border: 2px solid var(--secondary);
+            border-radius: 12px;
+        }
+
+        /* Feature Grid / Quick Links /Search bar */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            align-items: start;
+        }
+        
+        .card { 
+            background: white; 
+            border-radius: 10px; 
+            border: 1px solid #eee; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            height: auto; /* Allow growth */
+        }
+        
+        .card-header { 
+            background: var(--secondary); 
+            color: white; 
+            padding: 15px; 
+            font-weight: 600; 
+            border-radius: 10px 10px 0 0; 
+        }
+        
+        .card-body { 
+            padding: 15px; 
+            max-height: none; /* REMOVED LIMIT */
+            overflow-y: visible; /* REMOVED SCROLLBAR */
+        }
+        
+        .card-body ul { list-style: none; }
+        .card-body li { padding: 8px 0; border-bottom: 1px dashed #ddd; }
+        .card-body a { color: var(--secondary); text-decoration: none; font-size: 0.95rem; font-weight: 500; }
+        .card-body a:hover { color: var(--accent); }
+		.card-search {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			margin-bottom: 10px;
+			font-size: 0.9rem;
+			outline: none;
+		}
+
+		.card-search:focus {
+			border-color: var(--secondary);
+			box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+		}
+
+		/* Hide items that don't match search */
+		.hidden-item {
+			display: none !important;
+		}
+        .content { padding: 40px; }
+        .subsection {
+            margin-bottom: 40px;
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 6px solid var(--secondary);
+            scroll-margin-top: 50px;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #f8fafc;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .code-header {
+            background: #0f172a;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .copy-btn {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        pre { padding: 20px; overflow-x: auto; font-family: 'Consolas', monospace; font-size: 0.9rem; }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--accent);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+        }
+
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }	
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Java 8 Streams Mastery</h1>
+            <p>40 Comprehensive Examples & Common Use Cases</p>
+        </header>
+        <div class="grid" id="features-overview">
+            <div class="card">
+                <div class="card-header">
+					<h3>Basic Transformations & Filtering</h3>
+					<p>Examples focus on foundational Stream operations such as sorting, basic filtering, and simple string/number transformations.</p>
+				</div>
+                <div class="card-body">
+					<input type="text" class="card-search" placeholder="Search Basic Transformations & Filtering..." onkeyup="filterCard(this)">
+					<ul class="searchable-list">
+                        <li><a href="#ex1">1. sort-by-name.</a></li>
+                        <li><a href="#ex2">2. filter-by-id.</a></li>
+                        <li><a href="#ex3">3. reverse-sort-salary.</a></li>
+                        <li><a href="#ex4">4. reverse-sort-name.</a></li>
+                        <li><a href="#ex5">5. replace-character.</a></li>
+                        <li><a href="#ex6">6. filter-strings.</a></li>
+						<li><a href="#ex7">7. to-uppercase.</a></li>
+						<li><a href="#ex8">8. to-lowercase.</a></li>
+						<li><a href="#ex9">9. check-empty.</a></li>
+						<li><a href="#ex10">10. filter-even.</a></li>
+						<li><a href="#ex11">11. filter-odd.</a></li>
+						<li><a href="#ex12">12. remove-duplicates.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+					<h3>Intermediate Statistics & Logic</h3>
+					<p>Examples involve finding specific values (max/min), calculating averages, and working with flat data structures.</p>
+				</div>				
+                <div class="card-body">
+					<input type="text" class="card-search" placeholder="Search Intermediate Statistics & Logic..." onkeyup="filterCard(this)">
+					<ul class="searchable-list">
+                        <li><a href="#ex31">1. second-highest-salary.</a></li>
+                        <li><a href="#ex32">2. top3-salaries.</a></li>
+                        <li><a href="#ex33">3. flatten-list.</a></li>
+                        <li><a href="#ex34">4. word-frequency.</a></li>
+                        <li><a href="#ex35">5. max-string-length.</a></li>
+						<li><a href="#ex36">6. lexicographically-max-value.</a></li>
+						<li><a href="#ex37">7. max-and-min-price.</a></li>
+						<li><a href="#ex38">8. average-numbers.</a></li>
+						<li><a href="#ex39">9. largest-even.</a></li>
+						<li><a href="#ex40">10. employee-most-skills.</a></li>
+						<li><a href="#ex41">11. it-employee-map.</a></li>
+						<li><a href="#ex42">12. sort-dept-salary.</a></li>
+						<li><a href="#ex43">13. sum-it-finance.</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+					<h3>Advanced Grouping & Pipelines</h3>
+					<p>Examples utilize complex collectors like groupingBy, partitioningBy, and teeing for deep data analysis.</p>
+				</div>				
+                <div class="card-body">
+					<input type="text" class="card-search" placeholder="Search Advanced Grouping & Pipelines..." onkeyup="filterCard(this)">
+					<ul class="searchable-list">
+                        <li><a href="#ex61">1. group-by-dept-highest-sal.</a></li>
+                        <li><a href="#ex62">2. Partition-num-even-odd.</a></li>
+                        <li><a href="#ex63">3. Multi-group-by-age-range.</a></li>
+                        <li><a href="#ex64">4. Multi-group-by-age-bracket.</a></li>
+                        <li><a href="#ex65">5. weighted-age-teeing.</a></li>
+						<li><a href="#ex66">6. total-salary-per-dep.</a></li>
+						<li><a href="#ex67">7. all-unique-skills-empl-flatMap</a></li>
+						<li><a href="#ex68">8. group-emps-by-skills.</a></li>
+						<li><a href="#ex69">9. partition-age-salary.</a></li>
+						<li><a href="#ex70">10. avg-salary-per-dept-over30.</a></li>
+						<li><a href="#ex71">11. largest-dept-headcount.</a></li>
+						<li><a href="#ex72">12. avg-age-dept.</a></li>
+						<li><a href="#ex73">13. highest-emp-salary-per-dept.</a></li>
+						<li><a href="#ex74">14. full stream pipeline (Filter -> Sort -> FlatMap -> Map -> Limit).</a></li>					
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="setup-section">
+            <h2 id="core-setup" style="margin-bottom:20px; color: var(--primary);">⚙️ Project Base Setup</h2>
+            
+            <h3 style="color: var(--secondary); margin-bottom:10px;">1. Employee Model</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+
+					<pre><code>
+import java.util.List;
+
+public class Employee {
+	private int id;
+	private String name;
+	private int age;
+	private String department;
+	private double salary;
+	private List&lt;String&gt; skills;
+	
+	public Employee(int id, String name, int age, String department, 
+				   double salary, List&lt;String&gt; skills) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.department = department;
+		this.salary = salary;
+		this.skills = skills;
+	}
+	
+	public int getId() { return id; }
+	public String getName() { return name; }
+	public int getAge() { return age; }
+	public String getDepartment() { return department; }
+	public double getSalary() { return salary; }
+	public List&lt;String&gt; getSkills() { return skills; }
+	
+	public void salaryIncrement(double increment) {
+		this.salary = salary + increment;
+	}
+	
+	@Override
+	public String toString() {
+		return "Employee{" +
+			   "name='" + name + '\'' +
+			   ", age=" + age +
+			   ", department='" + department + '\'' +
+			   ", salary=" + salary +
+			   ", skills=" + skills +
+			   '}' + "\n";
+	}
+}
+					</code></pre>
+            </div>
+
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">2. Global Data Set</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+List&lt;Employee&gt; empList = Arrays.asList(
+  new Employee(1,"John", 25, "HR", 50000.0, Arrays.asList("recruiting", "communication")),
+  new Employee(2,"Jane", 32, "IT", 75000.0, Arrays.asList("java", "python", "sql")),
+  new Employee(4,"Bob", 45, "Finance", 85000.0, Arrays.asList("accounting", "excel")),
+  new Employee(6,"Alice", 28, "IT", 80000.0, Arrays.asList("java", "cloud", "docker")),
+  new Employee(7,"Tom", 40, "Finance", 90000.0, Arrays.asList("excel", "statistics")),
+  new Employee(3,"Sara", 35, "HR", 55000.0, Arrays.asList("recruiting", "training")),
+  new Employee(5,"Mike", 30, "IT", 78000.0, Arrays.asList("python", "linux", "networking"))
+);
+					</code></pre>
+            </div>
+			
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">3. Nested Integer List</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+List&lt;List&lt;Integer&gt;&gt; nestedList = Arrays.asList(
+  Arrays.asList(1, 2),
+  Arrays.asList(3, 4, 5),
+  Arrays.asList(6)
+);
+					</code></pre>
+            </div>
+
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">4. Food List</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+ArrayList&lt;String&gt; foodLst = new ArrayList&lt;&gt;();
+foodLst.add("Cabbage");
+foodLst.add("Pizza");
+foodLst.add("Sausage");
+foodLst.add("Potatoes");
+foodLst.add("Salad");
+					</code></pre>
+            </div>
+
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">5. Price List</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+ArrayList&lt;Float&gt; priceLst = new ArrayList&lt;&gt;();
+priceLst.add(25.14f);
+priceLst.add(25.20f);
+priceLst.add(25.10f);
+priceLst.add(25.30f);
+priceLst.add(25.25f);
+					</code></pre>
+            </div>
+
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">6. Number List</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+ArrayList&lt;Integer&gt; nmbrLst = new ArrayList&lt;&gt;();
+nmbrLst.add(1);
+nmbrLst.add(2);
+nmbrLst.add(4);
+nmbrLst.add(3);
+nmbrLst.add(4);
+nmbrLst.add(5);
+					</code></pre>
+            </div>
+
+            <h3 style="color: var(--secondary); margin-bottom:10px; margin-top:20px;">7. List of String Lists</h3>
+			<a href="#" class="back-to-top-btn">↑ Back to Features</a>	
+            <div class="code-block">
+                <div class="code-header"><span style="color: #3498db">JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+List&lt;List&lt;String&gt;&gt; listOfLists = Arrays.asList(
+  Arrays.asList("Reflection", "Collection", "Stream"),
+  Arrays.asList("Structure", "State", "Flow", "Collection"),
+  Arrays.asList("Sorting", "Mapping", "Reduction", "Stream")
+);
+					</code></pre>
+            </div>			
+        </div>
+
+        <div class="content">
+            <div class="subsection" id="ex1">
+                <h3>1. Sorting by Name</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+empList.stream()
+	.sorted(Comparator.comparing(Employee::getName))
+	.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>
+
+            <div class="subsection" id="ex2">
+                <h3>2. Filtering employees where ID > 1</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Convert the list of employees into a Stream for processing	
+empList.stream() 
+
+// Filter the stream to include only employees whose ID is greater than 1	
+.filter(akhil -> akhil.getId() > 1) 
+
+// Print each filtered employee to the console	
+.forEach(System.out::println); 
+					</code></pre>
+                </div>
+            </div>
+			
+            <div class="subsection" id="ex3">
+                <h3>3. Reverse sorting by salary</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Convert the list of employees into a Stream for processing
+empList.stream() 
+
+// Extract (map) only the salary from each Employee object
+.map(Employee::getSalary) 
+
+// Sort the salaries in descending order (highest to lowest)
+.sorted(Comparator.reverseOrder())
+
+// Print each sorted salary to the console
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>			
+
+            <div class="subsection" id="ex4">
+                <h3>4. Reverse sorting by name</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Start a stream from the list of Employee objects
+empList.stream()
+
+ // Filter the stream to include only employees whose ID is greater than 1
+.filter(akhil -> akhil.getId() > 1) 
+.sorted(
+	Comparator
+		// First sort by employee name in ascending order
+		.comparing(Employee::getName) 
+		// Reverse the order of name sorting to get descending name order
+		.reversed() 
+		// If names are the same, then sort by ID in ascending order
+		.thenComparing(Employee::getId) 
+)
+// Print each sorted employee object to the console
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex5">
+                <h3>5. Replacing characters (e.g., 'e' with 'E') in names</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of Employee objects
+empList.stream() 
+
+// For each employee, get their name and replace lowercase 'e' with uppercase 'E'
+.map(p -> p.getName().replace("e", "E")) 
+
+// Print each modified name to the console
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex6">
+                <h3>6. Finding all strings with length > 5</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the foodLst list
+foodLst.stream()
+
+// Filter only those strings whose length is greater than 5 characters
+.filter(s -> s.length() > 5)
+
+// Print each of the filtered strings
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex7">
+                <h3>7. Converting list of strings to uppercase</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list 'foodLst'
+foodLst.stream()
+
+// Convert each string in the list to uppercase using map()
+.map(str -> str.toUpperCase())
+
+// Print each uppercase string to the console
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex8">
+                <h3>8. Converting list of strings to lowercase</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the 'foodLst' list
+foodLst.stream()
+
+// Convert each string in the list to lowercase
+.map(str -> str.toLowerCase())
+
+// Print each lowercase string to the console
+.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex9">
+                <h3>9. Checking if a string or list of strings is empty</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Initialize a string variable with an empty string
+String str = "";
+
+// Create a stream with the string and check if all elements (only one here) are empty
+// allMatch returns true if all elements match the predicate String::isEmpty
+boolean isEmpty = Stream.of(str).allMatch(String::isEmpty);
+
+// Print the result based on the boolean outcome
+System.out.println(isEmpty ? "String is Empty" : "Not Empty");
+
+// Create a list of strings, including empty, whitespace, and non-empty strings
+List&lt;String&gt; strings = List.of("", " ", "abc");
+
+// Check if all strings in the list are empty using Stream API
+boolean allEmpty = strings.stream()
+		// Returns true only if every string in the list is exactly ""
+		.allMatch(String::isEmpty);  
+
+/*
+Note: 
+- " " (a space) is not considered empty by String::isEmpty, 
+  because isEmpty() only returns true for "" (zero-length string).
+*/
+
+// Print the result based on the boolean outcome
+System.out.println(allEmpty ? "All strings are empty" : "Some strings are not empty");
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex10">
+                <h3>10. Filtering even numbers from a list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of numbers
+nmbrLst.stream()      
+// Filter the stream to include only even numbers (those divisible by 2)
+.filter(s -> s % 2 == 0)
+// Print each even number to the console
+.forEach(System.out::println); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex11">
+                <h3>11. Filtering odd numbers from a list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of numbers
+nmbrLst.stream()                
+// Filter the stream to include only odd numbers (those not divisible by 2)
+.filter(s -> s % 2 != 0)       
+// Print each odd number to the console
+.forEach(System.out::println); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex12">
+                <h3>12. Removing duplicates from a list of integers</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of integers
+nmbrLst.stream()  
+// Use distinct() to filter out duplicate elements in the stream
+.distinct()           
+// Print each unique element to the console
+.forEach(System.out::println); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex31">
+                <h3>31. Finding the 2nd highest salary using skip(1)</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+Optional secondHighestSal = 
+		// Start a stream from the list of Employee objects
+		empList.stream() 
+		
+		// Map each Employee object to just their salary (extract salaries)
+		.map(Employee::getSalary) 
+		
+		// Sort the salaries in descending order (highest to lowest)
+		.sorted(Comparator.reverseOrder()) 
+		
+		// Skip the first (i.e., the highest salary)
+		.skip(1) 
+		
+		// Get the second highest salary (after skipping one), wrapped in an Optional
+		.findFirst(); 
+
+// Print the second highest salary
+System.out.print("secondHighestSal:" + secondHighestSal.get());
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex32">
+                <h3>32. Getting the names of the top 3 highest paid employees</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of Employee objects
+empList.stream() 
+
+// Sort employees by salary in descending order (highest salary first)
+.sorted(Comparator.comparing(Employee::getSalary).reversed())
+
+// Limit the result to the top 3 employees (i.e., top 3 highest paid)
+.limit(3) // Limit the result to the top 3 employees (i.e., top 3 highest paid)
+
+// For each of the top 3 employees, print their name and salary
+.forEach(e -> 
+	System.out.println("Name: " + e.getName() + "<>Salary: " + e.getSalary())	        
+);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex33">
+                <h3>33. Flattening a nested list of integers into a single list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+/*
+Working with a flat list is easier when you want to search, filter, or transform data.
+Common when processing JSON, CSV, or multidimensional structures (like rows of data).
+Each inner list (List&lt;Integer&gt;) becomes a stream of integers.
+flatMap() merges all those streams into one continuous stream.
+collect() gathers the flattened values into a new list.
+*/
+
+List&lt;List&lt;Integer&gt;&gt; nestedList = Arrays.asList(
+		Arrays.asList(1, 2),
+		Arrays.asList(3, 4, 5),
+		Arrays.asList(6)
+	);	
+
+// Print the nestedList list
+System.out.println("Nested List:\n"+nestedList+"\n");
+
+List&lt;Integer&gt; flatList = 
+		// Start a stream from the list of lists (nestedList)
+		nestedList.stream()
+		
+		// Use flatMap to flatten the nested lists into a single stream of integers
+		.flatMap(List::stream)                            
+		
+		// Convert the flattened stream of integers into a List&lt;Integer&gt;
+		.collect(Collectors.toList());                   
+
+// Print the flattened list
+System.out.println("flatList:\n"+flatList);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex34">
+                <h3>34. Counting word frequency in a sentence</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Use a mutable map to update and print word counts immediately
+Map&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+
+// Split the sentence by spaces, convert to a stream of words
+Arrays.stream(sentence.split(" ")) 
+	// Convert each word to lowercase for uniformity
+	.map(String::toLowerCase) 
+	// For each word in the stream
+	.forEach(word -> { 
+		// Put the word in the map with count, or increment the existing count
+		wordCount.put(word, wordCount.getOrDefault(word, 0) + 1);
+
+		// (Just to check)
+		// System.out.println("Word: " + word + " | Count so far: " + wordCount.get(word));
+	});
+
+// After all words are processed, print the final word counts
+wordCount.forEach((word, count) -> 
+	System.out.println(word + " → " + count) 
+);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex35">
+                <h3>35. Finding the maximum string length in a list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Find the longest string in the list using Java Streams
+String maxString = foodLst.stream()	
+
+// Use max() with a custom comparator comparing string lengths
+.max((str1, str2) -> Integer.compare(str1.length(), str2.length()))
+
+// If no value is found (e.g., empty list), return null
+.orElse(null);
+
+System.out.println("maxString:"+maxString);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex36">
+                <h3>36. Finding the lexicographically maximum value</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Use Java Stream to find the lexicographically maximum (alphabetically last) string in the list
+Optional&lt;String&gt; max = 
+// Create a stream from the foodLst list	
+foodLst.stream()
+
+// Use Comparator to compare two strings lexicographically (like dictionary order)
+.max((x, y) -> x.compareTo(y));
+
+// Print the result; if the list is empty, print null instead of throwing an exception
+System.out.println(max.orElse(null));
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex37">
+                <h3>37. Getting the max and min price from a list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Find the maximum price from the list using Stream and Float::compare
+System.out.println(
+	priceLst.stream()
+			// Compares Float values to get the maximum
+			.max(Float::compare) 
+			// Extracts the Optional value (be cautious if the list can be empty)
+			.get()            
+);
+
+// Find the minimum price from the list using Stream and Float::compare
+System.out.println(
+	priceLst.stream()
+			// Compares Float values to get the minimum
+			.min(Float::compare) 
+			// Extracts the Optional value (be cautious if the list can be empty)
+			.get()              
+);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex38">
+                <h3>38. Calculating the average of a list of integers</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+System.out.println(
+		// Convert the list (e.g., List) into a Stream for processing
+		nmbrLst.stream()   
+				// Map each Integer object to its int value (unboxing)
+			   .mapToInt(Integer::intValue)  
+			   // Sum all the int values in the stream and Divide the total sum by the size of the list to get the average
+			   .sum() / nmbrLst.size()
+	);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex39">
+                <h3>39. Finding the largest even number in a list</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+Optional&lt;Integer&gt; largest_even = 
+		// Convert list to stream
+		nmbrLst.stream()
+		// Filter only even numbers
+		.filter(n -> n % 2 == 0)    
+		// Use max() to find the largest even number
+		.max(Integer::compareTo);           
+
+// Print the largest even number, or null if no even numbers are found
+System.out.println("\nlargest_even: " + largest_even.orElse(null)); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex40">
+                <h3>40. Finding the employee with the most skills</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Find the employee with the most number of skills
+Employee withMostSkills = empList.stream()
+	// Use max() to find the employee with the maximum number of skills and Compare based on size of the skills list
+	.max(Comparator.comparingInt(e -> e.getSkills().size())) 
+	// If no employee is found (e.g., empty list), return null
+	.orElse(null);
+
+System.out.println("Employee with most skills:");
+// Print the employee details of the one with the most skills
+System.out.println(withMostSkills); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex41">
+                <h3>41. Creating a Map&lt;String, Employee&gt; specifically for the IT department</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a map of IT department employees with employee name as key and employee object as value
+Map&lt;String, Employee&gt; itEmployeeMap = empList.stream()
+	.filter(e -> "IT".equals(e.getDepartment())) // Filter only employees in the IT department
+	.collect(Collectors.toMap(
+		Employee::getName,         // Key: employee's name
+		Function.identity()        // Value: employee object itself
+	));
+
+System.out.println("IT Employee Map:");
+// Print the resulting map, which contains employee names as keys and Employee objects as values
+System.out.println(itEmployeeMap); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex42">
+                <h3>42. Sorting employees by department and then by salary descending</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Stream the list of employees to perform sorting
+List&lt;Employee&gt; sortedByDeptAndSalary = empList.stream()
+	
+	// Sort first by department in ascending (default) order
+	.sorted(
+		Comparator.comparing(Employee::getDepartment)
+		
+		// Then sort by salary in descending order using reversed()
+		.thenComparing(Comparator.comparing(Employee::getSalary).reversed())
+	)
+
+	// Collect the sorted results into a new List
+	.collect(Collectors.toList());
+
+System.out.println("Sorted by dept and salary (desc):");
+
+// Print each employee from the sorted list
+sortedByDeptAndSalary.forEach(System.out::println);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex43">
+                <h3>43. Summing salaries for the IT and Finance departments</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Calculate the total salary of employees in IT and Finance departments
+double sumITFinance = empList.stream()
+
+	// Filter only employees who belong to IT or Finance department
+	.filter(e -> "IT".equals(e.getDepartment()) || "Finance".equals(e.getDepartment()))
+
+	// Convert the remaining employee stream to a DoubleStream of their salaries
+	.mapToDouble(Employee::getSalary)
+
+	// Sum the salaries
+	.sum();
+
+System.out.println("Sum of salaries in IT and Finance:");
+// Print the total salary expenditure for IT and Finance departments
+System.out.println(sumITFinance);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex61">
+                <h3>61. Grouping by department to find the highest salary in each</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a stream from the list of Employee objects
+empList.stream() 
+	
+// Group employees by their department
+.collect(Collectors.groupingBy(
+	// Grouping key: department of the employee
+	Employee::getDepartment, 
+	// For each department group, find the employee with the maximum salary
+	Collectors.maxBy(Comparator.comparing(Employee::getSalary))		        
+))
+
+// Iterate through the resulting Map and print each department with the highest salary in that department
+.forEach((a, b) -> 
+	// 'a' is the department name (key), 'b' is an Optional<Employee> with the highest salary in that department
+	System.out.println(a + " -> " + b.get().getSalary())		        
+);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex62">
+                <h3>62. Partitioning numbers into even and odd groups</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+int[] numbersArr = {1,2,3,4,5,6,7,8,9,10};
+// Print the numbers array
+System.out.println("numbers:\n"+Arrays.toString(numbersArr)+"\n");
+
+// APPROACH 1
+// Convert an int[] array to a Stream&lt;Integer&gt; using boxed()
+// Partition the numbers into even and odd using Collectors.partitioningBy()
+Map&lt;Boolean, List&lt;Integer&gt;&gt; partitioned = 
+	// Create a stream from the int array
+	Arrays.stream(numbersArr)
+	// Convert IntStream to Stream&lt;Integer&gt; for collector support
+	.boxed() 
+	// Collect into a Map where the key is true for even numbers and false for odd numbers
+	.collect(Collectors.partitioningBy(n -> n % 2 == 0));
+
+// Retrieve and print even numbers (key: true)
+System.out.println("Even: " + partitioned.get(true));
+
+// Retrieve and print odd numbers (key: false)
+System.out.println("Odd: " + partitioned.get(false));
+
+// APPROACH 2
+// Convert the primitive int array to a Stream&lt;Integer&gt;
+Arrays.stream(numbersArr)
+// Use boxed() to convert IntStream to Stream&lt;Integer&gt;
+.boxed()
+// Collect the numbers into a Map partitioned by even and odd
+// Collectors.partitioningBy() creates a Map&lt;Boolean, List&lt;Integer&gt;&gt;
+// where the key is true for even numbers and false for odd numbers
+.collect(Collectors.partitioningBy(n -> n % 2 == 0)) 
+	
+	// Iterate over each partition using forEach
+	.forEach((isEven, nums) -> {
+		// Determine label based on the key (true = even, false = odd)
+		String label = isEven ? "Even Numbers" : "Odd Numbers";
+
+		// Print the label and the corresponding list of numbers
+		System.out.println(label + ": " + nums);
+	});
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex63">
+                <h3>63. Multi-level grouping: Department followed by Age Range</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Group employees by department and then by age range
+// We'll define age ranges: &lt;=30, 31-40, &gt;40	
+Map&lt;String, Map&lt;String, List&lt;Employee&gt;&gt;&gt; groupedByDeptAndAgeRange = 
+		// Start a stream from the list of Employee objects
+		empList.stream()
+		// Collect the employees into a Map where:
+		.collect(Collectors.groupingBy(
+			// First level grouping: by department name (e.g., "HR", "IT")
+			Employee::getDepartment, 				        
+			// Second level grouping: by age range
+			Collectors.groupingBy(e -> {
+				if (e.getAge() <= 30) return "<=30";        // Employees aged 30 or below
+				else if (e.getAge() <= 40) return "31-40";  // Employees aged between 31 and 40
+				else return ">40";                          // Employees aged above 40
+			})
+		));
+
+System.out.println("Group by department and age range:");
+// Print the resulting Map, which contains departments as keys and another Map of age ranges to lists of employees
+System.out.println(groupedByDeptAndAgeRange);   
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex64">
+                <h3>64. Multi-level grouping: Department followed by Age Bracket (Junior/Mid/Senior)</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Multi-level grouping: Department -> Age Bracket -> Employees
+Map&lt;String, Map&lt;String, List&lt;Employee&gt;&gt;&gt; ageBracketGrouping = empList.stream()
+		.collect(Collectors.groupingBy(
+			// First level grouping: by department name	
+			Employee::getDepartment, 
+			// Second level grouping: by age bracket
+			Collectors.groupingBy(e -> 
+				e.getAge() < 30 ? "Junior"     // Employees younger than 30
+				: e.getAge() > 40 ? "Senior"   // Employees older than 40
+				: "Mid"                        // Employees between 30 and 40 (inclusive)
+			)
+		));
+
+System.out.println("Group by department and age bracket:");
+// Print the resulting Map, which contains departments as keys and another Map of age brackets to lists of employees
+System.out.println(ageBracketGrouping); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex65">
+                <h3>65. Calculating weighted average age by department using the teeing collector</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+Map&lt;String, Double&gt; weightedAvgAge = empList.stream()
+		.collect(Collectors.groupingBy(
+			Employee::getDepartment, // Grouping by department
+
+			// collectingAndThen is used to finalize the result of teeing collector.
+			// Collectors.teeing(a, b, merger) is a Java 12 feature that lets you:
+				//Run two collectors in parallel (a and b)
+				//And combine their results using the merger				        
+			Collectors.collectingAndThen(
+				Collectors.teeing(
+					// Collector 1: Sum of (age × salary) — numerator for weighted average
+					Collectors.summingDouble(e -> e.getAge() * e.getSalary()),
+
+					// Collector 2: Sum of salary — denominator for weighted average
+					Collectors.summingDouble(Employee::getSalary),
+
+					// Merger: Divide the two to get the weighted average
+					(ageSalarySum, totalSalary) -> ageSalarySum / totalSalary
+				),
+
+				// Function.identity() just returns the result as-is
+				Function.identity()
+			)
+		));
+
+System.out.println("Weighted average age by department:");
+// Print the resulting Map, which contains departments as keys and their weighted average ages as values
+System.out.println(weightedAvgAge); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex66">
+                <h3>66. Calculating total salary expenditure per department</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Group employees by department and calculate total salary per department
+Map&lt;String, Double&gt; totalSalaryPerDept = empList.stream()
+	// Start a stream over the list of employees
+	.collect(Collectors.groupingBy(
+		// Grouping key: department of the employee
+		Employee::getDepartment,                      
+		// Downstream collector: sum salaries in each group
+		Collectors.summingDouble(Employee::getSalary) 
+	));
+
+System.out.println("Total salary per department:");
+
+System.out.println(totalSalaryPerDept);  
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex67">
+                <h3>67. Extracting all unique skills from all employees using flatMap</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Extract all unique skills from the list of employees
+Set&lt;String&gt; allSkills = empList.stream()
+	// Convert each employee into a stream of their skills (List&lt;String&gt; → Stream&lt;String&gt;)
+	.flatMap(e -> e.getSkills().stream())
+	// Collect all the skills into a Set to remove duplicates
+	.collect(Collectors.toSet());
+
+System.out.println("All skills:");
+// Print the set of all unique skills
+System.out.println(allSkills);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex68">
+                <h3>68. Grouping employees by individual skills (mapping multiple skills per person)</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Group employees by each skill they have
+Map&lt;String, List&lt;Employee&gt;&gt; employeesBySkill = empList.stream()
+	// For each employee, generate (skill, employee) pairs 
+	.flatMap(e -> 
+		// For each employee, get their skills and create a stream
+		e.getSkills().stream()
+		// For each skill of the employee, create a Map.Entry with skill as key and employee as value
+		 .map(skill -> new AbstractMap.SimpleEntry<>(skill, e))
+	)
+	// Collect the pairs into a Map&lt;String, List&lt;Employee&gt;&gt; where:
+	// - key = skill name
+	// - value = list of employees having that skill
+	.collect(Collectors.groupingBy(			    	
+		Map.Entry::getKey, // Grouping key = skill name                               
+		Collectors.mapping(Map.Entry::getValue, // extract the Employee object
+						   Collectors.toList()) // collect employees into a list
+	));
+
+System.out.println("Employees by skill:");
+// Print the resulting Map, which contains skills as keys and lists of employees as values
+System.out.println(employeesBySkill);		
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex69">
+                <h3>69. Nested partitioning by Age (>30) and Salary (>70k)</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Partition employees based on two boolean conditions:
+// 1. Age > 30
+// 2. Salary > 70000 (inside each age partition)
+Map&lt;Boolean, Map&lt;Boolean, List&lt;Employee&gt;&gt;&gt; partitionByAgeAndSalary = empList.stream()
+	.collect(
+		Collectors.partitioningBy(
+			e -> e.getAge() > 30, // Outer partition: true if age > 30
+			Collectors.partitioningBy(
+				e -> e.getSalary() > 70000 // Inner partition: true if salary > 70k
+			)
+		)
+	);
+
+System.out.println("Partition by age>30 and salary>70k:");
+// Print the resulting Map, which contains two levels of partitions
+System.out.println(partitionByAgeAndSalary);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex70">
+                <h3>70. Calculating average salary per department for employees over 30</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Filter employees older than 30 and calculate average salary grouped by department
+Map&lt;String, Double&gt; avgSalaryByDeptOver30 = empList.stream()
+	.filter(e -> e.getAge() > 30) // Only include employees whose age is greater than 30
+	.collect(Collectors.groupingBy(
+		Employee::getDepartment, // Group by department
+		Collectors.averagingDouble(Employee::getSalary) // Compute average salary within each group
+	));
+
+System.out.println("Average salary by dept for employees over 30:");
+// Print the resulting Map, which contains departments as keys and their average salaries as values
+System.out.println(avgSalaryByDeptOver30); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex71">
+                <h3>71. Finding the department with the highest headcount</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Step 1: Group employees by department and count how many employees are in each department
+Map.Entry&lt;String, Long&gt; deptWithMostEmployees = empList.stream()
+	.collect(Collectors.groupingBy(
+		Employee::getDepartment,         // Grouping key: department
+		Collectors.counting()            // Downstream collector: count the number of employees in each group
+	))
+	.entrySet().stream()                 // Convert the map into a stream of Map.Entry
+	.max(Map.Entry.comparingByValue())  // Find the entry with the highest count (most employees)
+	.orElse(null);                       // Return null if no employees found
+
+System.out.println("Department with most employees:");
+// Print the department name and the count of employees in that department
+System.out.println(deptWithMostEmployees); 
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex72">
+                <h3>72. Calculating average age per department</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Calculate and print the average age of employees grouped by department
+Map&lt;String, Double&gt; avgAgeByDept = empList.stream()
+
+	// Group the employees by department
+	.collect(Collectors.groupingBy(
+		
+		// Key: Department name
+		Employee::getDepartment,
+
+		// Downstream collector: average the age of employees in each department
+		Collectors.averagingInt(Employee::getAge)
+	));
+
+System.out.println("Average age by department:");
+// Print the resulting Map, which contains departments as keys and their average ages as values
+System.out.println(avgAgeByDept);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex73">
+                <h3>73. Finding the specific highest paid employee per department</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a map of highest paid employee per department
+Map&lt;String, Employee&gt; highestPaidPerDept = empList.stream()
+
+	// Convert the employee list into a stream for processing
+	.collect(Collectors.groupingBy(
+		
+		// Key: Department name (e.g., "IT", "HR", etc.)
+		Employee::getDepartment,
+
+		// Value: Employee with the highest salary in that department
+		Collectors.collectingAndThen(
+
+			// First, find the employee with max salary in each department
+			Collectors.maxBy(Comparator.comparingDouble(Employee::getSalary)),
+
+			// Since maxBy returns an Optional<Employee>, we use Optional::get to extract the actual employee object
+			Optional::get
+		)
+	));
+
+System.out.println("Highest paid per department:");
+// Print the resulting Map, which contains department names as keys and the highest paid employee in that department as values
+System.out.println(highestPaidPerDept);
+					</code></pre>
+                </div>
+            </div>	
+
+            <div class="subsection" id="ex74">
+                <h3>74. A full demonstration pipeline (Filter -> Sort -> FlatMap -> Map -> Limit)</h3>
+				<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+                <div class="code-block">
+                    <div class="code-header"><span>JAVA</span><button class="copy-btn">Copy</button></div>
+					<pre><code>
+// Create a set to hold intermediate results
+Set&lt;String&gt; intermediateResults = new HashSet&lt;&gt;();
+listOfLists.stream().forEach(System.out::println);
+System.out.print("\n");
+
+// Stream pipeline demonstrating various intermediate operations
+List&lt;String&gt; result = listOfLists.stream().flatMap(List::stream) // Flatten the list of lists into a single stream
+		.map(String::toUpperCase) // Transform each element to uppercase
+		.sorted() // Sort elements
+		.filter(s -> s.startsWith("S")) // Filter elements starting with "S"
+		.distinct() // Remove duplicate elements
+		.peek(s -> intermediateResults.add(s)) // Perform an action (add to set) on each element
+		.collect(Collectors.toList()); // Collect the final result into a list
+
+// Print the intermediate results
+System.out.println("Intermediate Results:");
+System.out.println("Before Sort:");
+intermediateResults.forEach(System.out::println);
+System.out.print("\n");
+
+System.out.println("After Sort:");
+intermediateResults.stream().sorted().forEach(System.out::println);
+System.out.print("\n");
+
+// Print the final result
+System.out.println("Final Result:");
+result.forEach(System.out::println);
+System.out.print("\n");
+
+listOfLists.stream().flatMap(List::stream).distinct().collect(Collectors.toList()).forEach(System.out::println);  
+
+System.out.println("Stream pipeline demonstrating multiple operations:\n");
+
+// Another example
+List&lt;String&gt; topITSkillNames = empList.stream()
+	.filter(e -> e.getDepartment().equals("IT"))                          // 1. Filter only IT employees
+	.filter(e -> e.getSalary() > 10000)                                   // 2. Filter those with salary > 85k
+	.distinct()                                                           // 3. Remove duplicates (if any)
+	.sorted(Comparator.comparing(Employee::getAge))                       // 4. Sort by age ascending
+	.peek(e -> System.out.println("After sorting: " + e.getName()))       // 5. Peek to debug stream content
+	.flatMap(e -> e.getSkills().stream())                                 // 6. Flatten the list of skills
+	.filter(skill -> skill.toLowerCase().contains("java"))                // 7. Filter skills containing "java"
+	.map(String::toUpperCase)                                             // 8. Convert to uppercase
+	.distinct()                                                           // 9. Remove duplicate skill entries
+	.limit(3)                                                             // 10. Limit to top 3 skills
+	.collect(Collectors.toList());                                        // 11. Collect as a List
+
+System.out.println("\nFinal Result (Top Java-related IT skills): " + topITSkillNames);  
+					</code></pre>
+                </div>
+            </div>	
+
+        </div>
+
+        <footer style="background: var(--primary); color: white; padding: 40px; text-align: center;">
+            <p>© 2024 Java Streams Reference Guide | Focused on Functional Efficiency</p>
+        </footer>
+    </div>
+
+    <a href="#" class="back-to-top">↑</a>
+
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const code = this.closest('.code-block').querySelector('code').innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    const original = this.innerText;
+                    this.innerText = 'Copied!';
+                    this.style.background = '#2ecc71';
+                    setTimeout(() => {
+                        this.innerText = original;
+                        this.style.background = '#3498db';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
