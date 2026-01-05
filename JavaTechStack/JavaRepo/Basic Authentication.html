@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spring Security – Public vs Secure Request Flow</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      background: #ffffff;
+      padding: 28px 32px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 8px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      font-size: 22px;
+      color: #2563eb;
+    }
+
+    h3 {
+      margin-top: 28px;
+      font-size: 18px;
+      color: #111827;
+    }
+
+    .summary {
+      background: #eef2ff;
+      border-left: 6px solid #2563eb;
+      padding: 16px 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .flow-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      font-family: Consolas, monospace;
+      white-space: pre;
+    }
+
+    .step {
+      margin-top: 18px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 14px;
+    }
+
+    .success {
+      background: #ecfdf5;
+      border-left: 6px solid #10b981;
+      padding: 14px 16px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .warning {
+      background: #fff7ed;
+      border-left: 6px solid #f97316;
+      padding: 14px 16px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, #2563eb, transparent);
+      margin: 40px 0;
+    }
+
+    code.inline {
+      background: #e5e7eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>🔐 Complete Request Flow — PUBLIC vs SECURE (Basic Authentication)</h1>
+
+    <div class="summary">
+      Public endpoints bypass authentication entirely, while secured endpoints require authentication on every request.
+      With Basic Authentication, credentials are validated per request, invoking
+      <code class="inline">UserDetailsService</code> each time.
+      Spring Security handles authentication via filters before delegating to controllers.
+    </div>
+	
+    <div class="summary">
+		During authentication, Spring Security’s <code class="inline">BasicAuthenticationFilter</code> delegates 
+		authentication to <code class="inline">AuthenticationManager</code>, 
+		which uses <code class="inline">DaoAuthenticationProvider</code>. This provider invokes 
+		<code class="inline">UserDetailsService.loadUserByUsername()</code> to fetch user details from the data source. 
+		The method is called on every secured request in Basic Authentication because 
+		the mechanism is stateless and credentials are validated per request.
+    </div>	
+
+    <div class="divider"></div>
+
+    <h2>🟢 FLOW 1: <code class="inline">/public</code> Endpoint (NO Authentication)</h2>
+
+    <h3>Example URL</h3>
+    <pre>http://localhost:8080/public</pre>
+
+    <h3>Request Flow</h3>
+    <div class="flow-box">
+Browser
+  ↓
+Spring Boot (Embedded Tomcat)
+  ↓
+Spring Security Filter Chain
+  ↓
+Authorization Decision
+  ↓
+Controller
+  ↓
+Response
+    </div>
+
+    <div class="step">
+      <div class="step-title">1️⃣ Browser sends HTTP request</div>
+      <pre>GET /public</pre>
+      No Authorization header.
+    </div>
+
+    <div class="step">
+      <div class="step-title">2️⃣ Authorization rule matches</div>
+      <pre>.requestMatchers("/public").permitAll()</pre>
+      Authentication is NOT required.
+    </div>
+
+    <div class="step">
+      <div class="step-title">3️⃣ Authentication skipped</div>
+      ✔ No BasicAuthenticationFilter processing  
+      ✔ No DB hit  
+      ✔ UserDetailsService NOT called
+    </div>
+	
+    <div class="step">
+      <div class="step-title">4️⃣ Controller executed</div>
+      <pre>
+@GetMapping("/public")
+public String publicApi() {
+    return "Public endpoint";
+}
+      </pre>
+    </div>
+
+    <div class="success">
+      ✔ No login popup <br />
+      ✔ No database query <br />
+      ✔ Fast response
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>🔴 FLOW 2: <code class="inline">/secure</code> Endpoint (WITH Basic Authentication)</h2>
+
+    <h3>Example URL</h3>
+    <pre>http://localhost:8080/secure</pre>
+
+    <h3>Request Flow</h3>
+    <div class="flow-box">
+Browser
+  ↓
+Spring Security Filter Chain
+  ↓
+BasicAuthenticationFilter
+  ↓
+AuthenticationManager
+  ↓
+DaoAuthenticationProvider
+  ↓
+UserDetailsService
+  ↓
+Password Validation
+  ↓
+Authorization Decision
+  ↓
+Controller
+  ↓
+Response
+    </div>
+
+    <div class="step">
+      <div class="step-title">1️⃣ First request (no credentials)</div>
+      <pre>GET /secure</pre>
+      Spring Security responds:
+      <pre>
+HTTP 401 Unauthorized
+WWW-Authenticate: Basic
+      </pre>
+    </div>
+
+    <div class="step">
+      <div class="step-title">2️⃣ Browser shows login popup</div>
+      User enters username & password.
+    </div>
+
+    <div class="step">
+      <div class="step-title">3️⃣ Request resent with Authorization header</div>
+      <pre>
+Authorization: Basic YWRtaW46YWRtaW4xMjM=
+      </pre>
+    </div>
+
+    <div class="step">
+      <div class="step-title">4️⃣ Authentication processing</div>
+      ✔ Credentials extracted  
+      ✔ AuthenticationManager invoked  
+      ✔ DaoAuthenticationProvider selected  
+      ✔ loadUserByUsername() called
+    </div>
+    <div class="summary">
+		<code class="inline">loadUserByUsername()</code> is automatically called by <strong>Spring Security during authentication</strong>, whenever a request contains credentials and the framework needs to load user details to verify them.
+
+		You <strong>never call it manually</strong>.
+    </div>
+    <div class="step">
+      <div class="step-title">5️⃣ Password validation</div>
+      <pre>passwordEncoder.matches(raw, storedHash)</pre>
+    </div>
+
+    <div class="step">
+      <div class="step-title">6️⃣ Controller executed</div>
+      <pre>
+@GetMapping("/secure")
+public String secureApi(Authentication auth) {
+    return "Welcome " + auth.getName();
+}
+      </pre>
+    </div>
+
+    <div class="warning">
+      📌 Basic Authentication is STATELESS <br />
+      ✔ Credentials sent on every request <br />
+      ✔ DB query executed every time
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>🧠 Key Differences (Interview Gold)</h2>
+
+    <table>
+      <tr>
+        <th>Feature</th>
+        <th>/public</th>
+        <th>/secure</th>
+      </tr>
+      <tr>
+        <td>Authentication Required</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Login Popup</td>
+        <td>❌ No</td>
+        <td>✅ First time</td>
+      </tr>
+      <tr>
+        <td>DB Query</td>
+        <td>❌ No</td>
+        <td>✅ Every request</td>
+      </tr>
+      <tr>
+        <td>loadUserByUsername()</td>
+        <td>❌ No</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>401 Response</td>
+        <td>❌ No</td>
+        <td>✅ If unauthenticated</td>
+      </tr>
+    </table>
+
+  </div>
+
+</body>
+</html>
