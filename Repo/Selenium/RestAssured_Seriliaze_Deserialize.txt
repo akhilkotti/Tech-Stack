@@ -1,0 +1,27 @@
+Serialize
+===========
+// Create an object for the POJO class
+	User user = new User();
+	user.setName("Jane Doe");
+	user.setAge(25);
+
+// Serialize POJO object to JSON and send POST request
+	Response response = RestAssured.given()
+		.contentType("application/json")
+		.body(user) // here the user object gets seriliazed
+		.post("https://api.example.com/users");
+
+// Validate the response
+	Assert.assertEquals(response.getStatusCode(), 201);
+
+Deserialize
+===========
+// Make a GET request to the API
+	Response response = RestAssured.get("https://api.example.com/users/1");
+
+// Deserialize JSON response into POJO object
+	User user = response.as(User.class);
+
+// Validate the deserialized data
+	Assert.assertEquals(user.getName(), "John Doe");
+	Assert.assertEquals(user.getAge(), 30);

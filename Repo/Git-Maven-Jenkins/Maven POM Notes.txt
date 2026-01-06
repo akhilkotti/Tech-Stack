@@ -1,0 +1,403 @@
+1. Root Elements
+	xml
+
+	<project xmlns="http://maven.apache.org/POM/4.0.0"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+								 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	  <!-- All elements go here -->
+	</project>
+
+    Mandatory: Yes (root container).
+
+2. Model Version
+	xml
+
+	<modelVersion>4.0.0</modelVersion>
+
+    Mandatory: Yes.
+
+    Purpose: Defines the POM schema version. Always 4.0.0.
+
+3. Project Coordinates (GAV)
+	xml
+
+	<groupId>com.example</groupId>
+	<artifactId>my-webapp</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>  <!-- Output format: jar (default), war, pom, etc. -->
+
+    Mandatory: groupId, artifactId, version (yes).
+
+    Purpose: Uniquely identifies the artifact in repositories.
+
+    Example: Deploy as my-webapp-1.0.0.war.
+
+4. Metadata
+	xml
+
+	<name>Employee Management System</name>
+	<description>Spring Boot app for managing employees</description>
+	<url>https://github.com/mycompany/employee-app</url>
+
+    Mandatory: No.
+
+    Purpose: Human-readable project info.
+
+5. Parent POM
+	xml
+
+	<parent>
+	  <groupId>org.springframework.boot</groupId>
+	  <artifactId>spring-boot-starter-parent</artifactId>
+	  <version>2.7.0</version>
+	  <relativePath/> <!-- Skip local lookup -->
+	</parent>
+
+    Mandatory: No.
+
+    Purpose: Inherit configurations (e.g., plugins, dependencies) from a parent POM. Common in Spring Boot.
+
+6. Properties
+	xml
+
+	<properties>
+	  <java.version>11</java.version>
+	  <maven.compiler.source>${java.version}</maven.compiler.source>
+	  <maven.compiler.target>${java.version}</maven.compiler.target>
+	  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	  <spring.version>5.3.20</spring.version>
+	</properties>
+
+    Mandatory: No.
+
+    Purpose: Centralize reusable values (e.g., versions, encodings).
+
+7. Dependencies
+	xml
+
+	<dependencies>
+	  <!-- Compile Scope (default) -->
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-web</artifactId>
+	  </dependency>
+
+	  <!-- Runtime Scope -->
+	  <dependency>
+		<groupId>mysql</groupId>
+		<artifactId>mysql-connector-java</artifactId>
+		<version>8.0.30</version>
+		<scope>runtime</scope> <!-- Only needed at runtime -->
+	  </dependency>
+
+	  <!-- Test Scope -->
+	  <dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope> <!-- Only for tests -->
+	  </dependency>
+
+	  <!-- Optional Dependency -->
+	  <dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<optional>true</optional> <!-- Not inherited by dependent projects -->
+	  </dependency>
+	</dependencies>
+
+    Mandatory: No.
+
+    Scopes:
+
+        compile (default): Available in all classpaths.
+
+        runtime: Needed only at runtime (e.g., JDBC driver).
+
+        test: Only for test compilation/execution.
+
+        provided: Expected to be provided by the environment (e.g., Servlet API).
+
+    Optional: Prevents transitive dependency propagation.
+
+8. Dependency Management
+	xml
+
+	<dependencyManagement>
+	  <dependencies>
+		<dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-core</artifactId>
+		  <version>${spring.version}</version>
+		</dependency>
+	  </dependencies>
+	</dependencyManagement>
+
+    Mandatory: No.
+
+    Purpose: Centralize dependency versions (especially in multi-module projects).
+
+    Note: Dependencies declared here aren’t added to the project; they define versions for use elsewhere.
+
+9. Build Configuration
+	xml
+
+	<build>
+	  <finalName>${project.artifactId}-${project.version}</finalName>
+	  
+	  <resources>
+		<resource>
+		  <directory>src/main/resources</directory>
+		  <filtering>true</filtering> <!-- Enable property replacement -->
+		</resource>
+	  </resources>
+
+	  <plugins>
+		<!-- Compiler Plugin -->
+		<plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-compiler-plugin</artifactId>
+		  <version>3.11.0</version>
+		  <configuration>
+			<source>${java.version}</source>
+			<target>${java.version}</target>
+		  </configuration>
+		</plugin>
+
+		<!-- Spring Boot Plugin -->
+		<plugin>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-maven-plugin</artifactId>
+		  <executions>
+			<execution>
+			  <goals>
+				<goal>repackage</goal> <!-- Create executable JAR/WAR -->
+			  </goals>
+			</execution>
+		  </executions>
+		</plugin>
+	  </plugins>
+	</build>
+
+    Mandatory: No.
+
+    Key Sections:
+
+        finalName: Customize output filename.
+
+        resources: Control resource filtering/copying.
+
+        plugins: Configure build plugins.
+
+10. Profiles
+	xml
+
+	<profiles>
+	  <profile>
+		<id>dev</id>
+		<activation>
+		  <activeByDefault>true</activeByDefault> <!-- Auto-activate -->
+		</activation>
+		<properties>
+		  <environment>dev</environment>
+		</properties>
+	  </profile>
+
+	  <profile>
+		<id>prod</id>
+		<build>
+		  <plugins>
+			<plugin>
+			  <groupId>org.apache.tomcat.maven</groupId>
+			  <artifactId>tomcat7-maven-plugin</artifactId>
+			  <version>2.2</version>
+			  <configuration>
+				<url>http://prod-server:8080/manager/text</url>
+				<server>prod-tomcat</server> <!-- Maven server credentials -->
+			  </configuration>
+			</plugin>
+		  </plugins>
+		</build>
+	  </profile>
+	</profiles>
+
+    Mandatory: No.
+
+    Purpose: Customize builds for different environments (e.g., mvn -P prod).
+
+    Activation: Auto-activate via activeByDefault, OS, file presence, etc.
+
+11. Repositories
+	xml
+
+	<repositories>
+	  <repository>
+		<id>spring-milestones</id>
+		<url>https://repo.spring.io/milestone</url>
+		<snapshots>
+		  <enabled>false</enabled> <!-- Disable snapshots -->
+		</snapshots>
+	  </repository>
+	</repositories>
+
+	<pluginRepositories>
+	  <pluginRepository>
+		<id>spring-plugin-repo</id>
+		<url>https://repo.spring.io/plugins</url>
+	  </pluginRepository>
+	</pluginRepositories>
+
+    Mandatory: No (default: Maven Central).
+
+    Purpose: Host dependencies/plugins not in Central (e.g., Spring Milestones).
+
+12. Reporting
+	xml
+
+	<reporting>
+	  <plugins>
+		<plugin>
+		  <groupId>org.apache.maven.plugins</groupId>
+		  <artifactId>maven-surefire-report-plugin</artifactId>
+		  <version>3.0.0</version>
+		</plugin>
+	  </plugins>
+	</reporting>
+
+    Mandatory: No.
+
+    Purpose: Configure reports (e.g., test coverage, Javadoc). Run with mvn site.
+
+13. Distribution Management
+	xml
+
+	<distributionManagement>
+	  <repository>
+		<id>company-releases</id>
+		<url>https://repo.company.com/releases</url>
+	  </repository>
+	  <snapshotRepository>
+		<id>company-snapshots</id>
+		<url>https://repo.company.com/snapshots</url>
+	  </snapshotRepository>
+	</distributionManagement>
+
+    Mandatory: No.
+
+    Purpose: Define where to deploy artifacts (mvn deploy).
+
+    Note: <id> maps to credentials in ~/.m2/settings.xml.
+
+Real-Time Project Example
+
+	Scenario: Build a Spring Boot WAR for Tomcat with:
+
+    MySQL driver (runtime scope).
+
+    Lombok (optional).
+
+    JUnit tests (test scope).
+
+    Dev/Prod profiles (auto-activate dev, deploy to prod Tomcat).
+
+Sample pom.xml:
+	xml
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<project>
+	  <modelVersion>4.0.0</modelVersion>
+	  <groupId>com.example</groupId>
+	  <artifactId>employee-app</artifactId>
+	  <version>1.0.0</version>
+	  <packaging>war</packaging>
+
+	  <name>Employee Management System</name>
+	  <description>Spring Boot + Hibernate + MySQL</description>
+
+	  <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.7.0</version>
+	  </parent>
+
+	  <properties>
+		<java.version>11</java.version>
+		<mysql.version>8.0.30</mysql.version>
+	  </properties>
+
+	  <dependencies>
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+		  <groupId>mysql</groupId>
+		  <artifactId>mysql-connector-java</artifactId>
+		  <version>${mysql.version}</version>
+		  <scope>runtime</scope>
+		</dependency>
+		<dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <optional>true</optional>
+		</dependency>
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-test</artifactId>
+		  <scope>test</scope>
+		</dependency>
+	  </dependencies>
+
+	  <build>
+		<plugins>
+		  <plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+		  </plugin>
+		</plugins>
+	  </build>
+
+	  <profiles>
+		<profile>
+		  <id>prod</id>
+		  <build>
+			<plugins>
+			  <plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+				  <url>http://prod-tomcat:8080/manager/text</url>
+				  <server>prod-tomcat-creds</server>
+				</configuration>
+			  </plugin>
+			</plugins>
+		  </build>
+		</profile>
+	  </profiles>
+	</project>
+
+Key Takeaways
+	Element							Mandatory?	Common Use Case
+	modelVersion					Yes			Always 4.0.0
+	groupId, artifactId, version	Yes			Unique artifact identification
+	dependencies					No			Declare libraries (with scopes)
+	build							No			Configure plugins (compiler, packaging)
+	properties						No			Centralize versions/configuration
+	profiles						No			Environment-specific builds (dev/prod)
+	parent							No			Inherit from a parent POM (e.g., Spring Boot)
+	packaging						No 			(default: jar)	Set output type (jar, war, pom)
+
+Build Commands:
+
+    mvn clean package: Build WAR.
+
+    mvn test: Run unit tests.
+
+    mvn spring-boot:run: Run locally.
+
+    mvn -P prod tomcat7:deploy: Deploy to prod Tomcat

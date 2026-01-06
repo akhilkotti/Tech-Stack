@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Microservices Caching Strategies – Java / Spring Boot</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f7f8fa;
+            color: #1f2937;
+            line-height: 1.65;
+            margin: 0;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: #ffffff;
+            padding: 40px 48px;
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 42px;
+            color: #0f172a;
+        }
+
+        h2 {
+            margin-top: 46px;
+            color: #2563eb;
+            border-left: 6px solid #2563eb;
+            padding-left: 14px;
+        }
+
+        h3 {
+            margin-top: 22px;
+            color: #111827;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 10px 0 20px 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 14px;
+            background: #ffffff;
+        }
+
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f9;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .note {
+            background: #fef3c7;
+            border-left: 6px solid #f59e0b;
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success {
+            background: #dcfce7;
+            border-left: 6px solid #22c55e;
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .danger {
+            background: #fee2e2;
+            border-left: 6px solid #ef4444;
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .divider {
+            margin: 40px 0;
+            border-top: 1px dashed #e5e7eb;
+        }
+
+        .footer {
+            margin-top: 56px;
+            padding-top: 28px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 14px;
+            color: #6b7280;
+        }
+		/* =========================
+		   FEATURE CARDS
+		   ========================= */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 5px;
+            padding: 5px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #eaeaea;
+			display: block; /* Changed from default inline for anchor */
+            text-decoration: none; /* Remove underline */
+        }	
+		
+       .feature-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.0rem;
+            font-weight: 600;
+            display: block;
+            text-decoration: none;
+        }
+
+		.feature-header:hover {
+		  background: linear-gradient(to right, #2980b9, #1a252f);
+		}		
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #c0392b;
+        }	
+
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }		
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🚀 Microservices Caching Strategies (Java / Spring Boot)</h1>
+	<div class="features-grid" id="features-overview">	
+		<div class="feature-card">
+			<a href="#1-section" class="feature-header">In-Memory Cache</a>
+		</div>				
+		<div class="feature-card">
+			<a href="#2-section" class="feature-header">Spring Cache Abstraction</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#3-section" class="feature-header">Distributed Cache (Redis)</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#4-section" class="feature-header">Cache-Aside Pattern</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#5-section" class="feature-header">Write-Through Cache</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#6-section" class="feature-header">Write-Behind (Write-Back)</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#7-section" class="feature-header">TTL-Based Eviction</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#8-section" class="feature-header">Cache Invalidation</a>
+		</div>
+		<div class="feature-card">
+			<a href="#9-section" class="feature-header">Two-Level Cache</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#10-section" class="feature-header">What NOT to Cache</a>
+		</div>		
+	</div>
+<h2 id="1-section">1️⃣ In-Memory Cache (Local Cache)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<h3>Basic</h3>
+<p>
+Cache data <strong>inside the microservice JVM</strong> using collections.
+</p>
+
+<h3>Advanced (Real Usage)</h3>
+<ul>
+    <li>Configuration values</li>
+    <li>Feature flags</li>
+    <li>Reference / master data</li>
+    <li>Small, frequently read data</li>
+</ul>
+
+<p><strong>Fastest possible cache</strong> (no network hop).</p>
+
+<pre>
+private final Map&lt;String, User&gt; cache = new ConcurrentHashMap&lt;&gt;();
+
+public User getUser(String id) {
+    return cache.computeIfAbsent(id, this::loadFromDB);
+}
+</pre>
+
+<p><strong>Why?</strong></p>
+<ul>
+    <li>O(1) access</li>
+    <li>Zero latency</li>
+    <li>No external dependency</li>
+</ul>
+
+<div class="success">
+    ✔ Use ConcurrentHashMap<br>
+    ✔ Add TTL / eviction logic<br>
+    ✔ Use for read-heavy data
+</div>
+
+<div class="danger">
+    ❌ Use for large datasets<br>
+    ❌ Expect cache sharing across pods
+</div>
+
+<div class="note">
+    “In-memory cache is fastest but isolated per instance, so it’s suitable
+    only for non-shared or reference data.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="2-section">2️⃣ Spring Cache Abstraction (@Cacheable)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<h3>Basic</h3>
+<p>
+Spring provides <strong>declarative caching</strong> using annotations.
+</p>
+
+<h3>Advanced</h3>
+<ul>
+    <li>Decouples business logic from cache provider</li>
+    <li>Supports Redis, Ehcache, Caffeine, in-memory</li>
+</ul>
+
+<pre>
+@Cacheable(value = "users", key = "#id")
+public User getUser(String id) {
+    return userRepository.findById(id).orElseThrow();
+}
+</pre>
+
+<div class="success">
+    ✔ Clean code<br>
+    ✔ Easy backend switching<br>
+    ✔ Industry standard
+</div>
+
+<div class="danger">
+    ❌ Cache transactional data blindly
+</div>
+
+<div class="note">
+    “Spring Cache provides a pluggable abstraction that allows us to
+    change cache providers without code changes.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="3-section">3️⃣ Distributed Cache (Redis) ⭐ Most Used</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<h3>Basic</h3>
+<p>
+A <strong>shared cache</strong> accessible by all microservice instances.
+</p>
+
+<h3>Advanced Usage</h3>
+<ul>
+    <li>User sessions</li>
+    <li>Auth tokens</li>
+    <li>Product catalog</li>
+    <li>Rate limiting</li>
+</ul>
+
+<pre>
+@Cacheable(value = "products", key = "#id")
+public Product getProduct(String id) {
+    return productRepo.findById(id).orElseThrow();
+}
+</pre>
+
+<div class="success">
+    ✔ Shared across pods<br>
+    ✔ TTL support<br>
+    ✔ Horizontally scalable
+</div>
+
+<div class="danger">
+    ❌ Cache very large objects<br>
+    ❌ Use Redis like a database
+</div>
+
+<div class="note">
+    “Redis acts as a centralized cache layer enabling consistent data
+    across microservice replicas.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="4-section">4️⃣ Cache-Aside Pattern (MOST IMPORTANT)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+User user = cache.get(id);
+if (user == null) {
+    user = db.getUser(id);
+    cache.put(id, user);
+}
+return user;
+</pre>
+
+<div class="success">
+    ✔ Full control<br>
+    ✔ Most common in microservices
+</div>
+
+<div class="danger">
+    ❌ Forget cache eviction
+</div>
+
+<div class="note">
+    “Cache-aside gives maximum flexibility and is the most widely used
+    caching pattern.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="5-section">5️⃣ Write-Through Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+cache.put(id, user);
+db.save(user);
+</pre>
+
+<ul>
+    <li>Cache always consistent</li>
+    <li>Slower writes</li>
+</ul>
+
+<div class="note">
+    “Write-through ensures cache consistency but increases write latency.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="6-section">6️⃣ Write-Behind (Write-Back) Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+cache.put(id, user);
+// DB write happens asynchronously
+</pre>
+
+<div class="danger">
+    ❌ Risk of data loss if cache crashes
+</div>
+
+<div class="note">
+    “Write-behind improves write performance but risks data loss.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="7-section">7️⃣ TTL-Based Eviction</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+spring.cache.redis.time-to-live=600000
+</pre>
+
+<div class="note">
+    “TTL ensures eventual consistency and protects memory.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="8-section">8️⃣ Cache Invalidation (HARDEST PROBLEM)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+@CacheEvict(value = "users", key = "#id")
+public void updateUser(String id) {
+    db.update(id);
+}
+</pre>
+
+<div class="note">
+    “Cache invalidation must be event-driven in microservices.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="9-section">9️⃣ Two-Level Cache (L1 + L2)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<pre>
+Request → L1 (Local) → L2 (Redis) → DB
+</pre>
+
+<div class="note">
+    “Two-level cache reduces Redis calls and improves latency.”
+</div>
+
+<div class="divider"></div>
+
+<h2 id="10-section">🔟 What NOT to Cache</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>
+<div class="danger">
+    ❌ Highly transactional data<br>
+    ❌ Frequently changing data<br>
+    ❌ Large blobs<br>
+    ❌ Security-critical data
+</div>
+
+<div class="divider"></div>
+
+<h2>📊 Comparison Table</h2>
+
+<table>
+    <tr>
+        <th>Strategy</th>
+        <th>Speed</th>
+        <th>Consistency</th>
+        <th>Scalability</th>
+    </tr>
+    <tr><td>In-Memory</td><td>🔥🔥🔥</td><td>Low</td><td>Low</td></tr>
+    <tr><td>Redis</td><td>🔥🔥</td><td>Medium</td><td>High</td></tr>
+    <tr><td>Cache-Aside</td><td>🔥🔥</td><td>Medium</td><td>High</td></tr>
+    <tr><td>Write-Through</td><td>🔥</td><td>High</td><td>Medium</td></tr>
+    <tr><td>Write-Behind</td><td>🔥🔥🔥</td><td>Low</td><td>Medium</td></tr>
+</table>
+
+<div class="divider"></div>
+
+<h2>🎯 Final Interview Closer</h2>
+
+<div class="success">
+    In microservices, caching is essential for performance and scalability.
+    Redis with cache-aside and TTL is the most common approach.
+    Local caches are useful for reference data, while distributed caches
+    ensure consistency across service instances.
+</div>
+
+<div class="footer">
+    © Microservices Caching Strategies – Interview & Production Guide
+</div>
+
+</div>
+<a href="#" class="back-to-top">↑</a>
+</body>
+</html>
+

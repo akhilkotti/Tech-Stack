@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<table width="760" border="1">
+  <tr bgcolor="#CCCCCC">
+    <td colspan="4"><strong>OrderCancelReject 35=9 </strong></td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td width="197"><em><strong>Field</strong></em></td>
+    <td width="96"><em><strong>Tag</strong></em></td>
+    <td width="411"><em><strong>Description</strong></em></td>
+    <td width="38">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ClOrdId</td>
+    <td>11</td>
+    <td rowspan="2">Combination of Tag 11 and 109 must be unique over the same trading date. Refer s to tag 37 for the record in the DB if available otherwise it should refer to Tag 11 + 109 </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ClientId</td>
+    <td>109</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>LastUpdatedTime/SendingTime</td>
+    <td>52</td>
+    <td>Time of message transmission (always expressed in UTC (Universal Time Coordinated, also known as &ldquo;GMT&rdquo;)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderStatus</td>
+    <td>39</td>
+    <td><p> Identifies current status of order </p></td>
+    <td>0 = New <br>
+    1 = Partially filled <br>
+    2 = Filled <br>
+    3 = Done for day <br>
+    4 = Canceled <br>
+    6 = Pending Cancel (i.e. result of Order Cancel Request) <br>
+    7 = Stopped <br>
+    8 = Rejected <br>
+    9 = Suspended <br>
+    A = Pending New <br>
+    B = Calculated <br>
+    C = Expired <br>
+    D = Accepted for Bidding <br>
+    E = Pending Replace (i.e. result of Order Cancel/Replace Request)</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td> CxlRejResponseTo  </td>
+    <td>434</td>
+    <td>If Tag 434=1, OrderStatus = CancelReject, if Tag 434 = 2 OrderStatus=ReplaceReject </td>
+    <td>1 = OrdCxlReq <br>
+    2 = OrdCxlRepReq</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderId</td>
+    <td>37</td>
+    <td><p>Unique identifier for Order as assigned by sell-side (broker, exchange, ECN). Uniqueness must be guaranteed within a single trading day. Firms which accept multi-day orders should consider embedding a date within the OrderID field to assure uniqueness across days. </p></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

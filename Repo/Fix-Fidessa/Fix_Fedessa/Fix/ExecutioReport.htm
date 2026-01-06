@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<table width="760" border="1">
+  <tr bgcolor="#CCCCCC">
+    <td colspan="4"><strong>ExecutionReport 35=8 </strong></td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td width="191"><em><strong>Field</strong></em></td>
+    <td width="74"><em><strong>Tag</strong></em></td>
+    <td width="241"><em><strong>Description</strong></em></td>
+    <td width="226">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ClOrdId</td>
+    <td>11</td>
+    <td rowspan="2">If 39=0 it should refer to tag 11+109 for the record in the database. Otherwise it should refer to tag 37 </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ClientId</td>
+    <td>109</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Market</td>
+    <td>100/207/15</td>
+    <td>*Must match Original Order </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ExDestination</td>
+    <td>100</td>
+    <td>Exchange Execution destination as defined by institution when order is entered.</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>SecurityExchange</td>
+    <td>207</td>
+    <td>Exchange Market used to help identify a security.</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Currency</td>
+    <td>15</td>
+    <td>Currency Identifies currency used for price. Absence of this field is interpreted as the default for the security. It is recommended that systems provide the currency value whenever possible. See &quot;Appendix 6-A: Valid Currency Codes&quot; for information on obtaining</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Symbol</td>
+    <td>22 and 48 </td>
+    <td>*Must match Original Order </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Side</td>
+    <td>54</td>
+    <td><p>*Must match Original Order </p>
+        <p>&nbsp;</p></td>
+    <td>1 = Buy <br>
+    2 = Sell <br>
+    3 = Buy minus <br>
+    4 = Sell plus <br>
+    5 = Sell short <br>
+    6 = Sell short exempt <br>
+    7 = Undisclosed (valid for IOI and List Order messages only) <br>
+    8 = Cross (orders where counterparty is an exchange, valid for all messages except IOIs) <br>
+    9 = Cross short</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderQty</td>
+    <td>38</td>
+    <td><p>Required update if its different from original order.</p>
+        <p>Number of shares ordered. This represents the number of shares for equities or based on normal convention the number of contracts for options, futures, convertible bonds, etc. (Prior to FIX 4.2 this field was of type int)</p></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Price</td>
+    <td>44</td>
+    <td><p>Required update if its different from original order.</p>
+        <p>Price per share </p></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td bordercolor="#ECE9D8">TimeInForce</td>
+    <td bordercolor="#ECE9D8">59(126)</td>
+    <td bordercolor="#ECE9D8"><p>Required update if its different from original order</p></td>
+    <td>0 = Day(GFD)<br>
+    1 = Good Till Cancel (GTC) <br>
+    2 = At the Opening (OPG) <br>
+    3 = Immediate or Cancel (IOC) <br>
+    4 = Fill or Kill (FOK) <br>
+    5 = Good Till Crossing (GTX) <br>
+    6 = Good Till Date(GTD) </td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td bordercolor="#ECE9D8">ExpireTime</td>
+    <td bordercolor="#ECE9D8">126</td>
+    <td bordercolor="#ECE9D8">Time/Date of order expiration (always expressed in UTC (Universal Time Coordinated, also known as &ldquo;GMT&rdquo;).</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>LastUpdatedTime/SendingTime</td>
+    <td>52</td>
+    <td>Time of message transmission (always expressed in UTC (Universal Time Coordinated, also known as &ldquo;GMT&rdquo;)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td> ExecType  </td>
+    <td>150 / 39 </td>
+    <td>Precedence 150 &gt; 39 </td>
+    <td>0 = New <br>
+      3 = Done for day <br>
+      4 = Canceled <br>
+      5 = Replaced<br>
+      6 = Pending Cancel (e.g. result of Order Cancel Request) <br>
+      7 = Stopped <br>
+      8 = Rejected <br>
+      9 = Suspended <br>
+      A = Pending New <br>
+      B = Calculated <br>
+      C = Expired <br>
+      D = Restated (Execution Report sent unsolicited by sellside, with ExecRestatementReason (378) set) <br>
+      E = Pending Replace (e.g. result of Order Cancel/Replace Request) <br>
+      F = Trade (partial fill or fill) <br>
+      G = Trade Correct <br>
+      H = Trade Cancel <br>
+      I = Order Status <br>
+      J = Trade in a Clearing Hold <br>
+      K = Trade has been released to Clearing <br>
+    L = Triggered or Activated by System</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderStatus</td>
+    <td>39</td>
+    <td><p> Identifies current status of order </p></td>
+    <td>0 = New <br>
+    1 = Partially filled <br>
+    2 = Filled <br>
+    3 = Done for day <br>
+    4 = Canceled <br>
+    6 = Pending Cancel (i.e. result of Order Cancel Request) <br>
+    7 = Stopped <br>
+    8 = Rejected <br>
+    9 = Suspended <br>
+    A = Pending New <br>
+    B = Calculated <br>
+    C = Expired <br>
+    D = Accepted for Bidding <br>
+    E = Pending Replace (i.e. result of Order Cancel/Replace Request)</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderId</td>
+    <td>37</td>
+    <td><p>Unique identifier for Order as assigned by sell-side (broker, exchange, ECN). Uniqueness must be guaranteed within a single trading day. Firms which accept multi-day orders should consider embedding a date within the OrderID field to assure uniqueness across days. </p></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>AvgPx</td>
+    <td>6</td>
+    <td>Calculated average price of all fills on this order.
+For Fixed Income trades AvgPx is always expressed as percent-of-par, regardless of the PriceType (423) of LastPx (31). I.e., AvgPx will contain an average of percent-of-par values (see LastParPx (669)) for issues traded in Yield, Spread or Discount.</td>
+    <td>Required update if its different from original order</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>CumQty</td>
+    <td>14</td>
+    <td><p>Total quantity (e.g. number of shares) filled. (Prior to FIX 4.2 this field was of type int) </p>
+    </td>
+    <td>Required update if its different from original order</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

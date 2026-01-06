@@ -1,0 +1,383 @@
+Java Basics
+
+	JVM, JRE, JDK (Architecture & differences)
+
+	Data Types (Primitive vs Non-Primitive)
+
+	Variables (Local, Instance, Static)
+
+	Type Casting (Implicit & Explicit)
+
+	Operators
+
+	Control Statements
+
+	if / else
+
+	switch
+
+	loops (for, while, do-while)
+
+	Wrapper Classes
+
+	Command line arguments
+
+Object-Oriented Programming (OOP)
+
+	Class & Object
+
+	Encapsulation
+
+	Inheritance
+
+	Polymorphism
+
+	Method Overloading
+
+	Method Overriding
+
+	Abstraction
+
+	Abstract classes
+
+	Interfaces
+
+	Association, Aggregation, Composition
+
+	SOLID Principles (basic understanding)
+
+Strings
+
+	String vs StringBuilder vs StringBuffer
+
+	Immutability of String
+
+	String Pool
+
+	equals() vs ==
+
+	Common String operations
+
+	Performance comparison
+
+Arrays
+
+	Single & Multi-dimensional arrays
+
+	Array vs Collection
+
+	Sorting & Searching
+
+	Arrays utility class
+
+Exception Handling
+
+	Checked vs Unchecked exceptions
+
+	try-catch-finally
+
+	throw vs throws
+
+	Custom Exceptions
+
+	Exception hierarchy
+
+	Best practices
+
+Java Collections Framework
+
+	List, Set, Map hierarchy
+
+	ArrayList vs LinkedList
+
+	HashSet vs TreeSet
+
+	HashMap vs LinkedHashMap vs TreeMap
+
+	Comparable vs Comparator
+
+	Fail-fast vs Fail-safe
+
+	Iterator vs ListIterator
+
+	Time complexity (Big-O)
+
+Multithreading & Concurrency
+
+	Thread lifecycle
+
+	Thread vs Runnable
+
+	Synchronization
+
+	volatile keyword
+
+	Deadlock, Starvation, Livelock
+
+	wait(), notify(), notifyAll()
+
+	ExecutorService
+
+	Callable & Future
+
+	CountDownLatch, Semaphore
+
+	Atomic classes
+
+Java 8 & Functional Programming ⭐
+
+	Lambda Expressions
+
+	Functional Interfaces
+
+	Predicate, Consumer, Supplier, Function
+
+	Stream API
+
+	filter, map, reduce
+
+	collect, groupingBy
+
+	Optional class
+
+	Method references
+
+	Parallel Streams
+
+	Date & Time API
+
+File Handling & I/O
+
+	File class
+
+	InputStream / OutputStream
+
+	Reader / Writer
+
+	Serialization & Deserialization
+
+	Externalization
+
+	NIO basics
+
+🔹 ADVANCED JAVA TOPICS
+
+(Advanced Java = Enterprise + Web + Distributed systems)
+
+JDBC (Database Connectivity)
+
+	JDBC Architecture
+
+	Drivers (Type 1–4)
+
+	Connection, Statement, PreparedStatement
+
+	ResultSet
+
+	Batch Processing
+
+	Transactions
+
+	Connection Pooling
+
+	SQL Injection prevention
+
+Servlets
+
+	Servlet lifecycle
+
+	ServletConfig vs ServletContext
+
+	RequestDispatcher
+
+	Session Management
+
+	Cookies
+
+	HttpSession
+
+	URL Rewriting
+
+	Filters & Listeners
+
+	GET vs POST
+
+JSP (Java Server Pages)
+
+	JSP lifecycle
+
+	JSP vs Servlet
+
+	Scriptlets, Expressions, Declarations
+
+	JSTL
+
+	Expression Language (EL)
+
+	MVC using JSP & Servlets
+
+Web Technologies (Java Web)
+
+	HTTP protocol
+
+	REST vs SOAP
+
+	Stateless vs Stateful
+
+	MIME types
+
+	JSON & XML handling
+
+Spring Framework ⭐⭐⭐
+
+	Spring Core (IoC & DI)
+
+	Bean lifecycle
+
+	Annotations
+
+	@Component, @Service, @Repository
+
+	@Autowired, @Qualifier
+
+	Spring MVC
+
+	Spring Boot
+
+	Profiles
+
+	Configuration (YAML / Properties)
+
+	Actuator
+
+Spring Boot (Enterprise Standard)
+
+	Auto-configuration
+
+	Starter dependencies
+
+	Embedded Tomcat
+
+	REST APIs
+
+	Exception Handling (@ControllerAdvice)
+
+	Validation
+
+	Pagination & Sorting
+
+	Logging (SLF4J, Logback)
+
+Spring Data JPA & Hibernate
+
+	ORM concepts
+
+	Entity Mapping
+
+	@OneToOne, @OneToMany, @ManyToMany
+
+	Fetch types (Lazy vs Eager)
+
+	JPQL & Native Queries
+
+	Transactions
+
+	N+1 problem
+
+	Caching (1st & 2nd level)
+
+Spring Security
+
+	Authentication vs Authorization
+
+	JWT based security
+
+	OAuth2
+
+	Filters & Security context
+
+	Role-based access
+
+	Password encoding
+
+Microservices Architecture ⭐⭐⭐
+
+	Monolith vs Microservices
+
+	Service Discovery (Eureka)
+
+	API Gateway
+
+	Feign Client
+
+	Load Balancing
+
+	Circuit Breaker
+
+	Distributed Config
+
+	Inter-service communication
+
+	Saga pattern
+
+Messaging & Streaming
+
+	Kafka basics
+
+	Producer & Consumer
+
+	Consumer Groups
+
+	Offset management
+
+	Exactly once vs at least once
+
+	Kafka with Spring Boot
+
+Testing
+
+	JUnit 5
+
+	Mockito
+
+	Mock vs Spy
+
+	Unit vs Integration testing
+
+	TestContainers
+
+	Code coverage
+
+Build & DevOps Basics
+
+	Maven / Gradle
+
+	pom.xml structure
+
+	CI/CD basics
+
+	Docker for Java apps
+
+	Kubernetes basics
+
+JVM & Performance
+
+	JVM Memory Model
+
+	Heap & Stack
+
+	Garbage Collection algorithms
+
+	Profiling & Monitoring
+
+	OutOfMemoryError scenarios
+
+🎯 HOW TO PREPARE (SMART WAY)
+
+	For interviews, focus more on:
+
+	Core Java → Collections, Multithreading, Java 8
+
+	Advanced Java → Spring Boot, JPA, Microservices, Kafka
+
+	Real-time scenarios & trade-offs

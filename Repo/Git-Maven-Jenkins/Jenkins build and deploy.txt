@@ -1,0 +1,62 @@
+jenkins installation configuration for auto build and deployment of java project
+================================================================================
+To set up Jenkins for automated build and deployment of a Java project on a Windows machine, follow these steps:
+
+1. Install Jenkins
+	Download the Jenkins installer for Windows from the Jenkins official website.
+	Run the installer and follow the setup instructions.
+	Once installed, Jenkins will run as a Windows service. You can access it through a web browser at http://localhost:8080.
+2. Initial Setup and Unlock Jenkins
+	During the initial setup, Jenkins will prompt you for an unlock key. This key is available in the file at C:\Program Files (x86)\Jenkins\secrets\initialAdminPassword.
+	Copy and paste the key into Jenkins to proceed with the setup.
+	Install the recommended plugins when prompted.
+3. Install Java and Configure JDK in Jenkins
+	Ensure Java is installed on your system. Set the JAVA_HOME environment variable to the JDK installation path.
+	In Jenkins, go to Manage Jenkins > Global Tool Configuration.
+	Scroll down to JDK and click Add JDK. Uncheck Install automatically and provide the path to your local JDK.
+4. Install Maven (If Required)
+	If your project uses Maven, download and install Maven on your Windows machine.
+	Set the MAVEN_HOME environment variable and add Maven’s bin directory to the PATH.
+	In Jenkins, go to Manage Jenkins > Global Tool Configuration and configure Maven under the Maven section.
+5. Create a New Jenkins Job
+	Go to the Jenkins dashboard and click on New Item.
+	Enter a name for your job and select Freestyle project, then click OK.
+6. Configure Source Code Management (SCM)
+	In the job configuration page, scroll down to the Source Code Management section.
+	Choose Git and provide the repository URL.
+	Add credentials if the repository is private.
+7. Configure Build Triggers
+	Scroll to the Build Triggers section.
+	Enable Poll SCM if you want Jenkins to check for changes in the repository at regular intervals.
+	Alternatively, you can use GitHub hook trigger for GITScm polling if you have a GitHub webhook configured.
+8. Configure the Build
+	Scroll to the Build section.
+	If you're using Maven, add a Invoke top-level Maven targets build step. Specify goals like clean install.
+	For plain Java projects, you might use a Execute Windows batch command build step to run commands like:
+	cmd
+	Copy code
+	javac -d bin src\*.java
+	java -cp bin MainClass
+	Alternatively, you can use Gradle or Ant depending on your project.
+9. Configure Post-Build Actions
+	Scroll to Post-build Actions.
+	If you want to deploy the build artifacts, you can add a Send build artifacts over SSH or Archive the artifacts step.
+	You can also configure deployment scripts to run after the build completes.
+10. Configure Deployment (Optional)
+	If you need Jenkins to automatically deploy the build, you can add deployment steps in the Post-build Actions.
+	This could involve copying files to a deployment server, running scripts, or using tools like Ansible.
+11. Save and Build
+	Click Save to store the job configuration.
+	You can now build the job manually by clicking Build Now or let it run automatically based on the triggers you configured.
+12. Monitor Builds
+	Monitor the progress and results of the builds in the Jenkins dashboard.
+	You can configure Jenkins to send notifications (e.g., via email or Slack) if a build fails or succeeds.
+13. Setting Up Windows Services or Batch Scripts
+	If your deployment requires starting/stopping services on Windows, you can use Windows batch command steps to manage them.
+	Example batch commands:
+	cmd
+	Copy code
+	net stop MyService
+	xcopy /y build\*.jar \\deployment-server\path\
+	net start MyService
+This setup should provide a solid foundation for automating builds and deployments of a Java project on a Windows machine using Jenkins.

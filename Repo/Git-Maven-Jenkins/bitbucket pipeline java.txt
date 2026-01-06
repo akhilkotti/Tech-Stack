@@ -1,0 +1,56 @@
+bitbucket pipeline to automate the build for develop repository
+===============================================================
+- create a bitbucket-pipelines.yml file in the root of your repository. 
+- This YAML file defines the steps to build, test, and deploy your application.
+
+bitbucket-pipelines.yml
+=======================
+	pipelines:
+	  branches:
+		develop:
+		  - step:
+			  name: Build and Test on Develop
+			  caches:
+				- maven
+			  script:
+				- mvn clean install
+			  artifacts:
+				- target/*.jar
+		  - step:
+			  name: Deploy to Development Server
+			  deployment: development  # Marks this step as a deployment
+			  script:
+				- scp target/*.jar user@yourserver:/path/to/deploy/  # Replace with your actual server details
+================================================================================
+Explanation:
+------------
+	- develop: This pipeline runs only when there’s a push to the develop branch.
+	- step:
+		- name: A descriptive name for the step.
+		- caches: Caches the Maven dependencies to speed up subsequent builds.
+		- script: The commands to execute during this step. Here, it runs mvn 
+		          clean install to clean the project and build it.
+		- artifacts: it keeps the built JAR file(s) in the target directory.
+	- step:
+		- name: A descriptive name for the step.
+		- deployment: Some information for which branch you are doing deployment
+		- script: This command helps in deploying the jar/war file from the target
+		          directory to the server.
+
+Setting Up SSH Keys
+-------------------
+	To allow Bitbucket Pipelines to access your server securely, you need to set up SSH keys:
+
+	Generate SSH Key:
+		On your local machine or in the Bitbucket Pipelines UI, generate an SSH key pair.
+		
+		Add the Public Key to the Server:
+			Copy the public key to the ~/.ssh/authorized_keys file on your target server.
+		
+		Add the Private Key to Bitbucket:
+			Go to your Bitbucket repository settings.
+			Navigate to Pipelines > SSH Keys.
+			Add the private key there.
+
+Note:
+	After committing the bitbucket-pipelines.yml file to your repository, Bitbucket Pipelines will automatically trigger a build whenever you push changes to the develop branch.

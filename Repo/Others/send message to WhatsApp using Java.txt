@@ -1,0 +1,106 @@
+To send a daily "Good Morning" message to WhatsApp using Java, you'll need to use an external service or API because WhatsApp doesn't provide a direct API for sending messages from Java. Here’s a general approach using the Twilio API for WhatsApp, which is one of the popular ways to automate WhatsApp messaging.
+
+### Step-by-Step Guide
+
+1. **Set Up Twilio Account**
+
+   * **Sign Up**: Create an account on [Twilio](https://www.twilio.com/).
+   * **Get WhatsApp Sandbox**: Go to the Twilio console, find the "Messaging" section, and look for the "WhatsApp" settings. You'll need to set up the WhatsApp sandbox environment for testing.
+   * **Get Credentials**: Obtain your Account SID, Auth Token, and WhatsApp-enabled phone number from Twilio.
+
+2. **Add Twilio Dependency**
+
+   Add the Twilio Java SDK to your project. If you're using Maven, add the following dependency to your `pom.xml`:
+
+   ```xml
+   <dependency>
+       <groupId>com.twilio</groupId>
+       <artifactId>twilio</artifactId>
+       <version>8.30.0</version>
+   </dependency>
+   ```
+
+   For Gradle, add the following to your `build.gradle`:
+
+   ```groovy
+   implementation 'com.twilio:twilio:8.30.0'
+   ```
+
+3. **Write the Java Code**
+
+   Here's a sample Java program that sends a "Good Morning" message to a WhatsApp number:
+
+   ```java
+   import com.twilio.Twilio;
+   import com.twilio.rest.api.v2010.account.Message;
+   import com.twilio.type.PhoneNumber;
+
+   public class SendWhatsAppMessage {
+       // Twilio credentials
+       public static final String ACCOUNT_SID = "your_account_sid";
+       public static final String AUTH_TOKEN = "your_auth_token";
+
+       public static void main(String[] args) {
+           // Initialize Twilio
+           Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+           // Define the message
+           Message message = Message.creator(
+                   new PhoneNumber("whatsapp:+recipient_number"),  // Recipient's WhatsApp number
+                   new PhoneNumber("whatsapp:+your_twilio_number"), // Your Twilio WhatsApp number
+                   "Good Morning! Have a great day!")                // Message body
+           .create();
+
+           System.out.println("Message sent: " + message.getSid());
+       }
+   }
+   ```
+
+   * Replace `"your_account_sid"` and `"your_auth_token"` with your Twilio Account SID and Auth Token.
+   * Replace `"+recipient_number"` with the recipient's WhatsApp number (including the country code).
+   * Replace `"+your_twilio_number"` with your Twilio WhatsApp-enabled number.
+
+4. **Schedule the Message**
+
+   To send the message daily, you can use a scheduling library like `java.util.Timer` or a more advanced scheduling library like Quartz. Here’s an example using `java.util.Timer`:
+
+   ```java
+   import java.util.Timer;
+   import java.util.TimerTask;
+
+   public class DailyScheduler {
+       public static void main(String[] args) {
+           Timer timer = new Timer();
+
+           TimerTask task = new TimerTask() {
+               @Override
+               public void run() {
+                   SendWhatsAppMessage.main(null);  // Call the method to send the message
+               }
+           };
+
+           // Schedule the task to run every day at 8 AM
+           timer.scheduleAtFixedRate(task, getDelayUntil8AM(), 24*60*60*1000);  // 24 hours in milliseconds
+       }
+
+       private static long getDelayUntil8AM() {
+           long now = System.currentTimeMillis();
+           long eightAM = /* compute delay until 8 AM */;
+           return eightAM - now;
+       }
+   }
+   ```
+
+   You'll need to implement the `getDelayUntil8AM` method to compute the delay until the next 8 AM.
+
+5. **Run and Test**
+
+   Compile and run your Java program. Ensure your environment is set up to allow outgoing connections to Twilio’s API. Verify that the message is sent as expected.
+
+6. **Considerations**
+
+   * **Twilio Costs**: Be aware that Twilio charges for sending messages, so check their pricing.
+   * **WhatsApp Policy**: Ensure that you comply with WhatsApp’s policies and guidelines for automated messaging.
+   * **Error Handling**: Implement error handling to manage issues such as network failures or invalid credentials.
+
+This setup provides a basic framework for sending daily messages using WhatsApp and Java. If you need more advanced features or customization, you might need to adjust the code or explore additional libraries and APIs.

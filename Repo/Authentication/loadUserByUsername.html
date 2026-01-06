@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>When is loadUserByUsername() Called? – Spring Security</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f4f6f8;
+      color: #1f2933;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 24px auto;
+      background: #ffffff;
+      padding: 28px 32px;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      border-bottom: 3px solid #2563eb;
+      padding-bottom: 8px;
+    }
+
+    h2 {
+      margin-top: 40px;
+      font-size: 22px;
+      color: #2563eb;
+    }
+
+    h3 {
+      margin-top: 26px;
+      font-size: 18px;
+      color: #111827;
+    }
+
+    .note {
+      background: #eef2ff;
+      border-left: 6px solid #2563eb;
+      padding: 16px 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .important {
+      background: #fff7ed;
+      border-left: 6px solid #f97316;
+      padding: 16px 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .success {
+      background: #ecfdf5;
+      border-left: 6px solid #10b981;
+      padding: 16px 18px;
+      margin: 20px 0;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e5e7eb;
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .flow-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+      font-family: Consolas, monospace;
+      white-space: pre;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 24px;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(to right, #2563eb, transparent);
+      margin: 40px 0;
+    }
+
+    code.inline {
+      background: #e5e7eb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>🔐 When is <code class="inline">loadUserByUsername()</code> Called?</h1>
+
+    <div class="note">
+      <strong>Interview-Ready Answer:</strong><br />
+      <code class="inline">loadUserByUsername()</code> is automatically called by Spring Security during authentication,
+      whenever a request contains credentials and the framework needs to load user details to verify them.
+      <br /><br />
+      You <strong>never call this method manually</strong>.
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>🧠 Who Calls This Method? (VERY IMPORTANT)</h2>
+
+    <p><strong>Simplified call chain:</strong></p>
+
+    <div class="flow-box">
+HTTP Request
+   ↓
+BasicAuthenticationFilter
+   ↓
+AuthenticationManager
+   ↓
+DaoAuthenticationProvider
+   ↓
+UserDetailsService.loadUserByUsername()
+    </div>
+
+    <div class="important">
+      👉 <strong>DaoAuthenticationProvider</strong> is the component that invokes
+      <code class="inline">loadUserByUsername()</code>.
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>🔎 Exact Scenarios When It Is Triggered</h2>
+
+    <h3>✅ 1️⃣ First request to a secured endpoint</h3>
+
+    <pre>
+GET /secure
+Authorization: Basic &lt;base64&gt;
+    </pre>
+
+    <p>
+      ✔ Spring Security detects credentials<br />
+      ✔ Authentication starts<br />
+      ✔ <code class="inline">loadUserByUsername(username)</code> is called
+    </p>
+
+    <h3>✅ 2️⃣ Every authenticated request (Basic Auth)</h3>
+
+    <ul>
+      <li>Basic Authentication is <strong>stateless</strong></li>
+      <li>Browser sends credentials on <strong>every request</strong></li>
+      <li>Spring Security authenticates <strong>every request</strong></li>
+    </ul>
+
+    <div class="important">
+      📌 <code class="inline">loadUserByUsername()</code> is called on <strong>every secured request</strong>
+      when using Basic Authentication.
+    </div>
+
+    <h3>❌ 3️⃣ NOT called for public endpoints</h3>
+
+    <pre>
+.requestMatchers("/public").permitAll()
+    </pre>
+
+    <p>
+      ✔ Authentication skipped<br />
+      ❌ <code class="inline">loadUserByUsername()</code> NOT invoked
+    </p>
+
+    <h3>❌ 4️⃣ NOT called when Authorization header is missing</h3>
+
+    <ul>
+      <li>No <code class="inline">Authorization</code> header</li>
+      <li>Spring Security immediately returns <strong>401</strong></li>
+      <li>UserDetailsService is <strong>not called</strong></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>🧪 How You Can Prove It</h2>
+
+    <pre>
+@Override
+public UserDetails loadUserByUsername(String username) {
+    System.out.println("loadUserByUsername called for: " + username);
+    ...
+}
+    </pre>
+
+    <ul>
+      <li>Hit <code class="inline">/public</code> → ❌ no log</li>
+      <li>Hit <code class="inline">/secure</code> → ✅ log appears</li>
+      <li>Refresh <code class="inline">/secure</code> → ✅ log appears again</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>🔐 What Happens INSIDE the Method?</h2>
+
+    <ol>
+      <li>Username extracted from Authorization header</li>
+      <li>Database query executed:</li>
+    </ol>
+
+    <pre>
+SELECT * FROM users WHERE username = ?
+    </pre>
+
+    <ol start="3">
+      <li>Password hash loaded</li>
+      <li>UserDetails object returned to Spring Security</li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>🔁 What Happens AFTER This Method?</h2>
+
+    <pre>
+passwordEncoder.matches(rawPassword, hashedPassword)
+    </pre>
+
+    <ul>
+      <li>✅ Match → authentication succeeds → controller executes</li>
+      <li>❌ No match → <strong>401 Unauthorized</strong></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>❓ Why UsernameNotFoundException?</h2>
+
+    <pre>
+.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    </pre>
+
+    <ul>
+      <li>Prevents user enumeration attacks</li>
+      <li>User not found = bad credentials</li>
+      <li>Handled same as wrong password</li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <h2>🧠 Interview-Ready Summary</h2>
+
+    <div class="success">
+      During authentication, Spring Security’s BasicAuthenticationFilter delegates authentication
+      to AuthenticationManager, which uses DaoAuthenticationProvider. This provider invokes
+      UserDetailsService.loadUserByUsername() to fetch user details from the data source.
+      The method is called on every secured request in Basic Authentication because the mechanism
+      is stateless and credentials are validated per request.
+    </div>
+
+    <h2>✅ Summary Table</h2>
+
+    <table>
+      <tr>
+        <th>Situation</th>
+        <th>Method Called?</th>
+      </tr>
+      <tr>
+        <td>Secured endpoint</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Public endpoint</td>
+        <td>❌ No</td>
+      </tr>
+      <tr>
+        <td>Wrong password</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>User not found</td>
+        <td>✅ Yes</td>
+      </tr>
+      <tr>
+        <td>Authorization header missing</td>
+        <td>❌ No</td>
+      </tr>
+      <tr>
+        <td>Basic Auth refresh</td>
+        <td>✅ Yes</td>
+      </tr>
+    </table>
+
+  </div>
+
+</body>
+</html>

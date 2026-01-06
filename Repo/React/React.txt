@@ -1,0 +1,10 @@
+ReactJS
+=======
+	- React is a javascript library to build interactive user interfaces.
+	
+	- Why not use just Javascript to build UI?
+		Writing javasscript code is:
+		- Cubersome
+		- error prone
+		- Hard to maintain
+	- React provides javascript library to handle the issues 

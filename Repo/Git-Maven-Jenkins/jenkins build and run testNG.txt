@@ -1,0 +1,102 @@
+To set up Jenkins to build and run TestNG tests for a Java project using Maven on a Windows machine, follow these steps:
+
+### 1. **Install Jenkins**
+
+1. **Download and Install Jenkins:**
+
+   * Download the Jenkins Windows installer from the [Jenkins website](https://www.jenkins.io/download/).
+   * Run the installer and follow the setup wizard.
+
+2. **Start Jenkins:**
+
+   * Jenkins should start automatically after installation. Open a web browser and navigate to `http://localhost:8080` to access the Jenkins dashboard.
+
+### 2. **Install Required Plugins**
+
+1. **Log in to Jenkins:**
+
+   * Use the admin password found in `C:\Program Files (x86)\Jenkins\secrets\initialAdminPassword`.
+
+2. **Install Maven Integration Plugin:**
+
+   * Go to `Manage Jenkins` > `Manage Plugins`.
+   * In the `Available` tab, search for `Maven Integration` and install it.
+
+3. **Install Git Plugin (if using Git):**
+
+   * Search for `Git plugin` in the `Available` tab and install it.
+
+### 3. **Set Up Maven and JDK**
+
+1. **Install Maven:**
+
+   * Download Maven from the [Apache Maven website](https://maven.apache.org/download.cgi).
+   * Extract the archive to a directory (e.g., `C:\apache-maven`).
+   * Set `M2_HOME` and update the `PATH` environment variable to include Maven's `bin` directory.
+
+2. **Install JDK:**
+
+   * Download and install the JDK from the [Oracle website](https://www.oracle.com/java/technologies/javase-downloads.html) or adopt OpenJDK from [AdoptOpenJDK](https://adoptium.net/).
+   * Set `JAVA_HOME` and update the `PATH` environment variable to include the JDK's `bin` directory.
+
+3. **Configure Jenkins to Use Maven and JDK:**
+
+   * Go to `Manage Jenkins` > `Global Tool Configuration`.
+   * Under `JDK`, add your JDK installation.
+   * Under `Maven`, add your Maven installation.
+
+### 4. **Create a Jenkins Job**
+
+1. **Create a New Item:**
+
+   * Click on `New Item` on the Jenkins dashboard.
+   * Enter a name for your job, select `Freestyle project`, and click `OK`.
+
+2. **Configure Source Code Management:**
+
+   * Under the `Source Code Management` section, select `Git` (or another SCM if you're using that).
+   * Enter your repository URL and credentials if needed.
+
+3. **Configure Build Triggers:**
+
+   * Under `Build Triggers`, select `GitHub hook trigger for GITScm polling` (if you're using GitHub) or configure according to your needs.
+
+4. **Configure Build Steps:**
+
+   * Under `Build`, click `Add build step` and select `Invoke top-level Maven targets`.
+   * Set the `Root POM` field to the path of your `pom.xml` file (e.g., `pom.xml`).
+   * In the `Goals` field, enter `clean test` to clean the project and run TestNG tests.
+
+5. **Add Post-Build Actions (Optional):**
+
+   * You can add post-build actions such as `Publish TestNG Results` to view test results.
+   * Under `Post-build Actions`, select `Publish TestNG Results` and configure it to point to the test results XML files.
+
+6. **Save the Job:**
+
+   * Click `Save` to store your job configuration.
+   * You can now build the job manually by clicking Build Now or let it run automatically based on the triggers you configured.
+   
+7. **Monitor Builds:**
+
+   * Monitor the progress and results of the builds in the Jenkins dashboard.
+   * You can configure Jenkins to send notifications (e.g., via email or Slack) if a build fails or succeeds.   
+
+### 5. **Run the Job**
+
+* Go to the Jenkins dashboard, select your job, and click `Build Now` to run the job.
+* Monitor the build and test results from the job's console output.
+
+### 6. **Configure Branch Build (Develop Branch)**
+
+1. **Configure Branch in Job:**
+
+   * Go to `Configure` in your job.
+   * Under `Source Code Management`, configure the branch to build. For Git, you can specify `develop` branch in the `Branches to build` field.
+
+2. **Save and Trigger:**
+
+   * Save the configuration and Jenkins will build the `develop` branch as per the trigger configuration.
+
+With this setup, Jenkins will build your Java project using Maven and execute TestNG tests, providing you with feedback on your `develop` branch.
+	

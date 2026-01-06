@@ -1,0 +1,124 @@
+Rest Assured is a popular Java library for testing RESTful APIs. Serialization and deserialization are key aspects of working with JSON in RESTful APIs. Here’s a quick example demonstrating both with Rest Assured.
+
+### Setup
+
+1. **Add Dependencies**:
+   Make sure you have the following dependencies in your `pom.xml` (for Maven) or `build.gradle` (for Gradle):
+
+   **Maven:**
+
+   ```xml
+   <dependency>
+       <groupId>io.rest-assured</groupId>
+       <artifactId>rest-assured</artifactId>
+       <version>5.0.1</version>
+       <scope>test</scope>
+   </dependency>
+   <dependency>
+       <groupId>org.codehaus.jackson</groupId>
+       <artifactId>jackson-core-asl</artifactId>
+       <version>1.9.13</version>
+   </dependency>
+   ```
+
+   **Gradle:**
+
+   ```gradle
+   testImplementation 'io.rest-assured:rest-assured:5.0.1'
+   testImplementation 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+   ```
+
+### Example
+
+Let's say you have a `User` class and a REST API that returns user details. Here's how you can use Rest Assured to test serialization and deserialization.
+
+1. **Define the User Class**:
+
+   ```java
+   public class User {
+       private String name;
+       private int age;
+       
+       // Getters and Setters
+       public String getName() {
+           return name;
+       }
+       public void setName(String name) {
+           this.name = name;
+       }
+       public int getAge() {
+           return age;
+       }
+       public void setAge(int age) {
+           this.age = age;
+       }
+   }
+   ```
+
+2. **Deserialization Example**:
+
+   Suppose your API returns a JSON object representing a user:
+
+   ```json
+   {
+       "name": "John Doe",
+       "age": 30
+   }
+   ```
+
+   You can deserialize this JSON response into a `User` object using Rest Assured:
+
+   ```java
+   import io.restassured.RestAssured;
+   import io.restassured.response.Response;
+   import org.testng.Assert;
+
+   public class UserTest {
+       public static void main(String[] args) {
+           // Make a GET request to the API
+           Response response = RestAssured.get("https://api.example.com/users/1");
+           
+           // Deserialize JSON response into User object
+           User user = response.as(User.class);
+           
+           // Validate the deserialized data
+           Assert.assertEquals(user.getName(), "John Doe");
+           Assert.assertEquals(user.getAge(), 30);
+       }
+   }
+   ```
+
+3. **Serialization Example**:
+
+   Suppose you want to send a `User` object as JSON in a POST request:
+
+   ```java
+   import io.restassured.RestAssured;
+   import io.restassured.response.Response;
+   import org.testng.Assert;
+
+   public class UserTest {
+       public static void main(String[] args) {
+           // Create a User object
+           User user = new User();
+           user.setName("Jane Doe");
+           user.setAge(25);
+           
+           // Serialize User object to JSON and send POST request
+           Response response = RestAssured.given()
+               .contentType("application/json")
+               .body(user)
+               .post("https://api.example.com/users");
+           
+           // Validate the response
+           Assert.assertEquals(response.getStatusCode(), 201);
+       }
+   }
+   ```
+
+In these examples:
+
+* **Deserialization**: The `response.as(User.class)` method converts the JSON response into a `User` object.
+* **Serialization**: The `given().body(user)` method converts the `User` object into JSON and sends it in the POST request.
+
+Let me know if you need more details or if you have any specific requirements!

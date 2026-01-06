@@ -1,0 +1,1304 @@
+Q1. How to create Azure Data Factory (ADF) pipelines and event-driven triggers to facilitate data transfer between Snowflake and external databases
+
+We are going to design Azure Data Factory (ADF) pipelines to transfer data between Snowflake and external databases (like Azure SQL Database, SQL Server, etc.). We'll use event-driven triggers to run the pipelines when certain events occur (e.g., new data arrival).
+
+Steps:
+
+1. **Prerequisites**:
+
+    Azure Account with active subscription
+
+    Azure Data Factory instance
+
+    Snowflake Account with necessary permissions
+
+    External Database (e.g., Azure SQL, PostgreSQL, MySQL) with network access configured
+
+    Azure Storage Account (for event triggering)
+
+2. **Create Linked Services**:
+
+	- Linked Service for Snowflake.
+		a. Snowflake Linked Service
+
+			In ADF Studio → "Manage" → "Linked services" → "+ New"
+
+			Search for "Snowflake"
+
+			Configure:
+			json
+
+		{
+		  "name": "ls_snowflake",
+		  "type": "Snowflake",
+		  "parameters": {},
+		  "typeProperties": {
+			"connectionString": "jdbc:snowflake://<account>.snowflakecomputing.com",
+			"user": "<username>",
+			"password": {
+			  "type": "AzureKeyVaultSecret",
+			  "store": { "referenceName": "ls_akv", "type": "LinkedServiceReference" },
+			  "secretName": "snowflake-pwd"
+			},
+			"database": "<database>",
+			"warehouse": "<warehouse>"
+		  }
+		}
+
+		Use Azure Key Vault for password security	
+
+	- Linked Service for the external database (e.g., Azure SQL Database).
+		b. External Database Linked Service (Example: Azure SQL)
+		json
+
+		{
+		  "name": "ls_azuresql",
+		  "type": "AzureSqlDatabase",
+		  "typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=<server>.database.windows.net;Initial Catalog=<database>;User ID=<user>"
+		  }
+		}	
+
+3. **Create Datasets**:
+
+	- Datasets representing the data in Snowflake (source/target).
+		a. Snowflake Dataset
+		json
+
+		{
+		  "name": "ds_snowflake_table",
+		  "properties": {
+			"linkedServiceName": {
+			  "referenceName": "ls_snowflake",
+			  "type": "LinkedServiceReference"
+			},
+			"type": "SnowflakeTable",
+			"typeProperties": {
+			  "schema": "PUBLIC",
+			  "table": "your_table"
+			}
+		  }
+		}	
+
+	- Datasets representing the data in the external database (source/target).
+		b. Azure SQL Dataset
+		json
+
+		{
+		  "name": "ds_azuresql_table",
+		  "properties": {
+			"linkedServiceName": {
+			  "referenceName": "ls_azuresql",
+			  "type": "LinkedServiceReference"
+			},
+			"type": "AzureSqlTable",
+			"typeProperties": {
+			  "tableName": "dbo.your_table"
+			}
+		  }
+		}
+4. **Design the Pipeline**:
+
+	- We'll create a pipeline that copies data from Snowflake to an external database and vice versa. We might create two separate pipelines or one parameterized pipeline.
+		a. Snowflake to Azure SQL Pipeline
+		json
+
+		{
+		  "name": "pl_snowflake_to_azuresql",
+		  "properties": {
+			"activities": [
+			  {
+				"name": "Copy_from_Snowflake",
+				"type": "Copy",
+				"inputs": [ { "referenceName": "ds_snowflake_table", "type": "DatasetReference" } ],
+				"outputs": [ { "referenceName": "ds_azuresql_table", "type": "DatasetReference" } ],
+				"typeProperties": {
+				  "source": { "type": "SnowflakeSource" },
+				  "sink": { "type": "AzureSqlSink" },
+				  "enableStaging": false
+				}
+			  }
+			]
+		  }
+		}
+
+		b. Azure SQL to Snowflake Pipeline (Reverse)
+		json
+
+		{
+		  "name": "pl_azuresql_to_snowflake",
+		  "properties": {
+			"activities": [
+			  {
+				"name": "Copy_to_Snowflake",
+				"type": "Copy",
+				"inputs": [ { "referenceName": "ds_azuresql_table", "type": "DatasetReference" } ],
+				"outputs": [ { "referenceName": "ds_snowflake_table", "type": "DatasetReference" } ],
+				"typeProperties": {
+				  "source": { "type": "AzureSqlSource" },
+				  "sink": { "type": "SnowflakeSink" },
+				  "preCopyScript": "TRUNCATE TABLE PUBLIC.your_table"
+				}
+			  }
+			]
+		  }
+		}
+5. **Create Event-Driven Triggers**:
+
+	- We can set up triggers based on events such as the arrival of a new file in Azure Blob Storage, or a specific time. 
+		However, for database to database, we might need to use tumbling window triggers or storage events if we are using staging storage.
+
+		a. Blob Storage Trigger (File Arrival)
+
+			Create Event Trigger:
+
+				ADF Studio → "Author" → "Triggers" → "+ New"
+
+				Type: Storage Events
+
+				Storage Account: Your Azure Storage
+
+				Events: "Blob Created"
+
+				Path: your-container/data-ingress/
+
+			Configure Pipeline Parameters:
+			json
+
+			{
+			  "name": "trigger_blob_created",
+			  "properties": {
+				"pipelines": [{
+				  "pipelineReference": {
+					"referenceName": "pl_azuresql_to_snowflake", // Trigger when new data arrives
+					"type": "PipelineReference"
+				  },
+				  "parameters": {
+					"source_file": "@triggerBody().fileName"
+				  }
+				}],
+				"type": "BlobEventsTrigger"
+			  }
+			}
+
+		b. Tumbling Window Trigger (Scheduled)
+		json
+
+		{
+		  "name": "trigger_hourly",
+		  "properties": {
+			"type": "TumblingWindowTrigger",
+			"runtimeState": "Started",
+			"typeProperties": {
+			  "frequency": "Hour",
+			  "interval": 1,
+			  "startTime": "2023-01-01T00:00:00Z"
+			},
+			"pipeline": {
+			  "pipelineReference": {
+				"referenceName": "pl_snowflake_to_azuresql",
+				"type": "PipelineReference"
+			  }
+			}
+		  }
+		}
+6. **Monitoring and Management**.
+
+Let's break down each step:
+
+	### Step 1: Prerequisites
+
+		- Ensure you have the necessary Azure resources and database credentials.
+
+	### Step 2: Create Linked Services
+
+		In ADF, linked services define connection information.
+
+		**Snowflake Linked Service**:
+
+			- Use the Snowflake connector in ADF.
+
+			- You'll need:
+
+				- Connection string (account URL, warehouse, database, schema)
+
+				- Authentication method (e.g., basic authentication with username and password, or key pair)
+
+		**Azure SQL Database Linked Service**:
+
+			- Use the Azure SQL Database connector.
+
+			- You'll need:
+
+				- Server name
+
+				- Database name
+
+				- Authentication (e.g., SQL authentication, managed identity)
+
+	### Step 3: Create Datasets
+
+		Create datasets that point to the specific tables or queries in Snowflake and the external database.
+
+		Example:
+
+			- `Snowflake_Dataset`: Define the table name or a query.
+
+			- `AzureSQL_Dataset`: Define the table name or a query.
+
+	### Step 4: Design the Pipeline
+
+		We'll create a pipeline with a copy activity. We can create two pipelines for bidirectional transfer or one pipeline with parameters.
+
+		**Example: Copy from Snowflake to Azure SQL Database**
+
+		- Add a copy activity to the pipeline.
+
+		- Set the source as the Snowflake dataset and the sink as the Azure SQL dataset.
+
+		**Example: Copy from Azure SQL Database to Snowflake**
+
+		- Similarly, create another pipeline or use the same pipeline with parameters to switch source and sink.
+
+	### Step 5: Event-Driven Triggers
+
+		We can create triggers that run the pipeline when an event occurs. For example:
+
+		- **Blob Storage Event Trigger**: If we are using Blob Storage as an intermediate, we can trigger when a new blob is created (e.g., a file that contains data to load). 
+			However, for direct database transfers, we might use:
+
+			- **Tumbling Window Trigger**: For periodic data transfer (e.g., every 15 minutes).
+
+			- **Schedule Trigger**: For fixed schedules.
+
+		But if we want to trigger based on an event in the database, note that ADF doesn't natively support database events. We can work around by:
+
+			- Using an Azure Function that listens to database changes (e.g., using CDC in SQL Server) and then triggers the ADF pipeline via HTTP call.
+
+			- Alternatively, we can use a storage event if the data is first exported to a file.
+
+			However, for simplicity, we'll use a tumbling window trigger for periodic transfers.
+
+	### Step 6: Implementation in ADF UI
+
+Let's outline the steps to create the pipeline in the Azure portal:
+
+1. **Create Linked Services**:
+
+- In ADF, go to "Manage" > "Linked services" > "New".
+
+- Choose "Snowflake" and fill in the connection details.
+
+- Similarly, create one for Azure SQL Database.
+
+2. **Create Datasets**:
+
+- Go to "Author" > "Datasets" > "New dataset".
+
+- Choose Snowflake and create a dataset that points to a table or use a query.
+
+- Similarly, create a dataset for Azure SQL Database.
+
+3. **Build Pipeline**:
+
+- Create a new pipeline.
+
+- Add a copy activity.
+
+- Configure the source (Snowflake dataset) and sink (Azure SQL dataset) for one direction.
+
+- For the other direction, you might create another pipeline or parameterize this one.
+
+4. **Set up Trigger**:
+
+- Go to "Author" > "Triggers" > "New/Edit" > "Choose trigger" (Tumbling window).
+
+- Set the start time, recurrence (e.g., every 15 minutes), and link to the pipeline.
+
+### Parameterized Pipeline for Bidirectional Transfer
+
+We can create a pipeline with parameters to handle both directions:
+
+- Parameters:
+
+- `sourceType` (string): "Snowflake" or "AzureSQL"
+
+- `sinkType` (string): "Snowflake" or "AzureSQL"
+
+- `sourceDataset` (string): name of the source dataset
+
+- `sinkDataset` (string): name of the sink dataset
+
+Then, in the copy activity, we set the source and sink dynamically.
+
+### Example: Parameterized Copy Activity
+
+In the pipeline, we can have:
+
+1. Source dataset: Reference the dataset name with `@dataset().sourceDataset` and set the dataset property to be parameterized.
+
+2. Similarly for sink.
+
+But note: The dataset itself must be parameterized to accept parameters (like table name, etc.).
+
+Alternatively, we can create two separate copy activities and enable one based on the direction parameter.
+
+### Event-Driven Trigger Example
+
+Suppose we want to trigger the pipeline when a new file arrives in Azure Blob Storage (which might be the case if we export data from one database to a file and then load to the other). Then:
+
+1. Create a Blob Storage linked service and dataset.
+
+2. Create an event trigger that fires when a blob is created in a specific path.
+
+3. The pipeline can then use the blob as a source and load into either Snowflake or Azure SQL.
+
+However, if we are doing direct database transfers without files, then we might not have a blob event. In that case, we rely on scheduled triggers.
+
+### Code Representation (ARM Template or ADF SDK)
+
+We can define the resources (pipelines, datasets, triggers) using JSON (ARM templates) or use the ADF .NET SDK or Python SDK. But for clarity, I'll outline the JSON structure for a simple copy pipeline and trigger.
+
+**Note**: The following is a simplified JSON representation of the ADF resources.
+
+#### Snowflake Linked Service
+
+```json
+
+{
+
+"name": "SnowflakeLinkedService",
+
+"properties": {
+
+"type": "Snowflake",
+
+"typeProperties": {
+
+"connectionString": "account=<account>;warehouse=<warehouse>;database=<database>;user=<user>;password=<password>",
+
+"encryptedCredential": "<encrypted credential>"
+
+}
+
+}
+
+}
+
+```
+
+#### Azure SQL Linked Service
+
+```json
+
+{
+
+"name": "AzureSqlLinkedService",
+
+"properties": {
+
+"type": "AzureSqlDatabase",
+
+"typeProperties": {
+
+"connectionString": "Server=tcp:<servername>.database.windows.net,1433;Database=<databasename>;User ID=<username>;Password=<password>;Trusted_Connection=False;Encrypt=True;"
+
+}
+
+}
+
+}
+
+```
+
+#### Snowflake Dataset
+
+```json
+
+{
+
+"name": "SnowflakeDataset",
+
+"properties": {
+
+"linkedServiceName": {
+
+"referenceName": "SnowflakeLinkedService",
+
+"type": "LinkedServiceReference"
+
+},
+
+"type": "SnowflakeTable",
+
+"typeProperties": {
+
+"schema": "<schema>",
+
+"table": "<table>"
+
+}
+
+}
+
+}
+
+```
+
+#### Azure SQL Dataset
+
+```json
+
+{
+
+"name": "AzureSqlDataset",
+
+"properties": {
+
+"linkedServiceName": {
+
+"referenceName": "AzureSqlLinkedService",
+
+"type": "LinkedServiceReference"
+
+},
+
+"type": "AzureSqlTable",
+
+"typeProperties": {
+
+"tableName": "<table>"
+
+}
+
+}
+
+}
+
+```
+
+#### Copy Pipeline (Snowflake to Azure SQL)
+
+```json
+
+{
+
+"name": "CopyPipeline_Snowflake_to_AzureSQL",
+
+"properties": {
+
+"activities": [
+
+{
+
+"name": "CopyFromSnowflakeToAzureSQL",
+
+"type": "Copy",
+
+"inputs": [
+
+{
+
+"referenceName": "SnowflakeDataset",
+
+"type": "DatasetReference"
+
+}
+
+],
+
+"outputs": [
+
+{
+
+"referenceName": "AzureSqlDataset",
+
+"type": "DatasetReference"
+
+}
+
+],
+
+"typeProperties": {
+
+"source": {
+
+"type": "SnowflakeSource"
+
+},
+
+"sink": {
+
+"type": "AzureSqlSink"
+
+}
+
+}
+
+}
+
+]
+
+}
+
+}
+
+```
+
+#### Tumbling Window Trigger
+
+```json
+
+{
+
+"name": "TumblingWindowTrigger",
+
+"properties": {
+
+"type": "TumblingWindowTrigger",
+
+"typeProperties": {
+
+"frequency": "Minute",
+
+"interval": 15,
+
+"startTime": "2023-01-01T00:00:00Z",
+
+"delay": "00:00:00"
+
+},
+
+"pipeline": {
+
+"pipelineReference": {
+
+"referenceName": "CopyPipeline_Snowflake_to_AzureSQL",
+
+"type": "PipelineReference"
+
+}
+
+}
+
+}
+
+}
+
+```
+
+### Using Azure Function for Custom Events
+
+If we need to trigger based on a database event (like a new row in a table), we can:
+
+1. Use an Azure Function that polls the database for changes (or uses SQL triggers to call a webhook).
+
+2. When a change is detected, the Azure Function triggers the ADF pipeline via its REST API.
+
+### Conclusion
+
+This setup provides a way to move data between Snowflake and Azure SQL Database using ADF. The event-driven aspect can be achieved by:
+
+- Tumbling window triggers (for periodic transfers)
+
+- Blob storage events (if using intermediate storage)
+
+- Custom events via Azure Functions (for database events)
+
+Remember to set up proper error handling and monitoring in ADF.
+==========================================================================================================================================
+Q2)creating data pipelines processing 10+ TB/day using Databricks, AWS EMR, and PySpark
+	We are creating a data pipeline to process 10+ TB/day using Databricks, AWS EMR, and PySpark.
+
+	The key challenges with such a high volume are:
+
+	- Scalability
+
+	- Fault tolerance
+
+	- Cost efficiency
+
+	- Performance optimization
+
+	- Data partitioning and storage format
+
+	We'll design the pipeline with the following stages:
+
+	1. Data Ingestion
+
+	2. Data Processing (with considerations for large datasets)
+
+	3. Data Storage (optimized for analytics)
+
+	4. Monitoring and Optimization
+
+	We'll consider two primary deployment options:
+
+	Option A: Using Databricks on AWS
+
+	Option B: Using AWS EMR (with PySpark)
+
+	Let's outline both options.
+
+	Option A: Databricks on AWS
+
+	----------------------------------
+
+		Advantages: Managed service, collaborative notebooks, optimized Spark, Delta Lake integration.
+
+		Stages:
+
+		1. Data Ingestion:
+
+		- Sources: S3, Kinesis, Kafka, Database (via JDBC)
+
+		- Use Databricks Auto Loader for efficient streaming from S3.
+
+		2. Data Processing:
+
+		- Use PySpark in Databricks notebooks or jobs.
+
+		- Leverage Delta Lake for ACID transactions and time travel.
+
+		- Use cluster auto-scaling (both horizontal and vertical).
+
+		3. Data Storage:
+
+		- Store data in Delta Lake format on S3 for cost efficiency and performance.
+
+		4. Monitoring:
+
+		- Use Databricks monitoring tools and Spark UI.
+
+		Example pipeline code (using Databricks):
+
+		```python
+
+		# Ingest data from S3 using Auto Loader
+
+		raw_df = (spark.readStream
+
+		.format("cloudFiles")
+
+		.option("cloudFiles.format", "json")
+
+		.option("cloudFiles.schemaLocation", "/path/schema_location")
+
+		.load("s3://raw-data-bucket/")
+
+		)
+
+		# Basic transformations
+
+		transformed_df = raw_df.select(
+
+		col("id"),
+
+		col("timestamp").cast("timestamp"),
+
+		col("value")
+
+		).withColumn("processing_time", current_timestamp())
+
+		# Write to Delta Lake in S3
+
+		(transformed_df.writeStream
+
+		.format("delta")
+
+		.outputMode("append")
+
+		.option("checkpointLocation", "/path/checkpoint")
+
+		.option("path", "s3://processed-data-bucket/table_name")
+
+		.trigger(processingTime='10 minutes')
+
+		.start()
+
+		)
+
+		```
+
+	Option B: AWS EMR with PySpark
+
+	----------------------------------
+
+		Advantages: Lower cost, more control, can use spot instances.
+
+		Stages:
+
+		1. Data Ingestion:
+
+		- Use Apache Spark Streaming or Structured Streaming.
+
+		- Alternatively, use AWS Glue for initial data movement.
+
+		2. Data Processing:
+
+		- Run PySpark jobs on EMR cluster.
+
+		- Use HDFS or EMRFS (S3) for storage.
+
+		- Consider using Delta Lake on EMR (requires installing delta-spark).
+
+		3. Data Storage:
+
+		- Store in S3 using columnar formats (Parquet, ORC) or Delta Lake.
+
+		4. Monitoring:
+
+		- Use EMR metrics in CloudWatch, Ganglia, or Spark UI.
+
+		Example pipeline code (EMR with PySpark):
+
+		```python
+
+		from pyspark.sql import SparkSession
+
+		from pyspark.sql.functions import *
+
+		spark = SparkSession.builder \
+
+		.appName("BigDataPipeline") \
+
+		.config("spark.sql.shuffle.partitions", "10000") \
+
+		.config("spark.sql.files.maxPartitionBytes", "128MB") \
+
+		.getOrCreate()
+
+		# Read from S3
+
+		df = spark.read.parquet("s3://raw-data-bucket/")
+
+		# Perform transformations
+
+		df_transformed = df \
+
+		.withColumn("new_col", expr("some_expression")) \
+
+		.repartition(1000, "partition_col")   # Repartition for even distribution
+
+		# Write to S3 in Parquet (or Delta)
+
+		df_transformed.write \
+
+		.partitionBy("date") \
+
+		.format("parquet") \
+
+		.mode("append") \
+
+		.save("s3://processed-data-bucket/table_name")
+
+		```
+
+General Best Practices for 10+ TB/day:
+
+----------------------------------------
+
+1. **Cluster Sizing and Autoscaling**:
+
+- Use multiple master nodes for HA in EMR.
+
+- Use spot instances for workers to reduce cost (with on-demand fallback).
+
+- Set up autoscaling based on workload (Databricks autoscaling or EMR autoscaling).
+
+2. **Data Partitioning**:
+
+- Partition data by date or other high-cardinality columns to enable partition pruning.
+
+- Avoid too many small files (use coalesce/repartition to control file size).
+
+3. **File Formats**:
+
+- Use columnar formats (Parquet, ORC) or Delta Lake for better compression and query performance.
+
+- For Delta Lake, run `OPTIMIZE` and `VACUUM` regularly.
+
+4. **Shuffle Optimization**:
+
+- Use `spark.sql.shuffle.partitions` appropriately (e.g., 2-3 times the number of cores).
+
+- Use broadcast joins for small tables.
+
+5. **Fault Tolerance**:
+
+- Use checkpointing in streaming jobs.
+
+- Enable Spark's speculative execution (`spark.speculation`).
+
+6. **Cost Management**:
+
+- Use S3 lifecycle policies to move older data to cheaper storage (Glacier).
+
+- Monitor cluster utilization and downsize when possible.
+
+7. **Monitoring**:
+
+- Set up alerts for job failures and cluster health.
+
+- Use Spark history server to analyze completed jobs.
+
+8. **Security**:
+
+- Encrypt data at rest (SSE-S3 or SSE-KMS) and in transit (SSL).
+
+- Use IAM roles for access control.
+
+9. **Streaming vs Batch**:
+
+- For near real-time: Use Spark Structured Streaming or Flink.
+
+- For batch: Schedule jobs at appropriate intervals.
+
+10. **Delta Lake Features** (if using Delta):
+
+- ACID transactions.
+
+- Time travel (data versioning).
+
+- Schema evolution.
+
+Conclusion:
+
+Both Databricks and EMR are viable. Databricks provides a more managed and integrated experience, while EMR offers more control and potential cost savings.
+
+The choice may depend on:
+
+- Team expertise
+
+- Existing infrastructure
+
+- Need for collaborative features (notebooks, dashboards) vs. cost
+
+For 10+ TB/day, the key is to design for scalability and efficiency in every layer.
+Building Petabyte-Scale Data Pipelines with Databricks, EMR, and PySpark
+
+Below is a comprehensive guide to creating data pipelines processing 10+ TB/day using Databricks, AWS EMR, and PySpark, including architecture patterns, code samples, and optimization techniques.
+Architecture Overview
+Diagram
+Code
+Core Components for 10+ TB/Day Pipelines
+1. Ingestion Layer
+
+    S3 as Landing Zone:
+    python
+
+# Use multipart uploads for large files
+aws s3 cp largefile.csv s3://landing-bucket/ --multipart-chunksize=100MB
+
+Kinesis Data Streams (for real-time):
+python
+
+    from pyspark.sql import SparkSession
+
+    spark = SparkSession.builder.appName("KinesisIngestion").getOrCreate()
+
+    df = (spark.readStream
+          .format("kinesis")
+          .option("streamName", "clickstream")
+          .option("region", "us-east-1")
+          .option("initialPosition", "LATEST")
+          .load())
+
+2. Batch Processing (AWS EMR)
+
+Cluster Configuration (10TB/day):
+json
+
+{
+  "InstanceGroups": [
+    {
+      "Name": "Master",
+      "InstanceRole": "MASTER",
+      "InstanceType": "r5.8xlarge",
+      "InstanceCount": 1
+    },
+    {
+      "Name": "Core",
+      "InstanceRole": "CORE",
+      "InstanceType": "r5.24xlarge",
+      "InstanceCount": 10
+    },
+    {
+      "Name": "Task",
+      "InstanceRole": "TASK",
+      "InstanceType": "r5.24xlarge",
+      "InstanceCount": 50,
+      "AutoScalingPolicy": {
+        "MinInstances": 30,
+        "MaxInstances": 100
+      }
+    }
+  ]
+}
+
+PySpark Optimization for Large Datasets:
+python
+
+from pyspark.sql import SparkSession
+
+spark = (SparkSession.builder
+         .appName("10TB-Processing")
+         .config("spark.sql.shuffle.partitions", "10000")
+         .config("spark.sql.adaptive.enabled", "true")
+         .config("spark.sql.files.maxPartitionBytes", "256MB")
+         .config("spark.executor.memory", "24g")
+         .config("spark.executor.cores", "8")
+         .config("spark.executor.instances", "200")
+         .getOrCreate())
+
+# Read from S3 with predicate pushdown
+df = (spark.read.parquet("s3://landing-bucket/")
+      .where("event_date >= '2023-01-01'"))
+
+# Processing with salting for skewed data
+from pyspark.sql.functions import col, sha1, rand
+
+skewed_df = (df.withColumn("salted_key", 
+             sha1(col("user_id")).substr(1, 4) + "_" + col("user_id"))
+             .repartition(1000, "salted_key"))
+
+3. Stream Processing (Databricks Delta Lake)
+
+Delta Architecture for 10TB/day:
+python
+
+from delta.tables import *
+
+# Configure Delta for high throughput
+spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", True)
+spark.conf.set("spark.databricks.delta.autoCompact.enabled", True)
+
+# Stream ingestion with Auto Loader
+stream = (spark.readStream
+          .format("cloudFiles")
+          .option("cloudFiles.format", "json")
+          .option("cloudFiles.schemaLocation", "/delta/schema")
+          .load("s3://landing-bucket/stream/")
+          .writeStream
+          .format("delta")
+          .option("checkpointLocation", "/delta/checkpoints")
+          .outputMode("append")
+          .trigger(processingTime='5 minutes')
+          .start("/delta/bronze"))
+
+# MERGE operation for SCD Type 2
+delta_table = DeltaTable.forPath(spark, "/delta/silver/users")
+
+(delta_table.alias("target")
+ .merge(
+   updates_df.alias("source"),
+   "target.user_id = source.user_id")
+ .whenMatchedUpdate(set = { 
+   "email": "source.email",
+   "is_active": "source.is_active",
+   "updated_at": "current_timestamp()"
+ })
+ .whenNotMatchedInsertAll()
+ .execute())
+
+4. Optimization Techniques for 10TB+ Scale
+
+Shuffle Optimization:
+python
+
+# Use shuffle service with optimized configuration
+.config("spark.shuffle.service.enabled", "true")
+.config("spark.shuffle.compress", "true")
+.config("spark.shuffle.spill.compress", "true")
+.config("spark.io.compression.codec", "snappy")
+
+Cost Optimization Strategies:
+python
+
+# Spot instances configuration for EMR
+.config("spark.executor.instances", "100")
+.config("spark.ec2.spotInstance", "true")
+.config("spark.ec2.spot.maxPrice", "0.5")
+
+# S3 storage optimization
+aws s3api put-bucket-lifecycle-configuration \
+  --bucket data-lake-bucket \
+  --lifecycle-configuration '{
+    "Rules": [
+      {
+        "ID": "MoveToIA",
+        "Status": "Enabled",
+        "Prefix": "",
+        "Transitions": [{"Days": 30, "StorageClass": "STANDARD_IA"}]
+      },
+      {
+        "ID": "MoveToGlacier",
+        "Status": "Enabled",
+        "Prefix": "archive/",
+        "Transitions": [{"Days": 90, "StorageClass": "GLACIER"}]
+      }
+    ]
+  }'
+
+5. Monitoring and Alerting
+
+CloudWatch Metrics for 10TB Pipeline:
+python
+
+# Critical metrics to monitor
+- S3: BucketSizeBytes, NumberOfObjects
+- EMR: HDFSUtilization, IsIdle
+- Kinesis: GetRecords.IteratorAgeMilliseconds
+- Spark: numFailedStages, executorRunTime
+
+# Alert thresholds
+- S3 ingestion delay > 15 min
+- Executor memory > 90% utilization
+- Shuffle spill > 50% of input size
+- Cluster idle time > 30 min
+
+Performance Comparison: EMR vs. Databricks
+Criteria	AWS EMR	Databricks
+Cost Efficiency	Lower infrastructure cost	Higher but includes optimization features
+Performance	Raw Spark performance	2-5x faster with Photon engine
+Ease of Use	Requires more configuration	Integrated notebooks, workflows, MLflow
+Delta Lake Support	Requires manual setup	Native integration
+Auto-scaling	Good with custom metrics	Excellent with workload prediction
+ML Integration	Requires custom setup	Native MLflow integration
+Key Best Practices for 10TB+ Pipelines
+
+    Data Partitioning Strategy:
+    python
+
+# Optimal partitioning for 10TB datasets
+df.write.partitionBy("year", "month", "day") \
+       .format("parquet") \
+       .option("maxRecordsPerFile", 1000000) \
+       .save("s3://processed-data/")
+
+File Size Optimization:
+python
+
+# Compact small files
+(spark.read.parquet("s3://raw-data/")
+  .repartition(1000)  # Target ~100MB files
+  .write.parquet("s3://optimized-data/"))
+
+Memory Management:
+python
+
+# Configuration for large datasets
+.config("spark.executor.memoryOverhead", "4g")
+.config("spark.memory.offHeap.enabled", "true")
+.config("spark.memory.offHeap.size", "16g")
+
+Delta Lake Maintenance:
+python
+
+# Optimize Delta tables
+from delta.tables import DeltaTable
+
+delta_table = DeltaTable.forPath(spark, "/delta/events")
+delta_table.optimize().executeCompaction()
+delta_table.vacuum(168)  # Retain 7 days of history
+
+Cost Monitoring:
+bash
+
+    # AWS Cost Explorer query
+    aws ce get-cost-and-usage \
+      --time-period Start=2023-01-01,End=2023-01-31 \
+      --granularity MONTHLY \
+      --metrics "BlendedCost" \
+      --filter '{"Dimensions": {"Key": "SERVICE", "Values": ["Amazon Elastic MapReduce", "Amazon S3", "Amazon Kinesis"]}}'
+
+Handling Common 10TB Pipeline Challenges
+
+Challenge 1: Data Skew
+python
+
+# Solution: Salting technique
+from pyspark.sql.functions import col, concat, lit, rand
+
+skewed_df = (df.withColumn("salted_key", 
+             concat(col("user_id"), lit("_"), (rand() * 100).cast("int")))
+             .groupBy("salted_key")
+             .agg(/* aggregations */))
+
+Challenge 2: Shuffle Failures
+python
+
+# Solution: Enhanced configuration
+.config("spark.shuffle.io.maxRetries", "10")
+.config("spark.shuffle.io.retryWait", "60s")
+.config("spark.shuffle.service.port", "7337")
+
+Challenge 3: S3 Throttling
+python
+
+# Solution: Prefix distribution
+.config("spark.hadoop.mapreduce.input.fileinputformat.list-status.num-threads", "20")
+.config("spark.sql.parquet.mergeSchema", "false")
+
+Challenge 4: Cluster Scaling
+python
+
+# Solution: Predictive scaling
+# Databricks autoscaling
+{
+  "autoscale": {
+    "min_workers": 20,
+    "max_workers": 200,
+    "target_workers": 35,
+    "scale_down": {
+      "enabled": true,
+      "idle_timeout_minutes": 10
+    }
+  }
+}
+
+Migration Strategy: From EMR to Databricks
+python
+
+# Step 1: Replicate data to Delta Lake
+(spark.read.parquet("s3://emr-output/")
+  .write.format("delta")
+  .save("s3://databricks-delta/"))
+
+# Step 2: Refactor jobs using Databricks Workflows
+from databricks.sdk import WorkspaceClient
+w = WorkspaceClient()
+
+w.jobs.create(
+  name="10TB-Processing",
+  tasks=[{
+    "task_key": "process_data",
+    "spark_python_task": {
+      "python_file": "dbfs:/scripts/process.py"
+    },
+    "new_cluster": {
+      "spark_version": "12.x-snapshot",
+      "node_type_id": "r5.24xlarge",
+      "num_workers": 50
+    }
+  }]
+)
+
+# Step 3: Performance comparison
+# Run parallel jobs and compare metrics
+
+This architecture provides a robust foundation for processing 10+ TB/day with:
+
+    Scalability: Auto-scaling clusters handling petabyte-scale data
+
+    Reliability: Delta Lake ACID transactions and time travel
+
+    Cost Efficiency: Spot instances, storage tiering, file optimization
+
+    Performance: Photon engine, shuffle optimization, partitioning
+
+    Observability: Comprehensive monitoring and alerting
+======================================================================================================================
+### How They Work Together
+
+	A typical modern data stack might look like:
+
+		1. **Data Ingestion**:
+
+		- AWS services (Kinesis, Glue, DMS) or Spark Streaming to ingest data into S3.
+
+		2. **Data Storage**:
+
+		- S3 as the data lake.
+
+		3. **Data Processing**:
+
+		- **Databricks/Spark**: Process large datasets (ETL) and write to S3 (in Delta Lake format) or to a data warehouse (Redshift).
+
+		- **dbt**: Transform data in the data warehouse (Redshift, Snowflake, BigQuery) using SQL. dbt can also connect to Databricks SQL (if using Databricks SQL Warehouse) for transformations.
+
+		4. **Data Orchestration**:
+
+		- Tools like Airflow (on AWS using MWAA) or Databricks Workflows to schedule and monitor jobs.
+
+		5. **Machine Learning**:
+
+		- Use Databricks notebooks with MLflow for model development and tracking.
+
+	### Example Integration: dbt with Databricks
+
+		dbt can connect to Databricks via the Databricks SQL connector. Steps:
+
+		1. **Set up Databricks SQL Warehouse**: Create a SQL endpoint in Databricks.
+
+		2. **Configure dbt**:
+
+		- In `profiles.yml`:
+
+		```yaml
+
+		your_profile:
+
+		target: dev
+
+		outputs:
+
+		dev:
+
+		type: databricks
+
+		catalog: [catalog_name]  # Unity Catalog catalog (optional)
+
+		schema: [schema_name]
+
+		host: [your-databricks-host]
+
+		http_path: [http-path of your SQL warehouse]
+
+		token: [your-personal-access-token]
+
+		```
+
+		3. **Run dbt**:
+
+		- `dbt run` to execute models on Databricks.
+
+	### Example Integration: Spark with dbt
+
+		While dbt is primarily SQL-based, you can use Spark for heavy transformations and then use dbt for the final transformations in the data warehouse. Alternatively, you can use dbt-spark adapter to run dbt models on a Spark cluster (via Databricks or EMR).
+
+	### Example Integration: AWS with Databricks
+
+		- **Databricks on AWS**:
+
+		- Deploy Databricks workspace in your AWS account.
+
+		- Use IAM roles for secure access to S3, Redshift, etc.
+
+		- Mount S3 buckets to DBFS (Databricks File System) for easy access.
+
+		### Tools Summary
+
+		| Tool       | Primary Use Case                     | Integration Points                     |
+
+		|------------|--------------------------------------|----------------------------------------|
+
+		| Databricks | Unified analytics platform (Spark)   | Runs on AWS; integrates with S3, Redshift; can run dbt via SQL Warehouse |
+
+		| dbt        | SQL-based data transformation        | Can run on Databricks SQL, Redshift, Athena |
+
+		| AWS        | Cloud infrastructure                 | Hosts Databricks, S3 for storage, Redshift for warehousing |
+
+		| Spark      | Distributed data processing          | Core engine of Databricks; can run on AWS EMR or Databricks |
+
+		### Example Workflow
+
+		1. **Ingest**: AWS Glue or Kinesis loads data into S3.
+
+		2. **Process**: Databricks reads from S3, processes using Spark, writes back to S3 (Delta Lake).
+
+		3. **Transform**: dbt reads from Delta Lake (via Databricks SQL) or from Redshift (if data is loaded there) and builds models.
+
+		4. **Serve**: Data is served to BI tools (like Tableau) from the data warehouse or Databricks SQL.
+
+		This ecosystem provides a scalable, flexible, and collaborative environment for data teams.

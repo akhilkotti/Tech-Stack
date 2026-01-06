@@ -1,0 +1,54 @@
+Build an e-commerce platform that consists of multiple microservices. The system should handle product catalog, order processing, user authentication, payment processing, and notifications. provide Complete end to end code
+
+Project should include all the below features.
+1. **Service Discovery (Eureka Server):**
+   - Central service registry for all microservices.
+2. **API Gateway (Spring Cloud Gateway):**
+   - Single entry point for all client requests.
+   - Routing, rate limiting, and security (JWT validation).
+3. **Authentication Service:**
+   - User registration and login.
+   - JWT token generation and validation.
+   - Integration with Spring Security and OAuth2.
+4. **Product Service:**
+   - CRUD operations for products.
+   - Database: MySQL or PostgreSQL.
+5. **Order Service:**
+   - Place orders, update order status.
+   - Use Saga pattern for distributed transactions (choreography or orchestration).
+   - Database: MongoDB (to handle flexible order schema).
+6. **Inventory Service:**
+   - Manage product inventory.
+   - When an order is placed, check and update inventory.
+7. **Payment Service:**
+   - Simulate payment processing (using a mock payment gateway).
+   - Integrate with order service to confirm payment.
+8. **Notification Service:**
+   - Send notifications (emails, SMS) for order updates.
+   - Use Kafka or RabbitMQ for asynchronous communication.
+9. **Config Server (Spring Cloud Config):**
+   - Externalize configuration for all services.
+10. **Distributed Tracing (Sleuth and Zipkin):**
+    - Trace requests across services.
+	
+Project should also include below advanced features.
+- **Resilience:**
+  - Use Resilience4j for circuit breaking in order service when calling inventory service.
+- **Asynchronous Communication:**
+  - When an order is placed, publish an event to Kafka. Then:
+    - Inventory service consumes the event to update inventory.
+    - Notification service sends an order confirmation.
+- **Security:**
+  - Secure all services with JWT. The API Gateway should validate the token and pass user information to downstream services.
+- **Testing:**
+  - Write unit and integration tests for each service.
+  - Use Testcontainers for integration tests with databases and Kafka.
+  - Implement contract testing for interactions between services (e.g., between order and payment service).
+- **Deployment:**
+  - Dockerize each microservice.
+  - Use Docker Compose for local development and testing.
+  - Deploy to Kubernetes (minikube for local, or cloud Kubernetes like EKS, GKE, AKS).
+  - Set up CI/CD pipelines (e.g., with GitHub Actions) to build, test, and deploy.
+- **Monitoring:**
+  - Set up Prometheus and Grafana for monitoring service metrics.
+  - Use ELK stack for centralized logging.

@@ -1,0 +1,23 @@
+
+Prerequisite:
+	- Make sure java, mavane and git are installed  
+	- ensure paths are set in the environment variables.
+	
+Jenkins Pipeline:
+	- Create a script file for the pipeline
+	- In the pipeline we have different sections
+		- Environment - Specify if any environment variables required.
+		- Stages:
+			- Stage:Build
+				- Script - mvn clean package 
+				(Download
+				dependencies, build		           project and generate jar file under target directory)
+			- Stage:Test
+				- Script - mvn test	
+				  (Run all the test scripts)
+			- Stage:Deploy
+				- Script - copy target\*.jar <Server Deployment directory>"
+				(copy jar file from target directory to the 
+				server deployment directory)
+		- Post:
+			- This section helps to display success and failure of the pipeline tasks

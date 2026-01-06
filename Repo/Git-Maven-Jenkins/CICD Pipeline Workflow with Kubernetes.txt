@@ -1,0 +1,137 @@
+Alright — let’s walk through a **real-time example** of the CI/CD Pipeline Workflow with Kubernetes from your diagram, stage by stage.
+
+---
+
+## **Scenario**
+
+We’re building and deploying a **React-based eCommerce web app** with a Node.js backend and MongoDB database.
+Our infrastructure uses:
+
+* **GitHub** for code repository
+* **Jenkins** as CI/CD server
+* **Docker Hub** for Docker image storage
+* **Kubernetes** cluster on AWS EKS for deployment
+
+---
+
+### **1. Developer → Commit Code, Push to Git**
+
+A frontend developer finishes adding a "Wishlist" feature in React.
+They commit the changes:
+
+```bash
+git add .
+git commit -m "Added wishlist feature"
+git push origin main
+```
+
+---
+
+### **2. Git Repo**
+
+The code is pushed to the **GitHub** repository.
+We’ve configured a **webhook** so that any push to the `main` branch notifies Jenkins.
+
+---
+
+### **3. CI Server Notices New Code**
+
+**Jenkins** is listening for changes via the GitHub webhook.
+Once the push happens, Jenkins automatically triggers the pipeline.
+
+---
+
+### **4. Build New Docker Image**
+
+Jenkins runs:
+
+```bash
+docker build -t myshop/frontend:1.0.5 .
+```
+
+This creates a Docker image containing the updated React frontend.
+
+---
+
+### **5. Run Tests**
+
+Before deploying, Jenkins runs:
+
+```bash
+npm test
+```
+
+If any unit or integration test fails, the pipeline stops.
+
+---
+
+### **6. Push New Docker Image**
+
+If tests pass, Jenkins pushes the image to **Docker Hub**:
+
+```bash
+docker push myshop/frontend:1.0.5
+```
+
+---
+
+### **7. Update Kubernetes Deployment**
+
+Jenkins runs:
+
+```bash
+kubectl set image deployment/frontend-deployment frontend=myshop/frontend:1.0.5
+```
+
+This tells Kubernetes to use the new image.
+
+---
+
+### **8. Kubernetes → Create New Pod**
+
+Kubernetes pulls the new Docker image from Docker Hub and spins up a **new pod** running version `1.0.5` of the frontend.
+
+---
+
+### **9. Check Pod Health**
+
+Kubernetes runs **liveness** and **readiness probes** to check the new pod’s health.
+For example:
+
+```yaml
+readinessProbe:
+  httpGet:
+    path: /health
+    port: 3000
+```
+
+---
+
+### **10. New Pod is Healthy**
+
+If the new pod passes health checks, Kubernetes proceeds.
+
+---
+
+### **11. Delete Old Pod**
+
+Kubernetes removes the old frontend pod running version `1.0.4`.
+
+---
+
+### **Failure Case — New Pod is Not Healthy**
+
+If the new pod fails readiness checks:
+
+* Kubernetes **keeps the old pod running**
+* The deployment is rolled back automatically.
+
+---
+
+✅ **End Result**
+The new React feature is live on production without downtime.
+Users can now add products to their wishlist instantly after deployment.
+
+---
+
+If you want, I can **draw this example in the same style as your uploaded diagram** but with real-world labels like "React frontend", "Docker Hub", "AWS EKS", and actual commands. This will make it look like a working deployment flow.

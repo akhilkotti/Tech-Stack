@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OOPs in Java</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    h1, h2 {
+      color: #2e6da4;
+    }
+    h1 {
+      border-bottom: 2px solid #2e6da4;
+      padding-bottom: 5px;
+	  margin-bottom: 8px;   /* 🔥 reduce gap */
+    }
+	
+    /* =========================
+       CODE BLOCKS
+       ========================= */
+    pre {
+      background-color: #1e1e1e;
+      color: #dcdcdc;
+      padding: 14px 16px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 12px 0;
+    }
+
+    code {
+      font-family: Consolas, "Courier New", monospace;
+    }
+	
+    /* =========================
+       SECTIONS
+       ========================= */
+    .section {
+      margin-bottom: 50px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+	  font-size: 15px;
+    }
+	
+    /* =========================
+       OUTPUT BOX
+       ========================= */
+    .output {
+      background-color: #f0f6ff;
+      padding: 12px 15px;
+      margin-top: 12px;
+      border-left: 4px solid #2e6da4;
+      font-size: 13px;
+    }
+	ul {
+	  margin-top: 2px;      /* 🔥 reduce space from line */
+	}	
+	header {
+		padding: 25px 20px;
+		text-align: center;
+	}
+
+    /* =========================
+       FEATURE CARDS
+       ========================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 280px);
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eaeaea;
+      transition: all 0.3s ease;
+    }
+
+    .feature-header {
+      display: block;
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      color: white;
+      padding: 12px 18px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .feature-header:hover {
+      background: linear-gradient(to right, #2980b9, #1a252f);
+    }
+	
+	/* Active/focus states */
+	.clickable-header:active,
+	.clickable-header:focus {
+		box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+	}
+	
+	.back-to-top {
+		position: fixed;
+		bottom: 30px;
+		right: 30px;
+		background: #e74c3c;
+		color: white;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 1.5rem;
+		text-decoration: none;
+		box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		transition: all 0.3s ease;
+	}
+	
+	.back-to-top:hover {
+		transform: translateY(-5px);
+		background: #c0392b;
+	}	
+
+	/* Back to Top button styling */
+	.back-to-top-btn {
+		display: inline-block;
+		margin: 10px 0 20px;
+		padding: 8px 15px;
+		background: #f5f5f5;
+		color: #2c3e50;
+		border-radius: 4px;
+		text-decoration: none;
+		font-size: 0.9rem;
+		transition: all 0.3s ease;
+	}
+	
+	.back-to-top-btn:hover {
+		background: #e0e0e0;
+		box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+	}		
+  </style>
+</head>
+<body>
+  	<header>
+		<h1>OOPs in Java</h1>
+	</header>
+
+	<div class="features-grid" id="features-overview">
+		<div class="feature-card">
+			<a href="#Encapsulation-section" class="feature-header">Encapsulationn</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#Inheritance-section" class="feature-header">Inheritance</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Polymorphism-section" class="feature-header">Polymorphism</a>
+		</div>
+		<div class="feature-card">
+			<a href="#Abstraction-section" class="feature-header">Abstraction</a>
+		</div>
+	</div>
+	<div class="section">
+		<ul>
+			<li><strong>OOPS</strong> stands for <strong>Object-Oriented Programming System.</strong></li>
+			<li>It is a programming paradigm that is based on the concept of <strong>objects,</strong> which can contain data in the form of fields (often known as <strong>attributes</strong> or <strong>properties</strong>) and code, in the form of procedures (often known as <strong>methods)</strong>.</li>
+			<li>The basic concept of OOPS is to <strong>create objects,</strong> which can hold both <strong>data and functions</strong>. </li>
+			<li><strong>Objects are instances of a class</strong>, a blueprint for an object. </li>
+			<li>A class defines the <strong>properties and methods</strong> of an object, and an object is an instance of a class. </li>
+			<li>The <strong>properties</strong> of an object are the data it stores, and the <strong>methods</strong> are the functions that operate on that data.</li>
+		</ul>	
+  </div>
+  <div class="section">
+	<h2 id="Encapsulation-section">🔹 Encapsulation</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+    <p>Encapsulation is useful in scenarios where you want to hide the internal details and only expose necessary information to the user.</p>
+    <p><strong>Example:</strong> Order Management System</p>
+
+    <ul>
+      <li><strong>Order Class:</strong> Order class encapsulates the details of an order(orderId, product, quantity, and price) by declaring class variables as private.</li>
+      <li><strong>Customer Class:</strong> Manages a list of orders with public methods to add/print orders.</li>
+      <li>Encapsulation protects the internal state of classes.</li>
+    </ul>
+
+    <h3>Order.java – Encapsulation Example</h3>
+    <pre><code>public class Order {
+  private int orderId;
+  private String product;
+  private int quantity;
+  private double price;
+
+  public Order(int orderId, String product, int quantity, double price) {
+    this.orderId = orderId;
+    this.product = product;
+    this.quantity = quantity;
+    this.price = price;
+  }
+
+  public int getOrderId() { return orderId; }
+  public String getProduct() { return product; }
+  public int getQuantity() { return quantity; }
+  public double getPrice() { return price; }
+
+  public double calculateTotal() {
+    return quantity * price;
+  }
+}</code></pre>
+
+    <h3>Customer.java – Encapsulation with Internal Order List</h3>
+    <pre><code>import java.util.ArrayList;
+import java.util.List;
+
+public class Customer {
+  private String name;
+  private List&lt;Order&gt; orders;
+
+  public Customer(String name) {
+    this.name = name;
+    this.orders = new ArrayList&lt;&gt;();
+  }
+
+  public void addOrder(Order order) {
+    orders.add(order);
+  }
+
+  public void printOrders() {
+    System.out.println("Customer: " + name);
+    for (Order order : orders) {
+      System.out.println("Order ID: " + order.getOrderId());
+      System.out.println("Product: " + order.getProduct());
+      System.out.println("Quantity: " + order.getQuantity());
+      System.out.println("Price: " + order.getPrice());
+      System.out.println("Total: " + order.calculateTotal());
+      System.out.println("-----------");
+    }
+  }
+}</code></pre>
+
+    <h3>Main.java – Test Program</h3>
+    <pre><code>public class Main {
+  public static void main(String[] args) {
+    Customer customer = new Customer("Akhil");
+
+    Order order1 = new Order(101, "Laptop", 1, 50000);
+    Order order2 = new Order(102, "Mouse", 2, 500);
+
+    customer.addOrder(order1);
+    customer.addOrder(order2);
+
+    customer.printOrders();
+  }
+}</code></pre>
+
+    <div class="output">
+      <strong>Output:</strong><br>
+      Customer: Akhil<br>
+      Order ID: 101<br>
+      Product: Laptop<br>
+      Quantity: 1<br>
+      Price: 50000.0<br>
+      Total: 50000.0<br>
+      -----------<br>
+      Order ID: 102<br>
+      Product: Mouse<br>
+      Quantity: 2<br>
+      Price: 500.0<br>
+      Total: 1000.0<br>
+      -----------
+    </div>
+  </div>
+
+  <div class="section">
+	<h2 id="Inheritance-section">🔹 Inheritance</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+    <p>Inheritance allows classes to inherit properties and behavior (methods) from an existing base class.</p>
+    <p><strong>Example:</strong> Order Management System</p>
+	<p>Lets take an example of Order Management System, Where we have Order Class as
+		  base class and subclasses "OnlineOrder" and "InstoreOrder"</p>
+    <ul>
+      <li><strong>Order Class:</strong> Order class is the base class that contains common attributes and methods. suppose we have a method like processOrder().</li>
+      <li><strong>OnlineOrder Class:</strong> Extends order class and overrides the processOrder method to include additional functionality related to online order, like shipping information.</li>
+      <li><strong>InStoreOrder Class:</strong> Extends order class and overrides the processOrder method to include additional functionality related to Instore orders, like pickup location.</li>
+    </ul>
+    <h3>Order.java – Base Class</h3>
+    <pre><code>public class Order {
+  protected int orderId;
+  protected String productName;
+  protected int quantity;
+
+  public Order(int orderId, String productName, int quantity) {
+    this.orderId = orderId;
+    this.productName = productName;
+    this.quantity = quantity;
+  }
+
+  public void processOrder() {
+    System.out.println("Processing order for: " + productName);
+  }
+}</code></pre>
+
+    <h3>OnlineOrder.java – Subclass with Override</h3>
+    <pre><code>public class OnlineOrder extends Order {
+  private String shippingAddress;
+
+  public OnlineOrder(int orderId, String productName, int quantity, String shippingAddress) {
+    super(orderId, productName, quantity);
+    this.shippingAddress = shippingAddress;
+  }
+
+  @Override
+  public void processOrder() {
+    System.out.println("Processing online order:");
+    System.out.println("Product: " + productName);
+    System.out.println("Quantity: " + quantity);
+    System.out.println("Shipping to: " + shippingAddress);
+  }
+}</code></pre>
+
+    <h3>InStoreOrder.java – Subclass with Override</h3>
+    <pre><code>public class InStoreOrder extends Order {
+  private String pickupLocation;
+
+  public InStoreOrder(int orderId, String productName, int quantity, String pickupLocation) {
+    super(orderId, productName, quantity);
+    this.pickupLocation = pickupLocation;
+  }
+
+  @Override
+  public void processOrder() {
+    System.out.println("Processing in-store order:");
+    System.out.println("Product: " + productName);
+    System.out.println("Quantity: " + quantity);
+    System.out.println("Pickup at: " + pickupLocation);
+  }
+}</code></pre>
+
+    <h3>Main.java – Test</h3>
+    <pre><code>public class Main {
+  public static void main(String[] args) {
+    Order online = new OnlineOrder(101, "Laptop", 1, "123 Shipping Lane");
+    Order inStore = new InStoreOrder(102, "Mouse", 2, "Store #12, Mall Road");
+
+    online.processOrder();
+    System.out.println("---------------");
+    inStore.processOrder();
+  }
+}</code></pre>
+
+    <div class="output">
+      <strong>Sample Output:</strong><br>
+      Processing online order:<br>
+      Product: Laptop<br>
+      Quantity: 1<br>
+      Shipping to: 123 Shipping Lane<br>
+      ---------------<br>
+      Processing in-store order:<br>
+      Product: Mouse<br>
+      Quantity: 2<br>
+      Pickup at: Store #12, Mall Road
+    </div>
+  </div>
+
+  <div class="section">
+	<h2 id="Polymorphism-section">🔹 Polymorphism</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+    <p>Polymorphism, a mechanism to exhibit different forms of an object with the same
+	  action. This can be achieved by method overloading (compile-time polymorphism) and method overriding (runtime polymorphism)</p>
+	<p><strong>Compile-Time Polymorphism (Static Binding):</strong> Compile-time polymorphism refers to the ability of a program to resolve method calls at compile time. The method that should be executed is determined at the time of compilation.It is achieved using method overloading.</p>
+	<p><strong>Runtime Polymorphism (Dynamic Binding):</strong> Runtime polymorphism refers to the ability of a program to decide which method to invoke at runtime based on the object being referred to. It is achieved using method overriding</p>	
+    <p><strong>Example:</strong> Order Management System</p>
+	<p>Lets take an example of Order Management System</p>
+	<ul>
+		<li>
+			Using Method Overloading (Compile-Time Polymorphism)
+			<ul>
+			  <li><strong>Order Class:</strong> Order class contains overloaded methods, calculateTotal(int quantity, double price) and calculateTotal(int quantity, double price, double discount).</li>
+			  <li>For instore orders we call the calculateTotal without discount.</li>
+			  <li>For online orders we call the calculateTotal with discount.</li>
+			</ul>			
+		</li>
+		<li>
+			Using Method overriding (runtime polymorphism)
+			<ul>
+			  <li><strong>Order Class:</strong> Order class contains common method calculateTotal().</li>
+			  <li>We have subclasses InStoreOrder and onlineOrder which extends Order.</li>
+			  <li>InStoreOrder class will overide the calculateTotal() without discount.</li>
+			  <li>onlineOrder class will overide the calculateTotal with discount.</li>
+			</ul>			
+		</li>		
+	</ul>
+    <h3>Method Overloading</h3>
+    <pre><code>public class Order {
+  public double calculateTotal(int quantity, double price) {
+    return quantity * price;
+  }
+
+  public double calculateTotal(int quantity, double price, double discount) {
+    double total = quantity * price;
+    return total - (total * discount / 100);
+  }
+}</code></pre>
+
+    <h3>Method Overriding</h3>
+    <pre><code>public class OrderBase {
+  protected int quantity;
+  protected double price;
+
+  public OrderBase(int quantity, double price) {
+    this.quantity = quantity;
+    this.price = price;
+  }
+
+  public double calculateTotal() {
+    return quantity * price;
+  }
+}
+
+public class OnlineOrder extends OrderBase {
+  private double discount;
+
+  public OnlineOrder(int quantity, double price, double discount) {
+    super(quantity, price);
+    this.discount = discount;
+  }
+
+  @Override
+  public double calculateTotal() {
+    double total = quantity * price;
+    return total - (total * discount / 100);
+  }
+}
+
+public class InStoreOrder extends OrderBase {
+  public InStoreOrder(int quantity, double price) {
+    super(quantity, price);
+  }
+
+  @Override
+  public double calculateTotal() {
+    return quantity * price;
+  }
+}</code></pre>
+
+    <h3>Main.java – Demo</h3>
+    <pre><code>public class PolymorphismDemo {
+  public static void main(String[] args) {
+    Order order = new Order();
+    System.out.println("=== Compile-Time Polymorphism (Overloading) ===");
+    System.out.println("InStore Total: " + order.calculateTotal(2, 1500));
+    System.out.println("Online Total: " + order.calculateTotal(1, 50000, 10));
+
+    System.out.println("\n=== Runtime Polymorphism (Overriding) ===");
+    OrderBase inStore = new InStoreOrder(2, 1500);
+    OrderBase online = new OnlineOrder(1, 50000, 10);
+
+    System.out.println("InStore Order Total: " + inStore.calculateTotal());
+    System.out.println("Online Order Total: " + online.calculateTotal());
+  }
+}</code></pre>
+
+    <div class="output">
+      <strong>Sample Output:</strong><br>
+      === Compile-Time Polymorphism (Overloading) ===<br>
+      InStore Total: 3000.0<br>
+      Online Total: 45000.0<br><br>
+      === Runtime Polymorphism (Overriding) ===<br>
+      InStore Order Total: 3000.0<br>
+      Online Order Total: 45000.0
+    </div>
+  </div>
+
+  <div class="section">
+	<h2 id="Abstraction-section">🔹 Abstraction</h2>
+	<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>		
+    <p>Abstraction hides complex logic and shows only essential details. Achieved through abstract classes and interfaces.</p>
+    <p><strong>Example:</strong> Order Management System</p>
+	<p>Lets take an example of Order Management System</p>
+	<ul>
+
+		<li><strong>Order Class(Abstract):</strong> The abstract class Order will define the common operations that every order type must implement.</li>		
+			<ul>
+				<li>a) public abstract void processOrder();</li>
+				<li>b) public abstract void cancelOrder();.</li>
+			</ul>
+		<li><strong>OnlineOrder Class:</strong> Extends order class and overrides the processOrder and cancelOrder methods to include additional functionality related to online order.</li>
+		<li><strong>InStoreOrder Class:</strong> Extends order class and overrides the processOrder and cancelOrder methods to include additional functionality related to instore order.</li>
+	</ul>			
+    <h3>Order.java – Abstract Class</h3>
+    <pre><code>public abstract class Order {
+  private int orderId;
+  private String productName;
+
+  public Order(int orderId, String productName) {
+    this.orderId = orderId;
+    this.productName = productName;
+  }
+
+  public int getOrderId() { return orderId; }
+  public String getProductName() { return productName; }
+
+  public abstract void processOrder();
+  public abstract void cancelOrder();
+}</code></pre>
+
+    <h3>OnlineOrder.java – Implementation</h3>
+    <pre><code>public class OnlineOrder extends Order {
+  private String shippingAddress;
+
+  public OnlineOrder(int orderId, String productName, String shippingAddress) {
+    super(orderId, productName);
+    this.shippingAddress = shippingAddress;
+  }
+
+  @Override
+  public void processOrder() {
+    System.out.println("Processing online order: " + getProductName());
+    System.out.println("Shipping to address: " + shippingAddress);
+  }
+
+  @Override
+  public void cancelOrder() {
+    System.out.println("Online order canceled. Refund initiated.");
+  }
+}</code></pre>
+
+    <h3>InStoreOrder.java – Implementation</h3>
+    <pre><code>public class InStoreOrder extends Order {
+  private String pickupLocation;
+
+  public InStoreOrder(int orderId, String productName, String pickupLocation) {
+    super(orderId, productName);
+    this.pickupLocation = pickupLocation;
+  }
+
+  @Override
+  public void processOrder() {
+    System.out.println("Processing in-store order: " + getProductName());
+    System.out.println("Pickup at: " + pickupLocation);
+  }
+
+  @Override
+  public void cancelOrder() {
+    System.out.println("In-store order canceled. Restocking item.");
+  }
+}</code></pre>
+
+    <h3>AbstractionDemo.java</h3>
+    <pre><code>public class AbstractionDemo {
+  public static void main(String[] args) {
+    Order onlineOrder = new OnlineOrder(101, "Laptop", "123 Main Street, City");
+    Order inStoreOrder = new InStoreOrder(102, "Headphones", "Electronics Store - Branch 5");
+
+    System.out.println("=== Online Order ===");
+    onlineOrder.processOrder();
+    onlineOrder.cancelOrder();
+
+    System.out.println("\n=== In-Store Order ===");
+    inStoreOrder.processOrder();
+    inStoreOrder.cancelOrder();
+  }
+}</code></pre>
+
+  </div>
+<a href="#" class="back-to-top">↑</a>  
+</body>
+</html>

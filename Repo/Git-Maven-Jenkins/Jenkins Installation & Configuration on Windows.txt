@@ -1,0 +1,350 @@
+Step-by-Step Jenkins Installation & Configuration on Windows with JDK 21
+Prerequisites
+
+    JDK 21 (Already installed)
+
+    Git for Windows: Download
+
+    Chrome/Firefox browser
+
+Phase 1: Install Jenkins
+Step 1: Download Jenkins Windows Installer
+
+Download Jenkins Windows Installer (.msi)
+
+    Choose Windows under Long-Term Support (LTS)
+
+Step 2: Run Installer
+
+    Double-click .msi file → Click Next
+
+    Set installation directory (e.g., C:\Program Files\Jenkins)
+
+    Service Logon Credentials:
+
+        Select Run service as LocalSystem
+
+        Check Install as a service
+
+    Set JDK path:
+    text
+
+    C:\Program Files\Java\jdk-21   # Your JDK 21 path  
+
+    Complete installation → Launch Jenkins
+
+Step 3: Unlock Jenkins
+
+    Open browser: http://localhost:8080
+
+    Get initial admin password:
+    powershell
+
+    # Run in PowerShell
+    type "C:\Program Files\Jenkins\secrets\initialAdminPassword"
+
+    Paste password → Click Continue
+
+Step 4: Install Plugins
+
+Select:
+
+    Install suggested plugins (Git, Pipeline, GitHub Integration, etc.)
+
+Step 5: Create Admin User
+
+Fill in:
+
+    Username: admin
+
+    Password: [Choose secure password]
+
+    Email: your@email.com
+
+Phase 2: Configure Jenkins with GitHub
+Step 1: Install Required Plugins
+
+    Go to Manage Jenkins → Plugins → Available plugins
+
+    Install:
+
+        GitHub Integration
+
+        Docker Pipeline
+
+        Kubernetes CLI
+
+        Pipeline Utility Steps
+
+        Slack Notification (optional)
+
+Step 2: Configure Global Tools
+
+Manage Jenkins → Tools:
+
+    JDK:
+
+        Name: jdk21
+
+        JAVA_HOME: C:\Program Files\Java\jdk-21
+
+    Git:
+
+        Name: Default
+
+        Path to Git executable: C:\Program Files\Git\bin\git.exe
+
+    Maven:
+
+        Name: maven
+
+        Install automatically → Select latest version
+
+Step 3: Add Credentials
+
+Manage Jenkins → Credentials → System → Global credentials:
+
+    GitHub PAT:
+
+        Kind: Secret text
+
+        Secret: [Your GitHub Personal Access Token]
+
+        ID: github-pat
+		
+		//steps in creating GitHub Personal Access Token
+		1. **Create a GitHub PAT**:
+			- Log in to your GitHub account.
+			- Go to Settings -> Developer settings -> Personal access tokens -> Tokens (classic).
+			- Click "Generate new token" (classic).
+			- Give the token a note (e.g., "Jenkins CI").
+			- Select the following scopes:
+				- `repo` (to access private repositories and manage webhooks)
+				- `admin:repo_hook` (to manage repository hooks)
+			- Click "Generate token".
+			- Copy the generated token (you won't see it again).
+		 2. **Add the PAT as a Secret Text credential in Jenkins**:
+			- In Jenkins, go to "Manage Jenkins" -> "Credentials" -> "System" -> "Global credentials (unrestricted)" -> "Add Credentials".
+			- Choose:
+				- Kind: "Secret text"
+				- Secret: ###################
+				- ID: `github-pat` (this is the ID we'll use in the pipeline)
+				- Description: "GitHub Personal Access Token"
+			- Click "OK".		
+
+    Docker Hub:
+
+        Kind: Username and password
+
+        ID: docker-creds
+
+        Username/Password: Your Docker Hub credentials
+		
+		//generating username and password for docker hub
+		Steps:
+		 1. If you don't have a Docker Hub account, sign up at https://hub.docker.com/signup
+		 2. Once you have an account, note your username and password.
+		 3. For better security, Docker recommends using an access token (instead of your password) for command line and API access.
+		 How to generate an access token:
+		   a. Log in to Docker Hub: https://hub.docker.com
+		   b. Click on your account icon (top right) → Account Settings
+		   c. In the left menu, click "Security"
+		   d. Click "New Access Token"
+		   e. Provide a description (e.g., "Jenkins CI")
+		   f. Set the permissions (for Jenkins, you need at least "Read, Write" for repositories you want to push to)
+		   g. Click "Generate"
+		   h. Copy the generated token (this is the only time you will see it)
+		 4. In Jenkins, when adding the Docker Hub credentials:
+			- Username: your Docker Hub username
+			- Password: the access token you generated (or your Docker Hub password, but token is more secure)
+		 Note: The access token acts as your password. If you lose it, you can regenerate a new one and update in Jenkins.
+Step 4: Configure GitHub Server
+
+Manage Jenkins → System:
+
+    Under GitHub:
+
+        Add GitHub Server → https://api.github.com
+
+        Credentials: Select github-pat
+
+        Test connection → Should show Credentials verified
+
+Phase 3: Create Jenkins Pipeline for microservices-eureka
+Step 1: Create Jenkinsfile in Project Root
+
+Add this to your GitHub repo:
+groovy
+
+// Jenkinsfile
+pipeline {
+    agent any
+    environment {
+        REGISTRY = "docker.io/your-docker-user"  // CHANGE THIS
+        K8S_NAMESPACE = "eureka-prod"
+    }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
+    triggers {
+        githubPush()
+    }
+    parameters {
+        choice(
+            name: 'DEPLOY_ENV',
+            choices: ['staging', 'prod'],
+            description: 'Target environment'
+        )
+        booleanParam(
+            name: 'RUN_TESTS',
+            defaultValue: true,
+            description: 'Run integration tests?'
+        )
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build & Test') {
+            parallel {
+                stage('Config Server') {
+                    steps { buildMicroservice('config-server') }
+                }
+                stage('Eureka Server') {
+                    steps { buildMicroservice('eureka-server') }
+                }
+                stage('Gateway') {
+                    steps { buildMicroservice('gateway') }
+                }
+                stage('Department Service') {
+                    steps { buildMicroservice('department-service') }
+                }
+                stage('Employee Service') {
+                    steps { buildMicroservice('employee-service') }
+                }
+            }
+        }
+        stage('Push Images') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        sh "docker login -u $DOCKER_USER -p $DOCKER_PASS"
+                        def services = ['config-server', 'eureka-server', 'gateway', 'department-service', 'employee-service']
+                        for (service in services) {
+                            sh "docker push $REGISTRY/${service}:${env.GIT_COMMIT}"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh "helm upgrade --install microservices ./helm-chart \
+                            --set global.image.tag=${env.GIT_COMMIT} \
+                            --namespace=${params.DEPLOY_ENV} \
+                            --create-namespace"
+                    }
+                }
+            }
+        }
+    }
+}
+
+void buildMicroservice(String serviceDir) {
+    dir(serviceDir) {
+        bat "mvn clean package -DskipTests=${!params.RUN_TESTS}"  // Windows-compatible
+        bat "docker build -t $env.REGISTRY/${serviceDir}:${env.GIT_COMMIT} ."
+    }
+}
+
+Step 2: Create Pipeline Job
+
+    New Item → Name: microservices-eureka → Pipeline
+
+    Pipeline Section:
+
+        Definition: Pipeline script from SCM
+
+        SCM: Git
+
+        Repository URL: https://github.com/akhilkotti/microservices-eureka.git
+
+        Credentials: Select github-pat
+
+        Script Path: Jenkinsfile
+
+    Build Triggers:
+
+        GitHub hook trigger for GITScm polling
+
+Phase 4: Configure GitHub Webhook
+
+    In your GitHub repo: Settings → Webhooks → Add webhook
+
+        Payload URL: http://[YOUR_PUBLIC_IP]:8080/github-webhook/
+
+            Use localhost:8080 if testing locally
+
+        Content type: application/json
+
+        Secret: Leave empty (or use Jenkins credential)
+
+        Events: Just the push event
+
+    Port Forwarding (If behind router):
+
+        Forward port 8080 to your local machine
+
+Phase 5: Trigger Builds
+Automatic Trigger:
+bash
+
+git push origin main  # Triggers pipeline via webhook
+
+Manual Trigger:
+
+    In Jenkins:
+
+        Open job → Build with Parameters
+
+        Select DEPLOY_ENV and RUN_TESTS
+
+        Click Build
+
+    Command Line:
+    powershell
+
+    # Install Invoke-WebRequest helper
+    $user = "admin"
+    $token = "YOUR_JENKINS_API_TOKEN"  # Get from: http://localhost:8080/user/admin/configure
+    $url = "http://localhost:8080/job/microservices-eureka/buildWithParameters?DEPLOY_ENV=prod&RUN_TESTS=true"
+
+    Invoke-WebRequest -Uri $url -Method Post -Headers @{"Authorization"="Basic $([Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("${user}:${token}")))"}
+
+Troubleshooting Tips
+
+    Jenkins Service Not Starting:
+
+        Restart service:
+        powershell
+
+    Restart-Service Jenkins
+
+GitHub Webhook Failing:
+
+    Check Jenkins URL accessibility
+
+    View logs: Manage Jenkins → System Log
+
+Docker Permission Denied:
+
+    Run Jenkins service as Administrator:
+    powershell
+
+        # Open Services.msc → Jenkins → Properties → Log On → This account → Enter admin credentials
+
+    Note: Replace placeholder values (your-docker-user, YOUR_PUBLIC_IP, etc.) with your actual details

@@ -1,0 +1,118 @@
+To convert multiple records from a JSON path into a list of POJOs in Java, you can use libraries like Jackson or Gson. Here's how you can do it with Jackson:
+
+### 1. Add Jackson Dependency
+
+If you're using Maven, add the Jackson dependency to your `pom.xml`:
+
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.15.2</version>
+</dependency>
+```
+
+### 2. Define Your POJO
+
+Create a POJO class that matches the structure of your JSON records:
+
+```java
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Order {
+    private int id;
+    private String item;
+    private double price;
+
+    // Getters and Setters
+
+    @JsonProperty("id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @JsonProperty("item")
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    @JsonProperty("price")
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+}
+```
+
+### 3. Parse JSON to List of POJOs
+
+Assuming you have a JSON array, use `ObjectMapper` to convert it into a list of your POJOs:
+
+```java
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
+
+public class JsonToPojoConverter {
+    public static void main(String[] args) {
+        String jsonArray = "[{\"id\":1,\"item\":\"Laptop\",\"price\":899.99}, {\"id\":2,\"item\":\"Phone\",\"price\":499.99}]";
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            List<Order> orders = objectMapper.readValue(jsonArray, new TypeReference<List<Order>>() {});
+            for (Order order : orders) {
+                System.out.println(order.getItem() + ": " + order.getPrice());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 4. Using Rest Assured with JSON Path
+
+If you're extracting JSON from an API response using Rest Assured, you can directly parse the response body:
+
+```java
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.util.List;
+
+public class ApiTest {
+    public static void main(String[] args) {
+        Response response = RestAssured.get("https://api.example.com/orders");
+
+        String jsonResponse = response.getBody().asString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            List<Order> orders = objectMapper.readValue(jsonResponse, new TypeReference<List<Order>>() {});
+            for (Order order : orders) {
+                System.out.println(order.getItem() + ": " + order.getPrice());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+This approach allows you to convert multiple JSON records into a list of POJOs using Rest Assured and Jackson.
+
+Would you like to know more or need help with a specific part of this process?

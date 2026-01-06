@@ -1,0 +1,415 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0058) -->
+<HTML><HEAD><TITLE>Thread Interview questions | Java Questions</TITLE>
+<META http-equiv=content-type content="text/html; charset=ISO-8859-1">
+<META 
+content="thread interview questions,java interview questions, core java interview questions, interview questions on java, wait, synchronized keyword, runnable interface, thread lifecycle, difference between thread and process, yield() vs sleep(), wait() vs sleep(), volatile keyword,notify() vs notfiyAll(), dameon threads, Synchronized and non-synchronized methods" 
+name=keywords>
+<STYLE type=text/css>
+.ws6 {
+	FONT-SIZE: 8px
+}
+.ws7 {
+	FONT-SIZE: 9px
+}
+.ws8 {
+	FONT-SIZE: 11px
+}
+.ws9 {
+	FONT-SIZE: 12px
+}
+.ws10 {
+	FONT-SIZE: 13px
+}
+.ws11 {
+	FONT-SIZE: 15px
+}
+.ws12 {
+	FONT-SIZE: 16px
+}
+.ws14 {
+	FONT-SIZE: 19px
+}
+.ws16 {
+	FONT-SIZE: 21px
+}
+.ws18 {
+	FONT-SIZE: 24px
+}
+.ws20 {
+	FONT-SIZE: 27px
+}
+.ws22 {
+	FONT-SIZE: 29px
+}
+.ws24 {
+	FONT-SIZE: 32px
+}
+.ws26 {
+	FONT-SIZE: 35px
+}
+.ws28 {
+	FONT-SIZE: 37px
+}
+.ws36 {
+	FONT-SIZE: 48px
+}
+.ws48 {
+	FONT-SIZE: 64px
+}
+.ws72 {
+	FONT-SIZE: 96px
+}
+.wpmd {
+	FONT-WEIGHT: normal; FONT-SIZE: 13px; FONT-STYLE: normal; FONT-FAMILY: 'Arial'
+}
+DIV {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+UL {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+OL {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+</STYLE>
+
+<STYLE type=text/css>
+A.style2:link {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style2:visited {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style2:active {
+	TEXT-DECORATION: none
+}
+A.style2:hover {
+	BACKGROUND: #ecffec; COLOR: #99cc00; TEXT-DECORATION: none
+}
+A.style1:link {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:visited {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:active {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:hover {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style3:link {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style3:visited {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style3:active {
+	TEXT-DECORATION: none
+}
+A.style3:hover {
+	BACKGROUND: #ecffec; COLOR: #99cc00; TEXT-DECORATION: none
+}
+</STYLE>
+
+<STYLE type=text/css>
+DIV#container {
+	MARGIN-TOP: 0px; MARGIN-LEFT: auto; WIDTH: 787px; MARGIN-RIGHT: auto; POSITION: relative; TEXT-ALIGN: left
+}
+BODY {
+	MARGIN: 0px; TEXT-ALIGN: center
+}
+</STYLE>
+
+<SCRIPT src="../Threads/ac_activex.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="../Threads/loadPage.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR>
+</HEAD>
+<BODY onload=load_threads()>
+<DIV id=container>
+<DIV 
+style="Z-INDEX: 15; LEFT: -110px; OVERFLOW: hidden; POSITION: absolute; TOP: 1px">
+<SCRIPT type=text/javascript><!--
+google_ad_client = "pub-3698926435153013";
+/* 120x600, created 4/21/09 */
+google_ad_slot = "5173970904";
+google_ad_width = 120;
+google_ad_height = 600;
+//-->
+</SCRIPT>
+
+<SCRIPT src="../Threads/show_ads.js" 
+type=text/javascript>
+</SCRIPT>
+</DIV>
+<DIV id=text1 
+style="Z-INDEX: 10; LEFT: -1px; OVERFLOW: auto; WIDTH: 551px; POSITION: absolute; TOP: 21px">
+<DIV class=wpmd>
+<DIV>
+<TABLE class=main style="FONT-SIZE: 90%; COLOR: #253b6d; FONT-FAMILY: verdana" 
+cellSpacing=15>
+  <TBODY>
+  <TR>
+    <TD width="518">
+      <H1 class=ws11>Autosys  Interview Questions</H1></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ1')" 
+      href="#Q1" 
+      name=Q1><STRONG>Q1) Autosys?</STRONG></A> 
+      <DIV id=divQ1>Ans) 
+        <p>AutoSys is an automated job control system for scheduling, monitoring, and reporting. These jobs can reside on any AutoSys-configured machine that is attached to a network. An AutoSys job is any single command, executable, script, or Unix batch file. Each AutoSys job definition contains a variety of qualifying attributes, including the conditions specifying when and where a job should be run. </p>
+        In addition, AutoSys provides utilities to help you define, run, and maintain AutoSys instances and jobs. The included utilities are platform-specific; however, all platforms include the AutoSys graphical user interface (GUI) and Job Information Language (JIL). Both the GUI and JIL enable you to define, manage, monitor, and report on jobs </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ2')" 
+      href="#Q2" 
+      name=Q2><STRONG>Q2) 
+
+
+ AutoSys system components
+
+? 
+      </STRONG></A>
+      <DIV id=divQ2>
+      <P>Ans) <strong>Event Server</strong>:</P>
+      <p>The Event Server, or AutoSys database, is the data repository for all system information and events and
+        all jobs, monitor, and report definitions. Event Server refers to the database where all the AutoSys
+        information, events, and job definitions are stored. Occasionally, the database is called a dataserver,
+        which actually describes a server instance. It is associated data space (or raw disk storage), that can
+        include multiple databases or tablespaces.</p>
+      <p><strong>Event Processor</strong></p>
+      <p>The Event Processor is the heart of AutoSys; it interprets and processes all the events it reads from
+        the AutoSys database. Sometimes called the event_demon, the Event Processor is the program that actually
+        runs AutoSys. It schedules and starts jobs. The Event Processor continually scans the database for
+        events to be processed. When it finds one, it checks whether the event satisfies the starting
+        conditions for any job in the database. Based on this information, the Event Processor first determines
+        what actions to take, then instructs the appropriate Remote Agent process to perform the actions. These
+        actions might be the starting or stopping of jobs, checking for resources, monitoring existing jobs, or
+        initiating corrective procedures.</p>
+      <p><strong>Remote Agent</strong></p>
+      <p>The Remote Agent is a temporary process started by the Event Processor to perform a specific task on a
+        remote, or client, machine. The Remote Agent starts the command specified for a given job, sends running
+        and completion information about a task to the Event Server, then exits. If the Remote Agent is unable
+        to transfer the information, it waits and tries again until it can successfully communicate with the<br>
+        database.</p>
+      <p><strong>Example Scenario on UNIX</strong></p>
+      <p>The example scenario in Figure 1-2 and the numbered explanations that follow it illustrate the
+        interactions between the Event Server, the Event Processor, and Remote Agents. In the example, the
+        following UNIX command line is to be run on WorkStation_2, at the start date and time specified in the
+        AutoSys job definition: <br>
+        rm /tmp/mystuff/* <br>
+        Understanding this example will help you answer many questions that might arise during your experiences
+        with AutoSys.<br>
+        <img width="575" height="360" src="Autosys_clip_image002.gif"> <br>
+      </p>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ3')" 
+      href="#Q3" 
+      name=Q3><STRONG>Q3) Defining Jobs?</STRONG></A> 
+      <DIV id=divQ3>Ans)
+Using AutoSys utilities, you can define a job by assigning it a name and specifying the attributes that describe its associated behavior. These specifications make up the AutoSys job definition. These are the two methods you can use to create job definitions: 
+        <p>&#149;&nbsp; Using the AutoSys Graphical User Interface (GUI). </p>
+        <p>&#149;&nbsp; Using the AutoSys Job Information Language (JIL) through a command-line interface. &nbsp;</p>
+        <p><strong>AutoSys Graphical User Interface</strong></p>
+        <p>The AutoSys GUI allows you to interactively set the attributes that describe when, where, and how a job should run. You create job definitions using the GUI Control Panel and the dialogs you can launch from it. The fields in the GUIs correspond to the AutoSys JIL sub-commands and attributes. In addition, from the GUI Control Panel, you can open applications that allow you to define calendars, monitors, and reports, and that allow you to monitor and manage AutoSys jobs. </p>
+        <p><strong>Job Information Language</strong></p>
+        <p>AutoSys <strong>JIL </strong>is a specification language, with its own syntax, that is used to describe when, where, and how a job should run. When you enter the jil command, you get the jil command prompt, at which you can enter the job definitions one line at a time using this special language. When you exit JIL, the job definition is loaded into the AutoSys database. Alternatively, you can enter the definition as a text file and re-direct the file to the jil command. In this case, the jil command activates the language processor, interprets the information in the text file, and loads this information in the AutoSys database. AutoSys also provides a set of commands that run essential utility programs for defining, controlling, and reporting on jobs. For example, the autorep command allows you to generate a variety of reports about job execution, and the sendevent command allows you to manually control job processing. </p>
+        <p><em><strong>Events Sent by Users</strong></em></p>
+        <p>By using the sendevent command or the Send Event dialog, you can send execute events that affect the running of a job. These are the execute events that you can send, if you have the appropriate permissions: </p>
+        <p>&#149;&nbsp; STARTJOB </p>
+        <p>&#149;&nbsp; FORCE_STARTJOB </p>
+        <p>&#149;&nbsp; KILLJOB </p>
+        <p>&#149;&nbsp; DELETEJOB </p>
+        <p>&#149;&nbsp; CHANGE_STATUS </p>
+        <p>&#149;&nbsp; JOB_ON_HOLD </p>
+        <p>&#149;&nbsp; JOB_OFF_HOLD </p>
+        <p>&#149;&nbsp; JOB_ON_ICE </p>
+        <p>&#149;&nbsp; JOB_OFF_ICE </p>
+        <p><strong>Note:</strong>Make sure you understand the consequences of EVENTS prior to execution of the events. </p>
+        In addition to sending execute events on jobs, you can schedule jobs to start at certain times or under certain conditions. When a job is scheduled to start automatically, permissions are checked on the Remote Agent machine on which the job is to run. The AutoSys Event Processor scans the Event Server for any jobs with starting conditions that have been met. When the starting conditions for a job are met, the Event Processor sends a STARTJOB event to the designated Remote Agent machine </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ4')" 
+      href="#Q4" 
+      name=Q4><STRONG>Q4)AutoSys Job-Level Security?</STRONG></A> 
+      <DIV id=divQ4>
+      <P>Ans) 
+
+
+ The AutoSys security scheme provides individuals and groups of users with edit and execute permissions on a job-by-job basis. AutoSys supports owner, group, and world edit and execute permissions. By default, only the user logged on as the owner of a job can edit or execute a job. The owner can extend permissions to other users and other machines, as described in the following sections. The following are supported </P>
+      <P>AutoSys Job Ownership,<br>
+          AutoSys User Types<br>
+          AutoSys Permission Types<br>
+          Granting Permissions</P>
+      <P><strong>AutoSys Job Ownership</strong></P>
+      <P> By default, the owner of an AutoSys job is the user who defines that job on a particular machine. When a user defines a job on UNIX, the user ID is retrieved from the UNIX environment and attached to the job in the form of <em>user@machine </em>. The owner is defined by the owner job attribute. By default, only the owner can edit and execute the job. The <em>user@machine </em>combination must have execute permission for any command specified in a job on the machine where the job command is to run. The job owner must also have permission to access any device, resource, etc. that the command needs to access. For this process to work, the job owner must have the appropriate system permissions. The owner's umask “write” permission is used as the default “edit” permission of the job, and the umask “execute” permission is used as the default “execute” permission of the job.</P>
+      <P><br>
+          <strong>AutoSys User Types</strong></P>
+      <P>Like UNIX, AutoSys uses the notion of these three types of users for any job: </P>
+      <p>&#149;&nbsp; <strong>Owner </strong>. The user who created the job. </p>
+      <p>&#149;&nbsp; <strong>Group </strong>. Any user who is in the same primary group as the owner. </p>
+      <p>&#149;&nbsp; <strong>World </strong>. Every user. </p>
+      <p>AutoSys uses the UNIX user ID (uid) and group ID (gid) of a job's owner to control the following: </p>
+      <p>&#149;&nbsp; Who can edit, override, or delete a job definition. </p>
+      <p>&#149;&nbsp; Who can execute the UNIX command specified in a job. </p>
+      <p>The owner of a job can allow other users to edit and execute the job by setting the permissions in the job definition (discussed in the next section). </p>
+      <P><strong><br>
+          AutoSys Permission Types</strong></P>
+      <P>By default, only the owner has edit and execute permissions on a job, and all edit and execute permissions are valid only on the machine on which the job was defined. However, the owner can grant different types of permissions when defining a job. Similar to UNIX, AutoSys associates different types of permissions with each job. Every job has the following permission types: </P>
+      <p>&#149;&nbsp; <strong>Edit </strong>. Users can edit, override, or delete a job definition. </p>
+      <p>&#149;&nbsp; <strong>Execute </strong>. Users can send an execute event that affects the running of a job by using the sendevent command or the Send Event dialog. </p>
+      <p>&#149;&nbsp; <strong>Machine </strong>. Users logged onto a machine other than the one on which a job was created can edit or execute the job. </p>
+      <p>&#149;&nbsp; In order for a job to run on a machine other than the one on which the job was defined, the owner of that job must have an account on that machine. </p>
+      <P><br>
+          <strong>Granting Permissions</strong></P>
+      <P>The owner of a job cannot override his or her ownership designation; only the <strong>Edit Superuser </strong> has the authority to change the owner job attribute. However, the owner can grant other users edit and execute permissions for a job by using the GUI or JIL to set the permission job attribute in the job definition. </P>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="142" valign="top"><p><strong>Group Execute </strong></p></td>
+          <td width="62" valign="top"><p>gx </p></td>
+          <td width="380" valign="top"><p>Users assigned to the job owner's primary group can execute the job if logged onto the machine where the job was created (the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine)">user@machine) </a></em>. </p></td>
+        </tr>
+        <tr>
+          <td width="142" valign="top"><p><strong>Group Edit </strong></p></td>
+          <td width="62" valign="top"><p>ge </p></td>
+          <td width="380" valign="top"><p>Users assigned to the job owner's primary group can edit the job if logged onto the machine where the job was created (the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine)">user@machine) </a></em>. </p></td>
+        </tr>
+        <tr>
+          <td width="142" valign="top"><p><strong>All Hosts Execute </strong></p></td>
+          <td width="62" valign="top"><p>mx </p></td>
+          <td width="380" valign="top"><p>Users, regardless of the machine logged onto, can execute the job (otherwise, the user must be logged onto the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine)">user@machine) </a></em>. </p></td>
+        </tr>
+        <tr>
+          <td width="142" valign="top"><p><strong>All Hosts Edit </strong></p></td>
+          <td width="62" valign="top"><p>me </p></td>
+          <td width="380" valign="top"><p>Users, regardless of the machine logged onto, can edit the job (otherwise, the user must be logged onto the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine)">user@machine) </a></em>. </p></td>
+        </tr>
+        <tr>
+          <td width="142" valign="top"><p><strong>World Execute </strong></p></td>
+          <td width="62" valign="top"><p>wx </p></td>
+          <td width="380" valign="top"><p>Users can execute the job if logged onto the machine where the job was created (the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine)">user@machine) </a></em>. World Edit we Users can edit the job if logged onto the machine where the job was created (the machine specified in the owner attribute, i.e., <em><a href="mailto:user@machine">user@machine </a>) </em> . </p></td>
+        </tr>
+      </table>
+      <p>Note:A job and the command it executes will always run as the user specified in the owner attribute of the job definition. Execute permissions determine who can execute events against the job, but not who the job runs as. Even if World Execute permissions are granted, the job will still run as the user. </p>
+      </DIV></TD>
+  </TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ5')" 
+      href="#Q5" 
+      name=Q5><STRONG>Q5) ?</STRONG> </A>
+      <DIV id=divQ5>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ6')" 
+      href="#Q6" 
+      name=Q6><STRONG>Q6) ?</STRONG> </A>
+      <DIV id=divQ6>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ7')" 
+      href="#Q7" 
+      name=Q7><STRONG>Q7) ?</STRONG> </A>
+      <DIV id=divQ7>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ8')" 
+      href="#Q8" 
+      name=Q8><STRONG>Q8) ?</STRONG> </A>
+      <DIV id=divQ8>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ9')" 
+      href="#Q9" 
+      name=Q9><STRONG>Q9) ?</STRONG></A> 
+      <DIV id=divQ9>
+      <P>Ans) &nbsp;</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ10')" 
+      href="#Q10" 
+      name=Q10><STRONG>Q10) ?</STRONG></A> 
+      <DIV id=divQ10>
+      <P>Ans)</P>
+      <P>&nbsp;</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ11')" 
+      href="#Q11" 
+      name=Q11><STRONG>Q11) ?</STRONG></A> 
+      <DIV id=divQ11>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ12')" 
+      href="#Q12" 
+      name=Q12><STRONG>Q12) ?</STRONG></A> 
+      <DIV id=divQ12>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ13')" 
+      href="#Q13" 
+      name=Q13><STRONG>Q13) ?</STRONG> </A>
+      <DIV id=divQ13>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ14')" 
+      href="#Q14" 
+      name=Q14><STRONG>Q14) ?</STRONG></A> 
+      <DIV id=divQ14>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ15')" 
+      href="#Q15" 
+      name=Q15><STRONG>Q15) ? </STRONG></A>
+      <DIV id=divQ15>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ16')" 
+      href="#Q16" 
+      name=Q16><STRONG>Q16) ?</STRONG></A> 
+      <DIV id=divQ16>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ17')" 
+      href="#Q17" 
+      name=Q17><STRONG>Q17) ? </STRONG></A>
+      <DIV id=divQ17>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ18')" 
+      href="#Q18" 
+      name=Q18><STRONG>Q18) ?</STRONG> </A>
+      <DIV id=divQ18>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ19')" 
+      href="#Q19" 
+      name=Q19><STRONG>Q19) ?</STRONG></A> 
+      <DIV id=divq19>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ20')" 
+      href="#Q20" 
+      name=Q20><STRONG>Q20) ?</STRONG> </A>
+      <DIV id=divQ20>
+      <P>Ans) </P>
+      </DIV></TD></TR>	  	  	  	  	  	  	  	  
+</TBODY></TABLE></DIV></DIV></DIV>
+</DIV>
+</BODY></HTML>

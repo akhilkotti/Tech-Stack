@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<table width="760" border="1" bordercolor="#ECE9D8">
+  <tr bgcolor="#CCCCCC">
+    <td colspan="4"><strong>New Message 35 = D </strong></td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td width="204"> Field </td>
+    <td width="76">Tag</td>
+    <td width="252">Description</td>
+    <td width="200">&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>CloRdId</td>
+    <td>11</td>
+    <td rowspan="2">Combination of Tag 11 and Tag 109 must be unique over the same trading date. </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ClientId</td>
+    <td>109</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Market</td>
+    <td>100/207/15</td>
+    <td>Preceddence: 100&gt;207&gt;15. For Tag 100/207 value, pleaser to appendix C </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Symbol </td>
+    <td>22 and 48 </td>
+    <td>Check for View Code using Tag 22 and Tag 48 </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Side</td>
+    <td>54</td>
+    <td><br></td>
+    <td>1 = Buy <br>
+2 = Sell <br>
+3 = Buy minus <br>
+4 = Sell plus <br>
+5 = Sell short <br>
+6 = Sell short exempt <br>
+7 = Undisclosed (valid for IOI and List Order messages only) <br>
+8 = Cross (orders where counterparty is an exchange, valid for all messages except IOIs) <br>
+9 = Cross short </td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderQty</td>
+    <td>38</td>
+    <td>Number of shares ordered. This represents the number of shares for equities or based on normal convention the number of contracts for options, futures, convertible bonds, etc.
+(Prior to FIX 4.2 this field was of type int)<br>    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Price</td>
+    <td>44</td>
+    <td>Price per share<br></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>TimeInForce</td>
+    <td>59(126)</td>
+    <td><p>If 59=6, read Tag 126 for ExpireDate. Absent of this field indicates day order.<br>
+    </p>    </td>
+    <td>0 = Day(GFD)<br>
+1 = Good Till Cancel (GTC) <br>
+2 = At the Opening (OPG) <br>
+3 = Immediate or Cancel (IOC) <br>
+4 = Fill or Kill (FOK) <br>
+5 = Good Till Crossing (GTX) <br>
+6 = Good Till Date(GTD)</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>ExpireTime</td>
+    <td>126</td>
+    <td>Time/Date of order expiration (always expressed in UTC (Universal Time Coordinated, also known as &ldquo;GMT&rdquo;).</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderIncomingTime/SendingTime</td>
+    <td>52</td>
+    <td>Time of message transmission (always expressed in UTC (Universal Time Coordinated, also known as &ldquo;GMT&rdquo;)</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>MsgType</td>
+    <td>35</td>
+    <td>If 35=D, OrderStatus = PendingNew</td>
+    <td>2 = ResendRequest<br>
+        <br>
+    3 = Reject<br>
+    <br>
+    6 = IOI<br>
+    <br>
+    8 = ExecutionReport<br>
+    <br>
+    9 = OrderCancelReject<br>
+    <br>
+    D = NewOrderSingle<br>
+    <br>
+    E = NewOrderList<br>
+    <br>
+    F = OrderCancelRequest<br>
+    <br>
+    G = OrderCancelReplaceRequest<br>
+    <br>
+    H = OrderStatusRequest<br>
+    <br>
+    Q = DontKnowTradeDK</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>OrderStatus</td>
+    <td>39</td>
+    <td><p> Identifies current status of order </p></td>
+    <td>0 = New <br>
+    1 = Partially filled <br>
+    2 = Filled <br>
+    3 = Done for day <br>
+    4 = Canceled <br>
+    6 = Pending Cancel (i.e. result of Order Cancel Request) <br>
+    7 = Stopped <br>
+    8 = Rejected <br>
+    9 = Suspended <br>
+    A = Pending New <br>
+    B = Calculated <br>
+    C = Expired <br>
+    D = Accepted for Bidding <br>
+    E = Pending Replace (i.e. result of Order Cancel/Replace Request)</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>Remark</td>
+    <td>99</td>
+    <td>StoPx if available </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>StoPx</td>
+    <td>99</td>
+    <td><p>Price per unit of quantity (e.g. per share) </p></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr bgcolor="#CCCCCC">
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

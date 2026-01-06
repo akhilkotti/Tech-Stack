@@ -1,0 +1,261 @@
+## ❌ What is the actual error?
+
+The error you are getting is **not a Git bug** and **not a network issue**.
+
+It is this **GitHub authentication error**:
+
+> **GitHub no longer supports password authentication for Git operations over HTTPS.**
+
+In real life, it usually appears as **one of these messages**:
+
+```text
+remote: Support for password authentication was removed on August 13, 2021.
+fatal: Authentication failed for 'https://github.com/akhilkotti/FoodBlogger.git/'
+```
+
+or
+
+```text
+fatal: could not read Username for 'https://github.com': No such device or address
+```
+
+or
+
+```text
+remote: Invalid username or password.
+fatal: Authentication failed
+```
+
+---
+
+## ❓ Why does this error occur?
+
+Because you ran:
+
+```bash
+git push origin develop
+```
+
+and Git tried to authenticate using:
+
+* ❌ **GitHub account password** (no longer allowed)
+* ❌ Old cached credentials
+
+GitHub **rejects the request**, even if the password is correct.
+
+---
+
+## 🧠 Root Cause (Interview-ready explanation)
+
+> GitHub removed password-based authentication for HTTPS Git operations.
+> Any push or pull over HTTPS now **requires a Personal Access Token (PAT)** or **SSH key authentication**.
+
+---
+
+## ✅ What fixes the error?
+
+Any **one** of the following:
+
+### ✔️ Fix 1: Use PAT instead of password
+
+When Git asks for password:
+
+```
+Password = Personal Access Token
+```
+
+---
+
+### ✔️ Fix 2: Switch repo to SSH
+
+```bash
+git remote set-url origin git@github.com:akhilkotti/FoodBlogger.git
+git push origin develop
+```
+
+---
+
+### ✔️ Fix 3: Clear wrong cached credentials
+
+```bash
+git credential-manager reject https://github.com
+```
+
+Then retry push with PAT or SSH.
+
+---
+
+## 🧪 How to confirm the error is gone
+
+Run:
+
+```bash
+git push origin develop
+```
+
+If:
+
+* SSH → **No password prompt**
+* HTTPS → **Prompts once for PAT and succeeds**
+
+✅ Error resolved.
+
+---
+
+### One-line summary (perfect for documentation)
+
+> The error occurs because GitHub no longer accepts account passwords for Git operations over HTTPS; authentication must be done using a Personal Access Token or SSH key.
+
+If you want, tell me **which exact error text you saw**, and I’ll map it line-by-line to the fix.
+
+We are getting this error because GitHub no longer accepts account passwords for Git operations. Instead, we need to use a personal access token (PAT) or an SSH key for authentication.
+ Since the error occurred during a `git push` over HTTPS, we have two options:
+ 
+ Option 1: Switch to SSH (recommended if you have set up SSH keys)
+   - Change the remote URL from HTTPS to SSH
+   - Then try pushing again
+ 
+ Option 2: Continue using HTTPS but with a Personal Access Token (PAT)
+   - Generate a PAT from GitHub and use it as your password when prompted.
+ Let me guide you through both:
+ 
+ ### Option 1: Switch to SSH
+ Step 1: Check current remote URL
+   ```
+   git remote -v
+   ```
+ Step 2: If it shows HTTPS, change to SSH
+   ```
+   git remote set-url origin git@github.com:akhilkotti/FoodBlogger.git
+   ```
+ Step 3: Try pushing again
+   ```
+   git push origin develop
+   ```
+ If you haven't set up SSH keys, you'll need to do that first. You can follow the steps from the previous conversation to generate and add an SSH key to your GitHub account.
+ 
+ ### Option 2: Use a Personal Access Token (for HTTPS)
+ Step 1: Generate a PAT
+   - Go to GitHub: https://github.com/settings/tokens
+   - Click "Generate new token" (classic)
+   - Give it a note (e.g., "Git on Windows")
+   - Select scopes: at least `repo` (to include all repositories)
+   - Generate token and copy it (it will be shown only once)
+ Step 2: When pushing, use your GitHub username and the token as the password.
+   - When prompted for username: `akhilben@gmail.com`
+   - When prompted for password: paste the token
+ Step 3: If you want to avoid entering the token every time, you can cache it with Git Credential Manager (which comes with Git for Windows). After entering it once, it should be cached.
+ 
+ Alternatively, you can set the remote URL to include the token (not recommended as it's less secure and the token might be exposed in config):
+   ```
+   git remote set-url origin https://<TOKEN>@github.com/akhilkotti/FoodBlogger.git
+   ```
+ But a better way is to use the credential helper to store the token:
+   ```
+   git config --global credential.helper manager
+   ```
+ Then when you push, enter your username and the token as password. It should be stored for future use.
+ ### If you prefer to continue with HTTPS without having to type the token every time, set the credential helper to store the credentials:
+   ```
+   git config --global credential.helper wincred  # For older Git for Windows)
+   git config --global credential.helper manager  # For newer versions that come with Git Credential Manager Core
+   ```
+ After setting this, the next time you push, it will ask for your credentials and then store them.
+ ### Summary for Option 2 (PAT) in steps:
+   1. Generate PAT on GitHub.
+   2. Set the remote to HTTPS if it isn't already (or leave it as is, since you are currently using HTTPS).
+   3. When you run `git push`, it will prompt for username and password. Use your GitHub username and the PAT as the password.
+   4. If you set a credential helper, it will remember the credentials for next time.
+ Choose the option that suits you best. If you haven't set up SSH, using PAT with HTTPS is straightforward.
+ Let me know if you need further assistance.
+
+This error occurs because GitHub no longer accepts account passwords for Git operations over HTTPS. You need to use either a Personal Access Token (PAT) or switch to SSH authentication instead. Here's how to fix it:
+
+	Solution 1: Use a Personal Access Token (PAT)
+	Step 1: Generate a PAT
+
+		Go to: https://github.com/settings/tokens
+
+		Click Generate new token (classic)
+
+		Set expiration (e.g., 90 days) and check:
+
+			repo (full control of private repositories)
+
+			workflow (optional for GitHub Actions)
+
+		Generate token → Copy the token (you won't see it again!)
+
+	Step 2: Use PAT for Git Operations
+
+		When prompted for password, paste your PAT instead of your GitHub password:
+		cmd
+
+		git push origin develop
+		Username: akhilben@gmail.com
+		Password: <PASTE_PAT_HERE>  # Not your account password!
+
+	Solution 2: Switch to SSH Authentication
+	Step 1: Generate SSH Key (if you haven't)
+	cmd
+
+	ssh-keygen -t ed25519 -C "akhilben@gmail.com"
+	# Press Enter to accept default location
+
+	Step 2: Add Key to GitHub
+
+		Copy public key:
+		cmd
+
+		type %USERPROFILE%\.ssh\id_ed25519.pub
+
+		Paste at: https://github.com/settings/ssh/new
+
+	Step 3: Change Remote URL to SSH
+	cmd
+
+	git remote set-url origin git@github.com:akhilkotti/FoodBlogger.git
+
+	Step 4: Push with SSH
+	cmd
+
+	git push origin develop  # No password prompt!
+
+	Solution 3: Cache Your Credentials (Windows)
+
+		Update remote URL to use PAT:
+		cmd
+
+	git remote set-url origin https://<PAT>@github.com/akhilkotti/FoodBlogger.git
+
+	Replace <PAT> with your actual token.
+
+	Or store credentials permanently:
+	cmd
+
+	git config --global credential.helper wincred
+
+	Then run:
+	cmd
+
+		git push origin develop
+
+		Enter your GitHub username and PAT when prompted.
+
+Troubleshooting Tips
+
+    Still getting errors? Run:
+    cmd
+
+git remote -v  # Verify remote URL
+
+Reset credentials if cached incorrectly:
+cmd
+
+git credential-manager reject https://github.com
+
+For HTTPS repos, always use:
+
+    Username: Your GitHub email/username
+
+    Password: Your PAT (not account password)

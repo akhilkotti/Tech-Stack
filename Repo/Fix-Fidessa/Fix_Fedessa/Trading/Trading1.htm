@@ -1,0 +1,376 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0058) -->
+<HTML><HEAD><TITLE>Thread Interview questions | Java Questions</TITLE>
+<META http-equiv=content-type content="text/html; charset=ISO-8859-1">
+<META 
+content="thread interview questions,java interview questions, core java interview questions, interview questions on java, wait, synchronized keyword, runnable interface, thread lifecycle, difference between thread and process, yield() vs sleep(), wait() vs sleep(), volatile keyword,notify() vs notfiyAll(), dameon threads, Synchronized and non-synchronized methods" 
+name=keywords>
+<STYLE type=text/css>
+.ws6 {
+	FONT-SIZE: 8px
+}
+.ws7 {
+	FONT-SIZE: 9px
+}
+.ws8 {
+	FONT-SIZE: 11px
+}
+.ws9 {
+	FONT-SIZE: 12px
+}
+.ws10 {
+	FONT-SIZE: 13px
+}
+.ws11 {
+	FONT-SIZE: 15px
+}
+.ws12 {
+	FONT-SIZE: 16px
+}
+.ws14 {
+	FONT-SIZE: 19px
+}
+.ws16 {
+	FONT-SIZE: 21px
+}
+.ws18 {
+	FONT-SIZE: 24px
+}
+.ws20 {
+	FONT-SIZE: 27px
+}
+.ws22 {
+	FONT-SIZE: 29px
+}
+.ws24 {
+	FONT-SIZE: 32px
+}
+.ws26 {
+	FONT-SIZE: 35px
+}
+.ws28 {
+	FONT-SIZE: 37px
+}
+.ws36 {
+	FONT-SIZE: 48px
+}
+.ws48 {
+	FONT-SIZE: 64px
+}
+.ws72 {
+	FONT-SIZE: 96px
+}
+.wpmd {
+	FONT-WEIGHT: normal; FONT-SIZE: 13px; FONT-STYLE: normal; FONT-FAMILY: 'Arial'
+}
+DIV {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+UL {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+OL {
+	MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px
+}
+</STYLE>
+
+<STYLE type=text/css>
+A.style2:link {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style2:visited {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style2:active {
+	TEXT-DECORATION: none
+}
+A.style2:hover {
+	BACKGROUND: #ecffec; COLOR: #99cc00; TEXT-DECORATION: none
+}
+A.style1:link {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:visited {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:active {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style1:hover {
+	COLOR: #333399; TEXT-DECORATION: none
+}
+A.style3:link {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style3:visited {
+	COLOR: #ff6600; TEXT-DECORATION: none
+}
+A.style3:active {
+	TEXT-DECORATION: none
+}
+A.style3:hover {
+	BACKGROUND: #ecffec; COLOR: #99cc00; TEXT-DECORATION: none
+}
+</STYLE>
+
+<STYLE type=text/css>
+DIV#container {
+	MARGIN-TOP: 0px; MARGIN-LEFT: auto; WIDTH: 787px; MARGIN-RIGHT: auto; POSITION: relative; TEXT-ALIGN: left
+}
+BODY {
+	MARGIN: 0px; TEXT-ALIGN: center
+}
+</STYLE>
+
+<SCRIPT src="../Threads/ac_activex.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="../Threads/loadPage.js" 
+type=text/javascript></SCRIPT>
+
+<META content="MSHTML 6.00.2900.2180" name=GENERATOR>
+</HEAD>
+<BODY onload=load_threads()>
+<DIV id=container>
+<DIV 
+style="Z-INDEX: 15; LEFT: -110px; OVERFLOW: hidden; POSITION: absolute; TOP: 1px">
+<SCRIPT type=text/javascript><!--
+google_ad_client = "pub-3698926435153013";
+/* 120x600, created 4/21/09 */
+google_ad_slot = "5173970904";
+google_ad_width = 120;
+google_ad_height = 600;
+//-->
+</SCRIPT>
+
+<SCRIPT src="../Threads/show_ads.js" 
+type=text/javascript>
+</SCRIPT>
+</DIV>
+<DIV id=text1 
+style="Z-INDEX: 10; LEFT: -1px; OVERFLOW: auto; WIDTH: 551px; POSITION: absolute; TOP: 21px">
+<DIV class=wpmd>
+<DIV>
+<TABLE class=main style="FONT-SIZE: 90%; COLOR: #253b6d; FONT-FAMILY: verdana" 
+cellSpacing=15>
+  <TBODY>
+  <TR>
+    <TD width="661">
+      <H1 class=ws11>Trading  Interview Questions</H1></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ1')" 
+      href="#Q1" 
+      name=Q1><STRONG>Q1) The RTD Software Architecture?</STRONG></A> 
+      <DIV id=divQ1>
+        <p>Ans) 
+
+ 
+          <img width="535" height="295" src="Trading1_clip_image002_0000.gif"> </p>
+        <p>The RTD Realtime Trading Desktop is based on an exchange-independent client-server
+          architecture. The RTD Communication Server forms the core of the system and acts as the
+          interface to the RTD and eRTD front-ends as well as to the RTD-API (Application
+          Programing Interface).</p>
+        <p><br>
+            The RTD Communication Server allows the integration of multiple exchanges on a single
+            trading platform with a single front-end for trading on all markets. Due to its flexibility and
+            object-oriented software design the RTD architecture has consistently maintained high
+            levels of performance and reliability across the extensive RTS product portfolio further<br>
+            enhancing RTS&rsquo;s reputation as the electronic trading platform for the future.</p>
+        <p><br>
+            The client-server architecture allows for extremely fast integration of new markets &ndash;
+              a considerable advantage in view of the ever changing developments in the world&rsquo;s<br>
+              exchanges. </p>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ2')" 
+      href="#Q2" 
+      name=Q2><STRONG>Q2) RTD Basket Trader? 
+      </STRONG></A>
+      <DIV id=divQ2>
+      <P>Ans) With the RTD Basket Trader any number of instruments from different exchanges can be traded in
+        the form of a multi-exchange and multi-currency basket.</P>
+      <P>        <img width="495" height="295" src="Trading1_clip_image002_0009.gif">  </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ3')" 
+      href="#Q3" 
+      name=Q3><STRONG>Q3) RTD Quote Machine?</STRONG></A> 
+      <DIV id=divQ3>
+        <p>Ans)The RTD Quote Machine&reg; is the ultimate solution for market makers as it automatically
+          quotes futures, options, equities, warrants and bonds.</p>
+        <p> <img width="575" height="345" src="Trading1_clip_image002_0008.gif"> <BR>
+&nbsp;</p>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ4')" 
+      href="#Q4" 
+      name=Q4><STRONG>Q4)RTD Dartboard?</STRONG></A> 
+      <DIV id=divQ4>
+      <P>Ans) The RTD Dartboard puts a host of functionality at traders&rsquo; fingertips for fast, secure and
+        effective order entry and execution.</P>
+      <P> <img width="547" height="340" src="Trading1_clip_image002_0006.gif"> </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ5')" 
+      href="#Q5" 
+      name=Q5><STRONG>Q5) The RTD Realtime Trading Desktop &ndash;
+      Fast, Diverse and Reliable.?</STRONG> </A>
+      <DIV id=divQ5>
+      <P>Ans) 
+
+ 
+        <img width="431" height="302" src="Trading1_clip_image002_0007.gif"> </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ6')" 
+      href="#Q6" 
+      name=Q6><STRONG>Q6) RTD Connect &ndash; Trading Without
+      Membership.?</STRONG> </A>
+      <DIV id=divQ6>
+      <P>Ans) RTD Connect links RTS customers with each other securely, reliably and swiftly. This
+        means that clients can access global markets in a cost- effective manner by utilizing the
+        exchange memberships of other customers.</P>
+      <P> <img width="427" height="169" src="Trading1_clip_image002_0005.gif"> </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ7')" 
+      href="#Q7" 
+      name=Q7><STRONG>Q7) RTD Net &ndash; The Alternative to
+      Individual Network Connections.?</STRONG> </A>
+      <DIV id=divQ7>
+      <P>Ans) The RTD Net guarantees a high performance network connection for those users of RTD
+        Connect who do not wish to have their own network infrastructure. In addition to
+        providing an optimal connection, RTD Net also provides the means to control, maintain,
+        set-up and install both the connection and the hardware for the required application.</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ8')" 
+      href="#Q8" 
+      name=Q8><STRONG>Q8) RTD-API &ndash; One Single Gateway to the
+      Global Markets.?</STRONG> </A>
+      <DIV id=divQ8>
+      <P>Ans) The Application Programing Interface (API) allows for flexible and functionally rich
+        communication between the RTD system, worldwide exchanges and in-house
+        applications. In addition, the RTD-API allows the integration of order routing, market
+        making, back office and proprietary trading software as well as the realtime data transfer
+        of orders, trades, positions and market information.</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ9')" 
+      href="#Q9" 
+      name=Q9><STRONG>Q9) RTD FIX-API &ndash; The worldwide
+      standardized Interface.?</STRONG></A> 
+      <DIV id=divQ9>
+      <P>Ans) &nbsp;On the basis of the FIX-API the simple and fast integration of customer systems is
+        guaranteed. The RTD FIX-API offers central access to all integrated exchanges in RTD with
+        a single API.</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ10')" 
+      href="#Q10" 
+      name=Q10><STRONG>Q10) Internet Trading Tool eRTD,
+      Everyone can trade on Electronic
+      Markets?</STRONG></A> 
+      <DIV id=divQ10>
+      <P>Ans)The Internet solution eRTD offers retail brokers, day traders and institutional customers a
+        cost-effective and innovative trading application which can be favourably compared with
+        existing professional traders' trading tools with regard to both functionality and reliability.<br>
+        The requirements for eRTD include a PC with Internet access and an Internet browser.<br>
+        eRTD allows the user to trade multiple products on multiple exchanges in realtime and
+        from one single screen only.<br>
+        <strong>The advantages of eRTD:</strong></P>
+      <P> <img width="427" height="101" src="Trading1_clip_image002_0002.gif"> </P>
+      <P>The Internet solution eRTD is a White-Label Product and allows RTS customers to pass on
+        their own &ldquo;Look and Feel&rdquo; to the end customer.</P>
+      <P><br>
+          An interactive product demonstration under www.rtsgroup.net will provide more insight
+          into the functionality of eRTD.</P>
+      </DIV></TD>
+  </TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ11')" 
+      href="#Q11" 
+      name=Q11><STRONG>Q11) mRTD - Define and
+      Implement Individual Market<br>
+      Models.?</STRONG></A> 
+      <DIV id=divQ11>
+      <P>Ans) The matcher solution mRTD allows the efficient design of individual electronic market models.</P>
+      <P>        <img width="431" height="149" src="Trading1_clip_image002_0004.gif">  </P>
+      <P>These characteristics make the mRTD an efficient instrument for centralizing order flows
+          or for selling a bank&rsquo;s individual products.</P>
+      <P><br>
+          The integration of RTD and eRTD as trading applications with mRTD as an internal market
+          creates new, innovative markets. The open RTD architecture allows the mRTD to be used
+          separately from all other RTS products so that it can be used in conjunction with a
+          customer-developed trading solution and other third-party software.</P>
+      <P><br>
+          By using the RTD Quote Machine&reg; in combination with mRTD, the internal market can
+            automatically be provided with liquidity. The integrated basic data management in mRTD
+            enables the user to easily administer and maintain the traded instruments.</P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ12')" 
+      href="#Q12" 
+      name=Q12><STRONG>Q12) ?</STRONG></A> 
+      <DIV id=divQ12>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ13')" 
+      href="#Q13" 
+      name=Q13><STRONG>Q13) ?</STRONG> </A>
+      <DIV id=divQ13>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ14')" 
+      href="#Q14" 
+      name=Q14><STRONG>Q14) ?</STRONG></A> 
+      <DIV id=divQ14>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ15')" 
+      href="#Q15" 
+      name=Q15><STRONG>Q15) ? </STRONG></A>
+      <DIV id=divQ15>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ16')" 
+      href="#Q16" 
+      name=Q16><STRONG>Q16) ?</STRONG></A> 
+      <DIV id=divQ16>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ17')" 
+      href="#Q17" 
+      name=Q17><STRONG>Q17) ? </STRONG></A>
+      <DIV id=divQ17>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ18')" 
+      href="#Q18" 
+      name=Q18><STRONG>Q18) ?</STRONG> </A>
+      <DIV id=divQ18>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ19')" 
+      href="#Q19" 
+      name=Q19><STRONG>Q19) ?</STRONG></A> 
+      <DIV id=divq19>
+      <P>Ans) </P>
+      </DIV></TD></TR>
+  <TR>
+    <TD><A onclick="showHideDiv('divQ20')" 
+      href="#Q20" 
+      name=Q20><STRONG>Q20) ?</STRONG> </A>
+      <DIV id=divQ20>
+      <P>Ans) </P>
+      </DIV></TD></TR>	  	  	  	  	  	  	  	  
+</TBODY></TABLE></DIV></DIV></DIV>
+</DIV>
+</BODY></HTML>

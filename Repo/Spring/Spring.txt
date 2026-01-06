@@ -1,0 +1,58 @@
+Spring 6:
+=========
+What is Spring?
+Project for Spring Series
+Prerequisite and Tools required for Spring
+	- Java (Spring 6 min jdk >17)
+	- Maven / Gradle
+	- JDBC
+	- Hibernate - Spring Data JPA
+	- XML and JSON
+	- Eclipse / IntelliJ
+IoC and DI
+	Layers:
+	- C - Controller
+	- S - Service
+	- R - Repositories
+	
+	- Inversion of Control(IoC)
+		- IoC is a principle
+		- Giving control of creation of objects to Spring framework
+	- Dependency Injection
+		- Its a design pattern
+		- Its the actual implementation of IoC. In spring to achive IoC we use DI.
+		- Spring Frameork does this dependency Injection.
+		- This is achieved by 3 techniques
+			- Constructor Injection
+			- Setter Injection
+			- Field Injection using annotation @AutoWired - Not Recomended
+	- Config file - It can be XML file or Properties file.
+		- 
+What is Spring Boot - https://start.spring.io
+	- Framework which will help in creating project/s faster.
+	- has built in Tomcat
+	- Downside is a lot libraries are loaded which are not required.
+DI using Spring Boot
+Auto wire using Spring Boot
+Spring without Boot
+Spring xml config
+Constructor and Setter Injection
+Autowire in Spring
+Need for Spring Boot MVC
+Spring Boot Web
+Spring MVC and Layers
+Spring Web Http methods GET and PUT
+Spring Web Update and DELETE
+Spring Data JPA
+Spring Data JPA and H2 Setup
+Spring Data JPA with JPA Repository
+Understanding react frontend
+Project Setup with Model
+loading data in H2
+CORS Error in Spring Boot
+Response Entity and GetByID
+Add Product with Image
+Fetching Image
+Update and Delete
+Search Feature
+	- 

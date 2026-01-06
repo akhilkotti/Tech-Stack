@@ -1,0 +1,969 @@
+IMG {
+	BORDER-RIGHT: medium none; BORDER-TOP: medium none; BORDER-LEFT: medium none; BORDER-BOTTOM: medium none
+}
+.BodyTable {
+	BORDER-TOP-WIDTH: 0px; TABLE-LAYOUT: fixed; MARGIN-TOP: -1px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 100%; POSITION: relative; BORDER-COLLAPSE: collapse; BORDER-RIGHT-WIDTH: 0px
+}
+.Category {
+	PADDING-LEFT: 10px; MARGIN-LEFT: 10px
+}
+UL.Category LI {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+.Center {
+	TEXT-ALIGN: center
+}
+.CustomField {
+	BACKGROUND-COLOR: yellow
+}
+.Disclaimer {
+	FONT-SIZE: x-small; COLOR: black; FONT-FAMILY: Verdana; BACKGROUND-COLOR: white
+}
+.DTTable {
+	BORDER-RIGHT: double; TABLE-LAYOUT: auto; BORDER-TOP: double; BORDER-LEFT: double; BORDER-BOTTOM: double
+}
+.EnmGroup {
+	
+}
+.EnmOne {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; COLOR: black; BACKGROUND-COLOR: gainsboro; TEXT-ALIGN: left
+}
+.EnmOneCustomEnum {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; COLOR: black; BACKGROUND-COLOR: yellow; TEXT-ALIGN: left
+}
+.EnmTwo {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; COLOR: black; BACKGROUND-COLOR: white; TEXT-ALIGN: left
+}
+.EnmTwoCustomEnum {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; COLOR: black; BACKGROUND-COLOR: yellow; TEXT-ALIGN: left
+}
+TD.Even {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+TH.Even {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; BORDER-BOTTOM: #000000 1px solid; TEXT-ALIGN: center
+}
+.Fld {
+	VERTICAL-ALIGN: top
+}
+.FldCustomCompEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldCustomCompOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldCustomField {
+	VERTICAL-ALIGN: top
+}
+.fldCustomMessageEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldCustomMessageOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDat {
+	VERTICAL-ALIGN: top
+}
+.FldDatCustomField {
+	VERTICAL-ALIGN: top
+}
+.FldDatCustomFieldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatCustomFieldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatIsDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatHdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDatIsDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #fff4d4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprCustomFieldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprCustomFieldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprIsDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDeprIsDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #fff4d4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDes {
+	VERTICAL-ALIGN: top
+}
+.FldDesCustomField {
+	VERTICAL-ALIGN: top
+}
+.FldDesCustomFieldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesCustomFieldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesIsDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesHdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldDesIsDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #fff4d4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldEnmHdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.FldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldName {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameIsDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #fff4d4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameIsDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameCustomField {
+	VERTICAL-ALIGN: top
+}
+.FldNameCustomFieldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameCustomFieldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameHdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.FldNameOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTag {
+	VERTICAL-ALIGN: top
+}
+.FldTagCustomField {
+	VERTICAL-ALIGN: top
+}
+.FldTagCustomFieldEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagCustomFieldOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: gainsboro; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagIsDeprEven {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagIsDeprOdd {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: normal; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #fff4d4; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagHdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.FldTagOdd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; VERTICAL-ALIGN: top; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+.Footer {
+	
+}
+.Hdr {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.HeaderTable {
+	BORDER-TOP-WIDTH: 0px; TABLE-LAYOUT: fixed; MARGIN-TOP: -1px; BORDER-LEFT-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; WIDTH: 100%; POSITION: relative; BORDER-COLLAPSE: collapse; BORDER-RIGHT-WIDTH: 0px
+}
+.Horiz UL.Menu {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; BACKGROUND: #ffffff 0% 50%; FLOAT: right; PADDING-BOTTOM: 0px; MARGIN: 2px 5px 0pt 0pt; PADDING-TOP: 0px
+}
+.Horiz UL.Menu LI {
+	PADDING-RIGHT: 0pt; DISPLAY: inline; PADDING-LEFT: 0pt; PADDING-BOTTOM: 0pt; MARGIN: 0pt 0pt 0pt 10px; PADDING-TOP: 0pt
+}
+#copyright {
+	
+}
+.InlineComponent {
+	
+}
+.ListTable {
+	BORDER-RIGHT: thin; TABLE-LAYOUT: auto; BORDER-TOP: thin; MARGIN-LEFT: auto; BORDER-LEFT: thin; WIDTH: auto; MARGIN-RIGHT: auto; BORDER-BOTTOM: thin
+}
+.Menu {
+	
+}
+.MessageTitle {
+	FONT-SIZE: medium; MARGIN: 3px 25px 8px; FONT-FAMILY: Arial, Verdana, Helvetica; TEXT-ALIGN: justify
+}
+.MessageTitleCustomMessage {
+	FONT-SIZE: medium; MARGIN: 8px 25px 3px; FONT-FAMILY: Arial, Verdana, Helvetica; BACKGROUND-COLOR: yellow; TEXT-ALIGN: justify
+}
+.MessageTitleCenter {
+	FONT-SIZE: medium; MARGIN: 8px 25px 3px; FONT-FAMILY: Arial, Verdana, Helvetica; TEXT-ALIGN: center
+}
+.MessageTitleCustomMessageCenter {
+	FONT-SIZE: medium; MARGIN: 8px 25px 3px; FONT-FAMILY: Arial, Verdana, Helvetica; TEXT-ALIGN: center
+}
+.MsgCmtContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentCustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentCustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentCustomFieldInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #f0f0f0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent0CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #efef00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent0CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent0CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent1CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfc7ab; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #d0d0d0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c0c0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent2CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b0b0b0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 35%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgCmtHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 35%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0dcc0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentCustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentCustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentCustomFieldInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b4ceb4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent0CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #efef00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent0CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent0CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #a8c0a8; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent1CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfc7ab; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #9cb39c; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #90a590; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent3CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #bfbf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent3CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #bfbf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #849784; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgDeprHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 5%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomFieldInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #f0f0f0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #d0d0d0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c0c0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent3CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent3CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b0b0b0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomFieldInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #f0f0f0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent0CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #efef00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent0CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent0CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfc7ab; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #d0d0d0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 25%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgFldHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 25%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgGE0Lines {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%
+}
+.MsgGE0LinesCustomField {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%
+}
+.MsgGE0LinesCustomFieldInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgGE0LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE0LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE0LinesCustomFieldRef {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%
+}
+.MsgGE0LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/ge0.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgGE1Lines {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%
+}
+.MsgGE1LinesCustomFieldInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%
+}
+.MsgGE1LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE1LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgGE1LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE1LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgGE1LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/ge1.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGE2LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE2LinesInlineComponent2CustomField {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgGE2LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGE2LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgGS0Lines {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%
+}
+.MsgGS0LinesCustomField {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%
+}
+.MsgGS0LinesInlineComponent0CustomField {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%
+}
+.MsgGS0LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS0LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS0LinesCustomFieldRef {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%
+}
+.MsgGS0LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/gs0.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgGS1Lines {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%
+}
+.MsgGS1LinesInlineComponent0CustomField {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%
+}
+.MsgGS1LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS1LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgGS1LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS1LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgGS1LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/gs1.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGS2LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS2LinesInlineComponent2CustomField {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgGS2LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGS2LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGS2LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGE2LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGE2LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGE2LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/ge2.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGS3LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/gs3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGS3LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/gs3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGE3LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/ge3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGE3LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/ge3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgGS3LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/gs3.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGS3LinesInlineComponent4CustomField {
+	BACKGROUND-IMAGE: url(images/gs3.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGE3LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/ge3.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGE3LinesInlineComponent4CustomField {
+	BACKGROUND-IMAGE: url(images/ge3.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgGS2LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgGS2LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/gs2.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgINDENT0Lines {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesCustomComp {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesCustomCompRef {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesCustomField {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesCustomFieldRef {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesInlineComponent0 {
+	WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT0LinesInlineComponent0CustomComp {
+	WIDTH: 3%
+}
+.MsgINDENT0LinesInlineComponent1 {
+	WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT1Lines {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%
+}
+.MsgINDENT1LinesCustomComp {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%
+}
+.MsgINDENT1LinesCustomCompRef {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%
+}
+.MsgINDENT1LinesCustomField {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%
+}
+.MsgINDENT1LinesCustomFieldRef {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%
+}
+.MsgINDENT1LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT1LinesInlineComponent0CustomComp {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT1LinesInlineComponent0CustomField {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT1LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT1LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgINDENT1LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT1LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/indent1.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT2Lines {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%
+}
+.MsgINDENT2LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%
+}
+.MsgINDENT2LinesInlineComponent0 {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT2LinesInlineComponent0CustomCompRef {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #f0f0f0
+}
+.MsgINDENT2LinesInlineComponent0CustomField {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%
+}
+.MsgINDENT2LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT2LinesInlineComponent1CustomCompRef {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT2LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT2LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgINDENT2LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/indent2.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT3LinesInlineComponent1 {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT3LinesInlineComponent1CustomField {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #e0e0e0
+}
+.MsgINDENT3LinesInlineComponent2 {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgINDENT3LinesInlineComponent2CustomField {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #d0d0d0
+}
+.MsgINDENT3LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT3LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgINDENT3LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/indent3.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT4LinesInlineComponent3 {
+	BACKGROUND-IMAGE: url(images/indent4.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT4LinesInlineComponent3CustomField {
+	BACKGROUND-IMAGE: url(images/indent4.gif); WIDTH: 3%; BACKGROUND-COLOR: #c0c0c0
+}
+.MsgINDENT4LinesInlineComponent4 {
+	BACKGROUND-IMAGE: url(images/indent4.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgINDENT4LinesInlineComponent4CustomField {
+	BACKGROUND-IMAGE: url(images/indent4.gif); WIDTH: 3%; BACKGROUND-COLOR: #b0b0b0
+}
+.MsgRqdContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0dcc0; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentCustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentCustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentCustomFieldInlineComponent0 {
+	WIDTH: 5%; TEXT-ALIGN: center
+}
+.MsgRqdContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b4ceb4; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent0CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #efef00; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent0CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent0CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #a8c0a8; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent1CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfc7ab; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #9cb39c; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #90a590; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent3CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent3CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c000; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #849784; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 5%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgRqdHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 5%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: center; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0dcc0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentCustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentCustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentCustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: yellow; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentCustomFieldInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #9cb39c; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #90a590; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent3CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #bfbf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #90a590; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent4CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #bfbf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentCustomFieldRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b4ceb4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent0CustomComp {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #efef00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent0CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #ffe4c4; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent0CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #a8c0a8; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent1CustomCompRef {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfc7ab; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent1CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #dfdf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #9cb39c; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagContentInlineComponent2CustomField {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 10%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #cfcf00; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgTagHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 10%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContent {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContentInlineComponent0 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #f0f0f0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContentInlineComponent1 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #e0e0e0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContentInlineComponent2 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #d0d0d0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContentInlineComponent3 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #c0c0c0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameContentInlineComponent4 {
+	BORDER-TOP: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 15%; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #b0b0b0; BORDER-RIGHT-WIDTH: 1px
+}
+.MsgXMLnameHdrContent {
+	BORDER-TOP: #000000 1px solid; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 8px; VERTICAL-ALIGN: top; BORDER-LEFT: #0000ff 1px solid; WIDTH: 15%; COLOR: white; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #0f0263; TEXT-ALIGN: left; BORDER-RIGHT-WIDTH: 1px
+}
+.NavHeading {
+	BORDER-TOP: #000000 2px solid; FONT-WEIGHT: bold; FONT-SIZE: x-small; WIDTH: 100%; COLOR: black; BORDER-BOTTOM: #000000 2px solid; BACKGROUND-COLOR: #d0d0d0; TEXT-ALIGN: center
+}
+.NavRow {
+	BORDER-TOP: #000000 1px solid; WIDTH: 100%; COLOR: black; BORDER-BOTTOM: thin; LIST-STYLE-TYPE: none; BACKGROUND-COLOR: #f0f0f0; TEXT-ALIGN: left
+}
+.Odd {
+	BORDER-TOP: #000000 1px solid; FONT-SIZE: x-small; BORDER-LEFT: #000000 1px solid; COLOR: black; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: white; BORDER-RIGHT-WIDTH: 1px
+}
+TD.Navrow UL.Section {
+	PADDING-LEFT: 5px; MARGIN-LEFT: 5px
+}
+TD.Navrow UL.Section LI {
+	MARGIN-TOP: 10px; PADDING-LEFT: 5px; MARGIN-LEFT: 5px; LIST-STYLE-TYPE: none
+}
+TD.Navrow UL.category {
+	PADDING-LEFT: 10px; MARGIN-LEFT: 10px
+}
+TD.Navrow UL.section LI {
+	MARGIN-TOP: 10px; PADDING-LEFT: 5px; MARGIN-LEFT: 5px; LIST-STYLE-TYPE: none
+}
+TD.Navrow UL.category LI {
+	MARGIN-TOP: 0px; PADDING-LEFT: 0px; MARGIN-LEFT: 0px; LIST-STYLE-TYPE: none
+}
+.TagUsedIn {
+	
+}
+.TopFrame {
+	BACKGROUND-IMAGE: url(images/new_plus_top_logo.jpg); HEIGHT: 100px
+}
+TR.IsDepr A {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; COLOR: #8b4513; FONT-STYLE: italic
+}
+A {
+	FONT-WEIGHT: normal; FONT-SIZE: x-small; COLOR: #0f0263; TEXT-DECORATION: none
+}
+.Navrow A:hover {
+	DISPLAY: block; WIDTH: 100%; BACKGROUND-COLOR: #d8d8d8
+}
+.Navrow A:link {
+	DISPLAY: block; WIDTH: 100%
+}
+TABLE.BodyTable A:hover {
+	COLOR: white; BACKGROUND-COLOR: #0f0263
+}
+A:link {
+	
+}
+A:visited {
+	
+}
+A:hover {
+	
+}
+BODY {
+	FONT-SIZE: small; FONT-FAMILY: sans-serif
+}
+H1 {
+	MARGIN-TOP: 3px; FONT-SIZE: large; MARGIN-BOTTOM: 2px; FONT-FAMILY: Verdana
+}
+H2 {
+	FONT-WEIGHT: normal; FONT-SIZE: large; COLOR: #000000; TEXT-ALIGN: center
+}
+H3 {
+	FONT-SIZE: medium; COLOR: #000000; TEXT-ALIGN: center
+}
+P {
+	MARGIN-TOP: 2px; FONT-SIZE: x-small; MARGIN-BOTTOM: 2px
+}
+TABLE {
+	WIDTH: 100%; BORDER-COLLAPSE: collapse
+}
+TD {
+	FONT-SIZE: x-small; FONT-FAMILY: Verdana
+}
+TD.center {
+	TEXT-ALIGN: center
+}
+TR.IsDepr TD {
+	COLOR: #8b4513; FONT-STYLE: italic
+}

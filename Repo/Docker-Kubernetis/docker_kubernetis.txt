@@ -1,0 +1,94 @@
+
+
+Environment: Windows.
+
+Pre-requisite: chatgpt
+	Docker:
+		- Download and install docker desktop for windows.
+		- Once installed check if the docker is installed from command prompt. (docker --version)
+	Minikube:	
+		- Download and install the Minikube. 
+		- Once installed check if the Minikube is installed from command prompt. (minikube version)
+	Kubernetes:
+		- Download and install Kubernetes. 
+		- Once installed check if the Kubernetes is installed from command prompt. (kubectl version --client)
+	Maven:
+		- Download and install maven if not installed.
+		- Once installed check if the maven is installed from command prompt. (mvn -version)
+	Java:
+		- Download and install java. Make sure your java version is > 17. (java -verion).
+		
+	Selenium:
+		- Make sure you have all selenium-java jar files in the build path of the IDE and also chrome driver. In my case i use eclipse IDE to test the automation script.
+		
+Procedure:
+	- Start Minikube
+	- clone the github project to your local directory (https://github.com/Vengatesh-m/qa-test.git)
+	- Create docker images for both the frontend and backend.
+		- Navigate to the frontend directory which has the frontend docker file. (Ex:D:\Equitek\qatest\qa-test\frontend)
+		- docker build -t vengatesh27/frontend:v1 (This will build the image and tag it as vengatesh27/frontend:v1)
+		- Navigate to the backent directory which has the backend docker file. (Ex:D:\Equitek\qatest\qa-test\backend)
+		- docker build -t vengatesh27/backend:v1 (This will build the image and tag it as vengatesh27/backend:v1)
+	- Load the both images in the Minikube
+		- minikube image load vengatesh27/frontend:v1
+		- minikube image load vengatesh27/backend:v1
+	- Deploy to Kubernetes
+		- kubectl apply -f backend-deployment.yaml
+		- kubectl apply -f frontend-deployment.yaml
+	- Check if the service is up and running
+		- minikube service frontend-service (Should invoke the browser and show the frontend page)
+	- Script 
+		- Create a maven project 
+		- create a java class FindGreetingText.java
+		- run the test using command (mvn test)
+
+minikube image load backend-image:latest
+minikube image load frontend-image:latest
+kubectl apply -f backend-deployment.yaml
+kubectl apply -f frontend-deployment.yaml
+
+package com.example.greeting
+
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class FindGreetingText {
+
+    @Test
+    public void testGreetingMessage() {
+        WebDriverManager.chromedriver().setup();
+        WebDriver driver = new ChromeDriver();
+        try {
+            driver.get("http://localhost:3000");
+            WebElement h1TagElement = driver.findElement(By.tagName("h1"));
+            String h1TextValue = h1TagElement.getText();
+            assertEquals("Hello from backend!", h1TextValue);
+        } finally {
+            driver.quit();
+        }
+    }
+}
+
+
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().window().fullscreen();
+		driver.manage().deleteAllCookies();
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+		driver.get("http://www.google.com");
+		System.out.println("url" + driver.getCurrentUrl());
+		System.out.println("titel-" + driver.getTitle());
+		System.out.println("cahnged after git clone");
+		
+		 driver.close();		
+		driver.quit();
+//span[contains(text(),'Parts Of A Website: A Cheat Sheet For Non-Techies')]
+
+message:Hello from the Backend!

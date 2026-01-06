@@ -1,0 +1,318 @@
+To deploy your Spring Boot services to a local Kubernetes cluster using Minikube, you'll need to follow several steps. Here's a guide to help you set this up:
+
+### Prerequisites
+
+1. **Minikube**: Make sure you have Minikube installed. You can download it from [Minikube's official page](https://minikube.sigs.k8s.io/docs/start/).
+2. **kubectl**: Kubernetes command-line tool. Install it if you don't have it yet.
+3. **Docker**: Ensure Docker is installed, as Minikube uses Docker to create containers.
+4. **A Dockerfile**: Your Spring Boot application should have a `Dockerfile` for containerization.
+
+### Step 1: Start Minikube
+
+Start Minikube by running the following command:
+
+```bash
+minikube start
+```
+
+### Step 2: Build the Docker Image
+
+You can build your Spring Boot application into a Docker image directly within Minikube’s Docker environment.
+
+```bash
+eval $(minikube docker-env)
+docker build -t your-username/order-booking-service .
+```
+
+Replace `your-username/order-booking-service` with the name of your Docker image.
+
+### Step 3: Create Kubernetes Deployment and Service Files
+
+You need to create YAML files for Kubernetes to define the deployment and service.
+
+#### **deployment.yaml**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-booking-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-booking-service
+  template:
+    metadata:
+      labels:
+        app: order-booking-service
+    spec:
+      containers:
+      - name: order-booking-service
+        image: your-username/order-booking-service:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:postgresql://your-postgresql-service:5432/your-database"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: "your-username"
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "your-password"
+```
+
+#### **service.yaml**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-booking-service
+spec:
+  type: NodePort
+  selector:
+    app: order-booking-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30001
+```
+
+### Step 4: Deploy to Kubernetes
+
+Apply the Kubernetes configuration files using `kubectl`:
+
+```bash
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
+
+### Step 5: Access Your Service
+
+To access your service, use the Minikube service command:
+
+```bash
+minikube service order-booking-service
+```
+
+This will open your default web browser to access the service via the exposed NodePort.
+
+### Step 6: Deploy PostgreSQL (Optional)
+
+If PostgreSQL is not already set up in your Minikube cluster, you can deploy it using Helm or by creating another `deployment.yaml` and `service.yaml` for PostgreSQL.
+
+For example:
+
+#### **postgres-deployment.yaml**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgresql
+  template:
+    metadata:
+      labels:
+        app: postgresql
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:13
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: "your-database"
+        - name: POSTGRES_USER
+          value: "your-username"
+        - name: POSTGRES_PASSWORD
+          value: "your-password"
+```
+
+#### **postgres-service.yaml**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql-service
+spec:
+  type: ClusterIP
+  selector:
+    app: postgresql
+  ports:
+    - port: 5432
+      targetPort: 5432
+```
+
+Apply these files similarly:
+
+```bash
+kubectl apply -f postgres-deployment.yaml
+kubectl apply -f postgres-service.yaml
+```
+
+### Step 7: Verify Deployment
+
+Use the following commands to verify your pods and services are running:
+
+```bash
+kubectl get pods
+kubectl get services
+```
+
+This setup should deploy your Spring Boot application with PostgreSQL on Minikube.
+
+Deploying your services to a local Kubernetes cluster using Minikube in a Windows environment involves several steps. Here’s a guide to help you set it up:
+
+### 1. **Install Prerequisites**
+
+Before starting, ensure you have the following tools installed:
+
+* **Minikube:** This is a local Kubernetes cluster. You can download it from the [official Minikube website](https://minikube.sigs.k8s.io/docs/start/).
+* **kubectl:** Kubernetes command-line tool. This is required to interact with the Kubernetes cluster. You can install it via the Minikube installation or download it separately from the [Kubernetes website](https://kubernetes.io/docs/tasks/tools/).
+* **Docker:** Minikube uses Docker to manage containers. Install Docker Desktop from the [Docker website](https://www.docker.com/products/docker-desktop).
+
+### 2. **Start Minikube**
+
+1. Open a terminal (Command Prompt, PowerShell, or Git Bash).
+
+2. Start Minikube with the command:
+
+   ```bash
+   minikube start --driver=docker
+   ```
+
+   * The `--driver=docker` flag tells Minikube to use Docker as the driver.
+
+3. Once Minikube starts, it creates a Kubernetes cluster in your local environment.
+
+### 3. **Verify the Minikube Cluster**
+
+You can verify that your Minikube cluster is running with the following command:
+
+```bash
+minikube status
+```
+
+### 4. **Deploying Your Application**
+
+1. **Containerize Your Application**
+   First, ensure your application is containerized. You should have a `Dockerfile` in your project root. Build your Docker image:
+
+   ```bash
+   docker build -t your-app-image-name .
+   ```
+
+2. **Load the Image into Minikube**
+   Since Minikube runs its own Docker daemon, load your Docker image into Minikube:
+
+   ```bash
+   minikube image load your-app-image-name
+   ```
+
+3. **Create Kubernetes Deployment and Service YAML**
+   Define your Kubernetes deployment and service in YAML files, for example, `deployment.yaml` and `service.yaml`.
+
+   **Example: `deployment.yaml`**
+
+   ```yaml
+   apiVersion: apps/v1
+   kind: Deployment
+   metadata:
+     name: your-app-deployment
+   spec:
+     replicas: 2
+     selector:
+       matchLabels:
+         app: your-app
+     template:
+       metadata:
+         labels:
+           app: your-app
+       spec:
+         containers:
+         - name: your-app-container
+           image: your-app-image-name
+           ports:
+           - containerPort: 8080
+   ```
+
+   **Example: `service.yaml`**
+
+   ```yaml
+   apiVersion: v1
+   kind: Service
+   metadata:
+     name: your-app-service
+   spec:
+     selector:
+       app: your-app
+     ports:
+       - protocol: TCP
+         port: 80
+         targetPort: 8080
+     type: NodePort
+   ```
+
+4. **Apply the YAML Files**
+
+   Deploy your application to the Kubernetes cluster by applying the YAML files:
+
+   ```bash
+   kubectl apply -f deployment.yaml
+   kubectl apply -f service.yaml
+   ```
+
+### 5. **Access Your Application**
+
+To access your service, run:
+
+```bash
+minikube service your-app-service
+```
+
+This command will open your default web browser with the service’s URL.
+
+### 6. **Monitor Your Application**
+
+You can monitor your deployments, pods, and services using the following `kubectl` commands:
+
+* List all pods:
+
+  ```bash
+  kubectl get pods
+  ```
+
+* List all services:
+
+  ```bash
+  kubectl get services
+  ```
+
+* Describe a specific pod:
+
+  ```bash
+  kubectl describe pod <pod-name>
+  ```
+
+### 7. **Clean Up**
+
+To stop your Minikube cluster:
+
+```bash
+minikube stop
+```
+
+To delete the Minikube cluster:
+
+```bash
+minikube delete
+```
+
+This should help you deploy and run your application locally on Kubernetes using Minikube in a Windows environment.

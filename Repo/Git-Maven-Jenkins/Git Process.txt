@@ -1,0 +1,18 @@
+
+Bit buket code changes:
+=======================
+1. get the  develop branch from remote(bitbuket) to local.
+2. create new feature or bugfix branch from develop branch in local.
+3. Add your changes to the files wherever required in the new feature branch.
+4. commit your changes in your local feature branch.
+5. push the feature branch to remote(bitbuket) and create a Pull Request(PR) to the destination branch develop.
+
+Merge Conflicts:
+================
+1. When user creates a PR from the feature to develop branch, if there is code conflict between feature and develop, message will be displayed in bitbucket against that PR, that this pull request has a conflicts.
+2. To resolve this conflict
+	- get the latest develop branch to your local using git pull command
+	- then using git merge command, merge the develop and feature branch with merge conflict in the local. 
+	  once the merge is done the files which has conflict will have both the changes from feature as well as develop.
+	- open the conflicted file one by one and decide which changes has to be there and save.
+	- once all the files are resolved commit the changes and push the changes to remote

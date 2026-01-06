@@ -1,0 +1,44 @@
+Spring Boot + Kafka || Kafka With and Without Zookeeper 
+	https://www.youtube.com/watch?v=B_btHfHVxGg
+	
+Spring Boot Security Tutorial with OAuth2 and JWT for Beginners & Professionals
+	https://www.youtube.com/watch?v=gqJN-Q5gb1I
+	https://www.youtube.com/watch?v=4Qp8PQkL6K0
+	https://www.youtube.com/watch?v=CLS459yBi-M
+	https://www.youtube.com/watch?v=pSb7R4_9Aqo
+	https://www.youtube.com/watch?v=PdfLB2qMwBI
+	
+Spring Security 6 with Spring Boot and JWT Tutorial	
+	https://www.youtube.com/watch?v=oeni_9g7too
+	
+Authentication Explained: When to Use Basic, Bearer, OAuth2, JWT & SSO
+	https://www.youtube.com/watch?v=9JPnN1Z_iSY
+	
+API Security Explained: Rate Limiting, CORS, SQL & NoSQL Injection, VPN, CSRF, XSS
+	https://www.youtube.com/watch?v=FsB_nRGdeLs
+	1. Rate Limting:
+		- Per Endpoint
+		- Per User/IP
+		- Overall to mitigate DDoS
+	2. CORS (Cross origin resource sharing)
+	3. SQL & NoSQL Injections
+	4. Firewalls
+	5. VPN (Virtual Private Networks)
+	6.CSRF (Cross-Site request forgery)
+		- session cookie, CSRF Token
+	7. XSS (Cross side scripting)
+====================================
+-Check if port 8080 is being used by any application
+C:\WINDOWS\system32>netstat -ano | findstr :8080
+  TCP    0.0.0.0:8080           0.0.0.0:0              LISTENING       4216
+
+-Check which application is using port 8080  
+C:\WINDOWS\system32>tasklist /FI "PID eq 4216"
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+httpd.exe                     4216 Services                   0      5,644 K
+
+-kill the application which is using port 8080
+C:\WINDOWS\system32>taskkill /PID 4216 /F
+SUCCESS: The process with PID 4216 has been terminated.  

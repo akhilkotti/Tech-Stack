@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Collections – List vs Set</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #f7f8fa;
+            color: #1f2937;
+            line-height: 1.65;
+            margin: 0;
+            padding: 32px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: #ffffff;
+            padding: 40px 48px;
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            margin-bottom: 42px;
+            color: #2563eb;
+			font-size: 28px;
+            border-left: 6px solid #2563eb;
+            padding-left: 14px;			
+        }
+
+        h2 {
+            margin-top: 46px;
+            color: #2563eb;
+            border-left: 6px solid #2563eb;
+            padding-left: 14px;
+        }
+
+        h3 {
+            margin-top: 22px;
+            color: #111827;
+        }
+
+        p {
+            margin: 8px 0;
+        }
+
+        ul {
+            margin: 10px 0 20px 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+        }
+
+        pre {
+            background: #0f172a;
+            color: #e5e7eb;
+            padding: 18px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 18px 0;
+            font-size: 14px;
+        }
+
+        code {
+            font-family: Consolas, monospace;
+        }
+
+        .success {
+            background: #dcfce7;
+            border-left: 6px solid #22c55e;
+            padding: 16px 18px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .divider {
+            margin: 40px 0;
+            border-top: 1px dashed #e5e7eb;
+        }
+
+        .footer {
+            margin-top: 56px;
+            padding-top: 28px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 14px;
+            color: #6b7280;
+        }
+		/* =========================
+		   FEATURE CARDS
+		   ========================= */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 5px;
+            padding: 5px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #eaeaea;
+			display: block; /* Changed from default inline for anchor */
+            text-decoration: none; /* Remove underline */
+        }	
+		
+       .feature-header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.0rem;
+            font-weight: 600;
+            display: block;
+            text-decoration: none;
+        }
+
+		.feature-header:hover {
+		  background: linear-gradient(to right, #2980b9, #1a252f);
+		}
+		
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #c0392b;
+        }	
+
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }			
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+	<h1>☕ Java Collections — Comparision</h1>
+
+	<div class="features-grid" id="features-overview">	
+		<div class="feature-card">
+			<a href="#1-section" class="feature-header">List vs Set</a>
+		</div>				
+		<div class="feature-card">
+			<a href="#2-section" class="feature-header">Set vs Map</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#3-section" class="feature-header">List vs Map</a>
+		</div>	
+		<div class="feature-card">
+			<a href="#4-section" class="feature-header">HashSet vs TreeSet</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#5-section" class="feature-header">ArrayList vs LinkedList</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#6-section" class="feature-header">HashMap vs TreeMap</a>
+		</div>		
+		<div class="feature-card">
+			<a href="#7-section" class="feature-header">ConcurrentHashMap vs HashMap</a>
+		</div>			
+		<div class="feature-card">
+			<a href="#8-section" class="feature-header">SynchronizedMap vs ConcurrentHashMap</a>
+		</div>
+	</div>
+<h1 id="1-section">🔹 List vs Set</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+    Use <code>List</code> when order and duplicates matter;
+    use <code>Set</code> when uniqueness and fast lookup are required.
+</div>
+<h2>1️⃣ Ordering</h2>
+
+<h3>List: Ordered (insertion order preserved)</h3>
+
+<pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("C");
+list.add("A");
+list.add("B");
+
+System.out.println(list);   // [C, A, B]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> guarantees that elements are stored and retrieved
+<strong>in the same order they are inserted</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>Set: No guaranteed order (depends on implementation)</h3>
+
+<pre>
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("C");
+set.add("A");
+set.add("B");
+
+System.out.println(set);    // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Set</code> focuses on <strong>uniqueness</strong>, not ordering.
+Some implementations like <code>LinkedHashSet</code> or
+<code>TreeSet</code> do maintain order, but <code>Set</code>
+itself does not guarantee it.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>List: Duplicates allowed</h3>
+
+<pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("A");
+list.add("A");
+
+System.out.println(list);   // [A, A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> does <strong>not perform any duplicate checks</strong>.
+Elements are stored by index.
+</p>
+
+<div class="divider"></div>
+
+<h3>Set: Duplicates NOT allowed</h3>
+
+<pre>
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("A");
+set.add("A");
+
+System.out.println(set);    // [A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Set</code> enforces uniqueness:
+</p>
+
+<ul>
+    <li><code>HashSet</code> → <code>hashCode()</code> + <code>equals()</code></li>
+    <li><code>TreeSet</code> → <code>compareTo()</code> / <code>Comparator</code></li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>List: Search is O(n)</h3>
+
+<pre>
+list.contains("B");   // O(n)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> performs <strong>linear search</strong>
+because it has no hashing or tree structure.
+</p>
+
+<div class="divider"></div>
+
+<h3>Set: Search is O(1) (HashSet)</h3>
+
+<pre>
+set.contains("B");    // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashSet</code> uses hashing, giving
+<strong>constant-time lookup</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>List Internal Structures</h3>
+
+<pre>
+ArrayList  → Dynamic Array
+LinkedList → Doubly Linked List
+</pre>
+
+<pre>
+ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Elements are stored sequentially (array or nodes),
+supporting <strong>index-based access</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>Set Internal Structures</h3>
+
+<pre>
+HashSet       → HashMap
+LinkedHashSet → LinkedHashMap
+TreeSet       → Red-Black Tree
+</pre>
+
+<pre>
+HashSet&lt;String&gt; set = new HashSet&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Set</code> implementations rely on
+<strong>maps or trees</strong> internally to enforce uniqueness.
+</p>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>List: When order & duplicates matter</h3>
+
+<pre>
+List&lt;String&gt; orders = new ArrayList&lt;&gt;();
+orders.add("Order-1");
+orders.add("Order-1");  // valid
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>UI lists</li>
+    <li>Logs</li>
+    <li>Transaction history</li>
+    <li>Ordered data</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>Set: When uniqueness matters</h3>
+
+<pre>
+Set&lt;String&gt; userEmails = new HashSet&lt;&gt;();
+userEmails.add("a@gmail.com");
+userEmails.add("a@gmail.com");  // ignored
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Email IDs</li>
+    <li>User roles</li>
+    <li>Cache keys</li>
+    <li>De-duplication</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="2-section">🔹 Set vs Map</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+    Use <code>Set</code> when you need uniqueness of elements,
+    and use <code>Map</code> when data naturally exists as key–value
+    pairs with fast lookup.
+</div>
+
+<h2>1️⃣ Ordering</h2>
+
+<h3>Set: No guaranteed order (implementation-dependent)</h3>
+
+<pre>
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("C");
+set.add("A");
+set.add("B");
+
+System.out.println(set); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Set</code> focuses on <strong>uniqueness of elements</strong>, not ordering.
+Some implementations like <code>LinkedHashSet</code> preserve insertion order,
+and <code>TreeSet</code> maintains sorted order.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map: No guaranteed order (implementation-dependent)</h3>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+map.put(3, "C");
+map.put(1, "A");
+map.put(2, "B");
+
+System.out.println(map); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> focuses on <strong>key-based lookup</strong>, not ordering.
+<code>LinkedHashMap</code> preserves insertion order,
+and <code>TreeMap</code> sorts by key.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>Set: No duplicate elements</h3>
+
+<pre>
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+set.add("A");
+set.add("A");
+
+System.out.println(set); // [A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Set</code> enforces uniqueness:
+</p>
+
+<ul>
+    <li><code>HashSet</code> → <code>hashCode()</code> + <code>equals()</code></li>
+    <li><code>TreeSet</code> → <code>compareTo()</code> / <code>Comparator</code></li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>Map: No duplicate keys (values may duplicate)</h3>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+map.put(1, "A");
+map.put(1, "B"); // overwrites value
+
+System.out.println(map); // {1=B}
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> enforces <strong>key uniqueness</strong>:
+</p>
+
+<ul>
+    <li>Duplicate key → value replaced</li>
+    <li>Duplicate values → allowed</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>Set: Fast element lookup</h3>
+
+<pre>
+set.contains("A"); // O(1) in HashSet
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashSet</code> uses hashing, providing <strong>constant-time lookup</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map: Fast key-based lookup</h3>
+
+<pre>
+map.get(1); // O(1) in HashMap
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashMap</code> hashes keys, enabling <strong>fast retrieval</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>Set Internals</h3>
+
+<pre>
+HashSet       → HashMap
+LinkedHashSet → LinkedHashMap
+TreeSet       → Red-Black Tree
+</pre>
+
+<pre>
+Set&lt;String&gt; set = new HashSet&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Most <code>Set</code> implementations internally rely on <code>Map</code>
+to enforce uniqueness.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map Internals</h3>
+
+<pre>
+HashMap       → Hash table
+LinkedHashMap → Hash table + linked list
+TreeMap       → Red-Black Tree
+</pre>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> stores <strong>key–value pairs</strong> optimized for lookup.
+</p>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>Set: Unique values only</h3>
+
+<pre>
+Set&lt;String&gt; roles = new HashSet&lt;&gt;();
+roles.add("ADMIN");
+roles.add("ADMIN"); // ignored
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>User roles</li>
+    <li>Unique IDs</li>
+    <li>Email lists</li>
+    <li>De-duplication</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>Map: Key-value relationships</h3>
+
+<pre>
+Map&lt;Integer, String&gt; userMap = new HashMap&lt;&gt;();
+userMap.put(101, "Akhil");
+userMap.put(102, "Ravi");
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>ID → Object mapping</li>
+    <li>Caching</li>
+    <li>Configuration values</li>
+    <li>Frequency counting</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="3-section">🔹 List vs Map</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+    Use <code>List</code> for ordered collections with duplicates,
+    and use <code>Map</code> for fast key-based lookup of values.
+</div>
+<h2>1️⃣ Ordering</h2>
+
+<h3>List: Ordered (insertion order preserved)</h3>
+
+<pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("C");
+list.add("A");
+list.add("B");
+
+System.out.println(list);   // [C, A, B]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> guarantees <strong>insertion order</strong>.
+Elements are stored and retrieved in the same sequence.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map: No guaranteed order (implementation-dependent)</h3>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+map.put(3, "C");
+map.put(1, "A");
+map.put(2, "B");
+
+System.out.println(map);    // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> focuses on <strong>key-based lookup</strong>, not ordering.
+<code>LinkedHashMap</code> preserves insertion order,
+and <code>TreeMap</code> sorts entries by keys.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>List: Duplicates allowed</h3>
+
+<pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+list.add("A");
+list.add("A");
+
+System.out.println(list);   // [A, A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> does <strong>not prevent duplicates</strong>.
+Each element is identified by its index.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map: No duplicate keys (values can duplicate)</h3>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+map.put(1, "A");
+map.put(1, "B"); // overwrites value
+
+System.out.println(map);   // {1=B}
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> enforces <strong>key uniqueness</strong>:
+</p>
+
+<ul>
+    <li>Duplicate key → old value replaced</li>
+    <li>Duplicate values → allowed</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>List: Search is O(n)</h3>
+
+<pre>
+list.contains("B"); // O(n)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>List</code> performs <strong>linear search</strong>
+because it lacks hashing or value-based indexing.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map: Lookup is O(1) (HashMap)</h3>
+
+<pre>
+map.get(1); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashMap</code> uses hashing on keys,
+giving <strong>constant-time lookup</strong> in average cases.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>List Internals</h3>
+
+<pre>
+ArrayList  → Dynamic Array
+LinkedList → Doubly Linked List
+</pre>
+
+<pre>
+List&lt;String&gt; list = new ArrayList&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Sequential storage enables <strong>index-based access</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>Map Internals</h3>
+
+<pre>
+HashMap       → Hash table
+LinkedHashMap → Hash table + linked list
+TreeMap       → Red-Black Tree
+</pre>
+
+<pre>
+Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>Map</code> stores <strong>key–value pairs</strong>,
+optimized for fast lookup by key.
+</p>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>List: Ordered data with duplicates</h3>
+
+<pre>
+List&lt;String&gt; transactions = new ArrayList&lt;&gt;();
+transactions.add("TXN-1");
+transactions.add("TXN-1"); // valid
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>UI lists</li>
+    <li>Logs</li>
+    <li>Ordered results</li>
+    <li>Duplicate records</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>Map: Key-value relationships</h3>
+
+<pre>
+Map&lt;Integer, String&gt; users = new HashMap&lt;&gt;();
+users.put(101, "Akhil");
+users.put(102, "Ravi");
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>ID → Object mapping</li>
+    <li>Configuration</li>
+    <li>Caching</li>
+    <li>Frequency counting</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="4-section">🔹 HashSet vs TreeSet</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+    Use <code>HashSet</code> for fastest uniqueness checks,
+    and use <code>TreeSet</code> when sorted order or range-based operations are required.
+</div>
+<h2>1️⃣ Ordering</h2>
+
+<h3>HashSet: No guaranteed order</h3>
+
+<pre>
+Set&lt;Integer&gt; hashSet = new HashSet&lt;&gt;();
+hashSet.add(30);
+hashSet.add(10);
+hashSet.add(20);
+
+System.out.println(hashSet); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashSet</code> does <strong>not maintain insertion or sorted order</strong>.
+Elements are placed based on their <strong>hash values</strong>, so the order can change.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeSet: Sorted order (natural or custom)</h3>
+
+<pre>
+Set&lt;Integer&gt; treeSet = new TreeSet&lt;&gt;();
+treeSet.add(30);
+treeSet.add(10);
+treeSet.add(20);
+
+System.out.println(treeSet); // [10, 20, 30]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>TreeSet</code> automatically maintains elements in <strong>sorted order</strong> using:
+</p>
+
+<ul>
+    <li>Natural ordering (<code>Comparable</code>)</li>
+    <li>Custom ordering (<code>Comparator</code>)</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>HashSet: Uses <code>hashCode()</code> + <code>equals()</code></h3>
+
+<pre>
+Set&lt;String&gt; hashSet = new HashSet&lt;&gt;();
+hashSet.add("A");
+hashSet.add("A"); // ignored
+
+System.out.println(hashSet); // [A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+An element is considered duplicate if:
+</p>
+
+<pre>
+hashCode() is same AND equals() is true
+</pre>
+
+<div class="divider"></div>
+
+<h3>TreeSet: Uses <code>compareTo()</code> / <code>Comparator</code></h3>
+
+<pre>
+Set&lt;Integer&gt; treeSet = new TreeSet&lt;&gt;();
+treeSet.add(10);
+treeSet.add(10); // ignored because compareTo() == 0
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+In <code>TreeSet</code>, <strong>comparison result defines uniqueness</strong>:
+</p>
+
+<pre>
+compareTo() == 0 → duplicate
+</pre>
+
+<div class="note">
+⚠️ <strong>equals()</strong> is <strong>NOT used</strong> for duplicate detection in TreeSet.
+</div>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>HashSet: O(1)</h3>
+
+<pre>
+hashSet.contains(20); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses hashing → <strong>constant-time operations</strong> in average case.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeSet: O(log n)</h3>
+
+<pre>
+treeSet.contains(20); // O(log n)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses a balanced tree → <strong>logarithmic time</strong> for search, add, and remove.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>HashSet Internal Structure</h3>
+
+<pre>
+HashSet → HashMap
+</pre>
+
+<pre>
+HashSet&lt;E&gt; internally stores elements as:
+HashMap&lt;E, Object&gt;
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Each element is stored as a <strong>key</strong> in a HashMap with a dummy value.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeSet Internal Structure</h3>
+
+<pre>
+TreeSet → Red-Black Tree
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+A self-balancing binary search tree ensures:
+</p>
+
+<ul>
+    <li>Sorted order</li>
+    <li>Guaranteed O(log n) performance</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>HashSet: Fast uniqueness checks</h3>
+
+<pre>
+Set&lt;String&gt; emailIds = new HashSet&lt;&gt;();
+emailIds.add("a@gmail.com");
+emailIds.add("a@gmail.com"); // ignored
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Email IDs</li>
+    <li>User roles</li>
+    <li>Cache keys</li>
+    <li>De-duplication</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>TreeSet: Sorted data & range queries</h3>
+
+<pre>
+Set&lt;Integer&gt; scores = new TreeSet&lt;&gt;();
+scores.add(85);
+scores.add(70);
+scores.add(95);
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Leaderboards</li>
+    <li>Ranking systems</li>
+    <li>Range-based queries (<code>headSet</code>, <code>tailSet</code>)</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="5-section">🔹 ArrayList vs LinkedList</h1>
+<h2>🎯 One-liner (Interview)</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<div class="success">
+    Use <code>ArrayList</code> for fast random access and read-heavy workloads;
+    use <code>LinkedList</code> only when frequent insertions or deletions dominate.
+</div>
+
+<h2>1️⃣ Ordering</h2>
+
+<h3>ArrayList: Ordered (insertion order preserved)</h3>
+
+<pre>
+List&lt;String&gt; arrayList = new ArrayList&lt;&gt;();
+arrayList.add("C");
+arrayList.add("A");
+arrayList.add("B");
+
+System.out.println(arrayList); // [C, A, B]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>ArrayList</code> preserves <strong>insertion order</strong> because elements are
+stored sequentially in an underlying array.
+</p>
+
+<div class="divider"></div>
+
+<h3>LinkedList: Ordered (insertion order preserved)</h3>
+
+<pre>
+List&lt;String&gt; linkedList = new LinkedList&lt;&gt;();
+linkedList.add("C");
+linkedList.add("A");
+linkedList.add("B");
+
+System.out.println(linkedList); // [C, A, B]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>LinkedList</code> also preserves insertion order, but elements are linked
+via nodes rather than stored in array indexes.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>ArrayList: Duplicates allowed</h3>
+
+<pre>
+arrayList.add("A");
+arrayList.add("A");
+
+System.out.println(arrayList); // [C, A, B, A, A]
+</pre>
+
+<div class="divider"></div>
+
+<h3>LinkedList: Duplicates allowed</h3>
+
+<pre>
+linkedList.add("A");
+linkedList.add("A");
+
+System.out.println(linkedList); // [C, A, B, A, A]
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Both allow duplicates because they implement <code>List</code> and do
+<strong>not enforce uniqueness</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>ArrayList: Fast random access – O(1)</h3>
+
+<pre>
+arrayList.get(2); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Direct index-based access due to the underlying array.
+</p>
+
+<div class="divider"></div>
+
+<h3>LinkedList: Slow random access – O(n)</h3>
+
+<pre>
+linkedList.get(2); // O(n)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>LinkedList</code> must traverse nodes sequentially to reach the index.
+</p>
+
+<div class="divider"></div>
+
+<h3>Insertion / Deletion (Middle)</h3>
+
+<pre>
+arrayList.add(1, "X");   // O(n) - shifting required
+linkedList.add(1, "X");  // O(1) - if node reference is known
+</pre>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>ArrayList Internal Structure</h3>
+
+<pre>
+ArrayList → Dynamic Array
+</pre>
+
+<pre>
+ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses a <strong>resizable array</strong>, which automatically grows when capacity is exceeded.
+</p>
+
+<div class="divider"></div>
+
+<h3>LinkedList Internal Structure</h3>
+
+<pre>
+LinkedList → Doubly Linked List (prev | data | next)
+</pre>
+
+<pre>
+LinkedList&lt;String&gt; list = new LinkedList&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Each element is stored in a node with references to previous and next nodes,
+increasing memory overhead.
+</p>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>ArrayList: Read-heavy scenarios</h3>
+
+<pre>
+List&lt;User&gt; users = new ArrayList&lt;&gt;();
+User u = users.get(100); // fast
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>UI lists</li>
+    <li>Search results</li>
+    <li>Index-based access</li>
+    <li>Read-heavy applications</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>LinkedList: Insert/Delete heavy scenarios</h3>
+
+<pre>
+Deque&lt;Task&gt; taskQueue = new LinkedList&lt;&gt;();
+taskQueue.addFirst(new Task());
+taskQueue.removeLast();
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Queue / Deque implementations</li>
+    <li>Frequent insertions/removals at ends</li>
+    <li>Undo / Redo operations</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="6-section">🔹 HashMap vs TreeMap</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+    Use <code>HashMap</code> for fastest key-based lookup,
+    and use <code>TreeMap</code> when sorted keys or range-based operations are required.
+</div>
+<h2>1️⃣ Ordering</h2>
+
+<h3>HashMap: No guaranteed order</h3>
+
+<pre>
+Map&lt;Integer, String&gt; hashMap = new HashMap&lt;&gt;();
+hashMap.put(3, "C");
+hashMap.put(1, "A");
+hashMap.put(2, "B");
+
+System.out.println(hashMap); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashMap</code> does <strong>not maintain insertion or sorted order</strong>.
+Entries are placed based on <strong>hashing of keys</strong>, so iteration order can change.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeMap: Sorted order by key</h3>
+
+<pre>
+Map&lt;Integer, String&gt; treeMap = new TreeMap&lt;&gt;();
+treeMap.put(3, "C");
+treeMap.put(1, "A");
+treeMap.put(2, "B");
+
+System.out.println(treeMap); // {1=A, 2=B, 3=C}
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>TreeMap</code> maintains entries in <strong>sorted order of keys</strong>, using:
+</p>
+
+<ul>
+    <li>Natural ordering (<code>Comparable</code>)</li>
+    <li>Custom ordering (<code>Comparator</code>)</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>HashMap: No duplicate keys (values can duplicate)</h3>
+
+<pre>
+hashMap.put(1, "A");
+hashMap.put(1, "B"); // overwrites value
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Keys must be <strong>unique</strong>.
+Adding a duplicate key <strong>replaces the existing value</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeMap: No duplicate keys (comparison-based)</h3>
+
+<pre>
+treeMap.put(1, "A");
+treeMap.put(1, "B"); // overwrites value
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>TreeMap</code> identifies duplicate keys using:
+</p>
+
+<pre>
+compareTo(key1, key2) == 0
+</pre>
+
+<div class="note">
+⚠️ If comparison returns <strong>0</strong>, the key is treated as duplicate,
+even if <code>equals()</code> is false.
+</div>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>HashMap: O(1) average time</h3>
+
+<pre>
+hashMap.get(2); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses hashing → <strong>constant-time lookup</strong> in average case.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeMap: O(log n) time</h3>
+
+<pre>
+treeMap.get(2); // O(log n)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses a balanced tree → <strong>logarithmic time</strong> for get, put, and remove.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>HashMap Internal Structure</h3>
+
+<pre>
+HashMap → Hash Table (array + buckets)
+</pre>
+
+<pre>
+HashMap&lt;K, V&gt;
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Buckets may internally convert to trees (Java 8+) when collisions increase,
+but ordering is still not guaranteed.
+</p>
+
+<div class="divider"></div>
+
+<h3>TreeMap Internal Structure</h3>
+
+<pre>
+TreeMap → Red-Black Tree
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+A self-balancing binary search tree ensures:
+</p>
+
+<ul>
+    <li>Sorted order</li>
+    <li>Predictable O(log n) performance</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>HashMap: Fast key-based lookup</h3>
+
+<pre>
+Map&lt;String, User&gt; userCache = new HashMap&lt;&gt;();
+userCache.put("u101", new User());
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Caching</li>
+    <li>Configuration values</li>
+    <li>Fast lookups</li>
+    <li>Frequency counting</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>TreeMap: Sorted data & range queries</h3>
+
+<pre>
+NavigableMap&lt;Integer, String&gt; leaderboard = new TreeMap&lt;&gt;();
+leaderboard.put(90, "A");
+leaderboard.put(75, "B");
+leaderboard.put(95, "C");
+
+leaderboard.headMap(90); // scores &lt; 90
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Leaderboards</li>
+    <li>Time-based data</li>
+    <li>Range queries (<code>headMap</code>, <code>tailMap</code>, <code>subMap</code>)</li>
+</ul>
+
+<div class="divider"></div>
+<h1 id="7-section">🔹 ConcurrentHashMap vs HashMap</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+<div class="success">
+    Use <code>HashMap</code> in single-threaded scenarios,
+    and <code>ConcurrentHashMap</code> in multi-threaded environments
+    for thread-safe, high-performance access.
+</div>
+<h2>1️⃣ Ordering</h2>
+
+<h3>HashMap: No guaranteed order</h3>
+
+<pre>
+Map&lt;Integer, String&gt; hashMap = new HashMap&lt;&gt;();
+hashMap.put(3, "C");
+hashMap.put(1, "A");
+hashMap.put(2, "B");
+
+System.out.println(hashMap); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>HashMap</code> does <strong>not preserve insertion or sorted order</strong>.
+Iteration order depends entirely on hashing.
+</p>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: No guaranteed order</h3>
+
+<pre>
+Map&lt;Integer, String&gt; concurrentMap = new ConcurrentHashMap&lt;&gt;();
+concurrentMap.put(3, "C");
+concurrentMap.put(1, "A");
+concurrentMap.put(2, "B");
+
+System.out.println(concurrentMap); // Order NOT guaranteed
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>ConcurrentHashMap</code> also does <strong>not guarantee order</strong>.
+Its focus is <strong>thread safety and concurrency</strong>, not ordering.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Duplicate Handling</h2>
+
+<h3>HashMap: No duplicate keys (values can duplicate)</h3>
+
+<pre>
+hashMap.put(1, "A");
+hashMap.put(1, "B"); // overwrites value
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Keys must be unique.
+A duplicate key <strong>replaces</strong> the old value.
+</p>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: No duplicate keys (values can duplicate)</h3>
+
+<pre>
+concurrentMap.put(1, "A");
+concurrentMap.put(1, "B"); // overwrites value
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Same rule as <code>HashMap</code>, but operations are <strong>thread-safe</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<h3>HashMap: Fast but NOT thread-safe</h3>
+
+<pre>
+hashMap.get(1); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Very fast in <strong>single-threaded</strong> scenarios.
+In multi-threaded code, it may cause:
+</p>
+
+<ul>
+    <li>Data corruption</li>
+    <li>Infinite loops (pre-Java 8)</li>
+    <li>Inconsistent reads</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: Slightly slower but thread-safe</h3>
+
+<pre>
+concurrentMap.get(1); // O(1)
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Uses <strong>fine-grained locking and CAS</strong>.
+Multiple threads can read and write simultaneously without blocking the entire map.
+</p>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Internal Structure</h2>
+
+<h3>HashMap Internal Structure</h3>
+
+<pre>
+HashMap → Hash table (array + buckets)
+</pre>
+
+<pre>
+HashMap&lt;K, V&gt;
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+No synchronization.
+Not safe when multiple threads modify the map.
+</p>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap Internal Structure</h3>
+
+<pre>
+ConcurrentHashMap → Hash table + bucket-level locking + CAS
+</pre>
+
+<p>
+<strong>Explanation:</strong>
+</p>
+
+<ul>
+    <li>Java 7: Segment-level locking</li>
+    <li>Java 8+: Node-level locking + CAS (lock-free reads)</li>
+</ul>
+
+<p>
+This design enables <strong>high concurrency with minimal contention</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Real-World Use Case</h2>
+
+<h3>HashMap: Single-threaded or externally synchronized code</h3>
+
+<pre>
+Map&lt;String, String&gt; config = new HashMap&lt;&gt;();
+config.put("url", "localhost");
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Configuration data</li>
+    <li>Local caches</li>
+    <li>Single-threaded applications</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: Multi-threaded applications</h3>
+
+<pre>
+Map&lt;String, Object&gt; cache = new ConcurrentHashMap&lt;&gt;();
+cache.put("user101", new User());
+</pre>
+
+<p><strong>Use cases:</strong></p>
+
+<ul>
+    <li>Web applications</li>
+    <li>Shared caches</li>
+    <li>Session storage</li>
+    <li>High-concurrency systems</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>🔥 Important Interview Traps</h2>
+
+<h3>Why ConcurrentHashMap does NOT allow null keys or values?</h3>
+
+<pre>
+concurrentMap.put(null, "A"); // ❌ NullPointerException
+</pre>
+
+<p>
+<strong>Answer:</strong><br>
+To avoid ambiguity between:
+</p>
+
+<ul>
+    <li><code>null</code> meaning “key not present”</li>
+    <li><code>null</code> meaning “value stored”</li>
+</ul>
+
+<p>
+This is critical in concurrent reads.
+</p>
+
+<div class="divider"></div>
+
+<h3>Iterator Behavior</h3>
+
+<table>
+    <tr>
+        <th>Map</th>
+        <th>Iterator Type</th>
+    </tr>
+    <tr>
+        <td>HashMap</td>
+        <td>Fail-fast</td>
+    </tr>
+    <tr>
+        <td>ConcurrentHashMap</td>
+        <td>Weakly consistent</td>
+    </tr>
+</table>
+
+<pre>
+// No ConcurrentModificationException
+for (String k : concurrentMap.keySet()) {
+    concurrentMap.put("x", "y");
+}
+</pre>
+
+<div class="divider"></div>
+<h1 id="8-section">🔹SynchronizedMap vs ConcurrentHashMap</h1>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<h2>🎯 One-liner (Interview)</h2>
+
+<div class="success">
+Use <code>SynchronizedMap</code> only for legacy or low-concurrency scenarios;
+use <code>ConcurrentHashMap</code> for modern, high-performance, multi-threaded applications.
+</div>
+<h2>1️⃣ What Are They?</h2>
+
+<h3>SynchronizedMap</h3>
+
+<pre>
+Map&lt;String, String&gt; syncMap =
+    Collections.synchronizedMap(new HashMap&lt;&gt;());
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>SynchronizedMap</code> wraps a regular <code>Map</code> and synchronizes
+<strong>every method using a single lock</strong>.
+</p>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap</h3>
+
+<pre>
+Map&lt;String, String&gt; concurrentMap = new ConcurrentHashMap&lt;&gt;();
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+<code>ConcurrentHashMap</code> is designed for <strong>high concurrency</strong>,
+allowing multiple threads to read and write simultaneously.
+</p>
+
+<div class="divider"></div>
+
+<h2>2️⃣ Thread Safety & Locking</h2>
+
+<h3>SynchronizedMap: Global Lock</h3>
+
+<p>
+All operations acquire a <strong>single monitor lock</strong>.
+</p>
+
+<div class="danger">
+❌ Only one thread can access the map at a time  
+❌ Poor scalability under high load
+</div>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: Fine-Grained Locking</h3>
+
+<ul>
+    <li>Java 7: Segment-level locking</li>
+    <li>Java 8+: Bucket-level locking + CAS</li>
+</ul>
+
+<div class="success">
+✔ Multiple threads can read and write concurrently  
+✔ High throughput and scalability
+</div>
+
+<div class="divider"></div>
+
+<h2>3️⃣ Performance</h2>
+
+<table>
+    <tr>
+        <th>Aspect</th>
+        <th>SynchronizedMap</th>
+        <th>ConcurrentHashMap</th>
+    </tr>
+    <tr>
+        <td>Reads</td>
+        <td>Blocked by lock</td>
+        <td>Lock-free</td>
+    </tr>
+    <tr>
+        <td>Writes</td>
+        <td>Single-threaded</td>
+        <td>Bucket-level locking</td>
+    </tr>
+    <tr>
+        <td>Scalability</td>
+        <td>Poor</td>
+        <td>Excellent</td>
+    </tr>
+</table>
+
+<div class="divider"></div>
+
+<h2>4️⃣ Null Handling</h2>
+
+<h3>SynchronizedMap</h3>
+
+<pre>
+syncMap.put(null, "value");   // ✅ Allowed
+syncMap.put("key", null);     // ✅ Allowed
+</pre>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap</h3>
+
+<pre>
+concurrentMap.put(null, "value"); // ❌ NullPointerException
+concurrentMap.put("key", null);   // ❌ NullPointerException
+</pre>
+
+<div class="note">
+Nulls are disallowed in <code>ConcurrentHashMap</code> to avoid ambiguity in
+concurrent reads.
+</div>
+
+<div class="divider"></div>
+
+<h2>5️⃣ Iteration Behavior</h2>
+
+<h3>SynchronizedMap: Fail-Fast</h3>
+
+<pre>
+synchronized (syncMap) {
+    for (String key : syncMap.keySet()) {
+        // manual synchronization required
+    }
+}
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Iteration requires <strong>external synchronization</strong>,
+otherwise <code>ConcurrentModificationException</code> may occur.
+</p>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap: Weakly Consistent</h3>
+
+<pre>
+for (String key : concurrentMap.keySet()) {
+    concurrentMap.put("x", "y"); // ✅ No CME
+}
+</pre>
+
+<p>
+<strong>Explanation:</strong><br>
+Iterators:
+</p>
+
+<ul>
+    <li>Never throw CME</li>
+    <li>May reflect some updates</li>
+    <li>Never see corrupted data</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>6️⃣ Atomic Operations</h2>
+
+<h3>SynchronizedMap (Not Atomic)</h3>
+
+<pre>
+if (!syncMap.containsKey(key)) {
+    syncMap.put(key, value); // ❌ NOT atomic
+}
+</pre>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap (Atomic APIs)</h3>
+
+<pre>
+concurrentMap.putIfAbsent(key, value);
+concurrentMap.computeIfAbsent(key, k -> loadValue());
+</pre>
+
+<div class="success">
+✔ Built-in atomic methods  
+✔ Eliminates race conditions
+</div>
+
+<div class="divider"></div>
+
+<h2>7️⃣ Real-World Use Cases</h2>
+
+<h3>SynchronizedMap</h3>
+
+<ul>
+    <li>Legacy codebases</li>
+    <li>Low-concurrency applications</li>
+    <li>Simple synchronization needs</li>
+</ul>
+
+<div class="divider"></div>
+
+<h3>ConcurrentHashMap</h3>
+
+<ul>
+    <li>Web applications</li>
+    <li>Microservices</li>
+    <li>In-memory caches</li>
+    <li>Session storage</li>
+    <li>Rate limiting</li>
+</ul>
+
+<div class="divider"></div>
+</div>
+<a href="#" class="back-to-top">↑</a>
+</body>
+</html>
+
