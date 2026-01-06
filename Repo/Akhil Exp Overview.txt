@@ -1,7 +1,0 @@
-0:00–0:15 | The Hook & Experience "Hi, I’m Akhil. I’m a Technical Project Manager with over 15 years of experience building high-impact solutions across healthcare, financial services, and enterprise platforms. I didn't just start in management; I spent the first half of my career as a developer and tech lead working hands-on with Java, React, and Cloud deployments."
-
-0:15–0:35 | The Technical Edge "That technical foundation is my greatest asset. It allows me to sit down with engineers, dive into architecture, and identify potential risks long before they hit production. I don't just pass along requirements—I translate complex business goals into execution-ready roadmaps that teams can actually build."
-
-0:35–0:55 | Recent Impact "Most recently, I spent two and a half years leading a healthcare staffing platform. I owned everything from backlog structure and sprint delivery to high-level stakeholder collaboration. My focus was always on balancing business priorities with technical feasibility to ensure our delivery was both predictable and high-quality."
-
-0:55–1:15 | The "Why ENO8" & Call to Action "I’m looking for my next challenge at a place like ENO8, where technical excellence and client partnership are the core focus. I want to be the bridge that helps your engineering teams and clients stay perfectly aligned. I’m ready to bring my leadership and hands-on mindset to your next big project. Thanks for watching, and I look forward to connecting."
