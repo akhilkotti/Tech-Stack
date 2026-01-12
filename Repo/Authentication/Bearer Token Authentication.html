@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Bearer Token Authentication – End-to-End Flow</title>
+<meta charset="UTF-8">
+<title>Bearer Token Login & Secure Flow</title>
 
-  <style>
+<style>
     body {
       margin: 0;
       font-family: "Segoe UI", Arial, sans-serif;
@@ -107,436 +107,538 @@
       background: linear-gradient(to right, #2563eb, transparent);
       margin: 40px 0;
     }
-  </style>
+</style>
+
 </head>
-
 <body>
-	<div class="container">
-
-	<h1>🔐 Bearer Tokens — Explained Clearly</h1>
-
-	<div class="note">
-	  <strong>Interview-Ready One-Liner:</strong><br />
-	  Bearer token authentication works by issuing a time-limited token after login,
-	  which the client sends in the <code class="inline">Authorization: Bearer</code> header
-	  for subsequent requests—avoiding repeated credential exposure and enabling
-	  stateless, scalable security.
-	</div>
-
-	<div class="divider"></div>
-
-	<h2>🔁 What Is a Bearer Token?</h2>
-
-	<p>
-	A <strong>Bearer Token</strong> is a <strong>temporary credential</strong> issued by the server
-	<strong>after successful authentication</strong>.
-	</p>
-
-	<div class="warning">
-	  Whoever <strong>bears the token</strong> can access protected resources —
-	  <strong>no password required</strong> on subsequent requests.
-	</div>
-
-	<div class="divider"></div>
-
-	<h2>🔄 Complete Flow (Start → End)</h2>
-
-	<h3>1️⃣ Initial Login (Authentication)</h3>
-
-	<pre>
-	POST /login
-	Content-Type: application/json
-
-	{
-	  "username": "admin",
-	  "password": "admin123"
-	}
-	</pre>
-
-	<ul>
-	  <li>Credentials sent <strong>once</strong></li>
-	  <li>Server validates user</li>
-	  <li>Server issues token (usually JWT)</li>
-	</ul>
-
-	<h3>2️⃣ Token Issued by Server</h3>
-
-	<pre>
-	{
-	  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
-	  "expires_in": 3600
-	}
-	</pre>
-
-	<p>Token typically contains:</p>
-	<ul>
-	  <li>User ID</li>
-	  <li>Roles / scopes</li>
-	  <li>Expiry timestamp</li>
-	  <li>Signature (tamper protection)</li>
-	</ul>
-
-	<h3>3️⃣ Subsequent Requests (Authorization)</h3>
-
-	<pre>
-	GET /secure/data
-	Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-	</pre>
-
-	<ul>
-	  <li>No username/password</li>
-	  <li>Server validates token</li>
-	  <li>Access granted if token is valid</li>
-	</ul>
-
-	<div class="divider"></div>
-
-	<h2>🔐 Bearer Token vs Basic Authentication</h2>
-
-	<table>
-	  <tr>
-		<th>Aspect</th>
-		<th>Basic Auth</th>
-		<th>Bearer Token</th>
-	  </tr>
-	  <tr>
-		<td>Credentials sent</td>
-		<td>Every request</td>
-		<td>Only once</td>
-	  </tr>
-	  <tr>
-		<td>Password exposure</td>
-		<td>High</td>
-		<td>None after login</td>
-	  </tr>
-	  <tr>
-		<td>Token expiry</td>
-		<td>❌ No</td>
-		<td>✅ Yes</td>
-	  </tr>
-	  <tr>
-		<td>Revocation</td>
-		<td>❌ Hard</td>
-		<td>✅ Easy</td>
-	  </tr>
-	  <tr>
-		<td>Mobile / SPA friendly</td>
-		<td>❌ No</td>
-		<td>✅ Yes</td>
-	  </tr>
-	  <tr>
-		<td>Microservices ready</td>
-		<td>❌ No</td>
-		<td>✅ Yes</td>
-	  </tr>
-	</table>
-
-	<div class="divider"></div>
-
-	<h2>⚠️ Important Security Notes (Interview Gold)</h2>
-
-	<div class="warning">
-	  Bearer tokens must be protected — anyone with the token can act as the user.
-	</div>
-
-	<ul>
-	  <li>✅ Always use HTTPS</li>
-	  <li>✅ Keep access tokens short-lived</li>
-	  <li>✅ Store securely (HTTP-only cookies / secure storage)</li>
-	  <li>❌ Avoid LocalStorage for sensitive apps</li>
-	</ul>
-
-	<div class="divider"></div>
-
-	<h2>🔄 Token Expiry & Refresh</h2>
-
-	<ul>
-	  <li><strong>Access Token</strong> → short-lived (15 min – 1 hour)</li>
-	  <li><strong>Refresh Token</strong> → long-lived</li>
-	  <li>Refresh token used to obtain new access token</li>
-	</ul>
-
-	<div class="divider"></div>
-
-	<h2>🌍 Where Bearer Tokens Are Used</h2>
-
-	<ul>
-	  <li>REST APIs</li>
-	  <li>Mobile applications</li>
-	  <li>Single Page Applications (React / Angular)</li>
-	  <li>Microservices communication</li>
-	  <li>OAuth2 & OpenID Connect</li>
-	  <li>API Gateways</li>
-	</ul>
-	</div>
-	<div class="container">
-
-	<h1>🔐 End-to-End Postman Flow: Login → JWT → Secure API</h1>
-
-	<h2>✅ Pre-Check (Do This Once)</h2>
-
-	<ul>
-	  <li>Spring Boot app is <strong>RUNNING</strong> in Eclipse</li>
-	  <li>Console shows:</li>
-	</ul>
-
-	<pre>
-	Tomcat started on port(s): 8080
-	</pre>
-
-	<ul>
-	  <li>PostgreSQL is running</li>
-	  <li><code class="inline">users</code> table contains a valid user</li>
-	  <li>Password is <strong>BCrypt encrypted</strong></li>
-	  <li><code class="inline">/login</code> is permitted in SecurityConfig</li>
-	</ul>
-
-	<div class="divider"></div>
-
-	<h2>1️⃣ Create Postman Environment (MANDATORY)</h2>
-
-	<h3>Step 1</h3>
-	<ul>
-	  <li>Open Postman</li>
-	  <li>Click <strong>Environments</strong></li>
-	  <li>Click <strong>+ New</strong></li>
-	</ul>
-
-	<h3>Step 2 – Environment Name</h3>
-
-	<pre>
-	Bearer-Auth-Env
-	</pre>
-
-	<h3>Step 3 – Add Variable</h3>
-
-	<table>
-	  <tr>
-		<th>Variable Name</th>
-		<th>Initial Value</th>
-		<th>Current Value</th>
-	  </tr>
-	  <tr>
-		<td>jwt_token</td>
-		<td>(empty)</td>
-		<td>(empty)</td>
-	  </tr>
-	</table>
-
-	<p><strong>Click Save</strong></p>
-
-	<div class="divider"></div>
-
-	<h2>2️⃣ Create Login Request (<code class="inline">/login</code>)</h2>
-
-	<h3>Step 1 – Request Details</h3>
 
-	<ul>
-	  <li>Name: <strong>POST Login</strong></li>
-	  <li>Method: <strong>POST</strong></li>
-	</ul>
+<div class="container">
 
-	<pre>
-	http://localhost:8080/login
-	</pre>
 
-	<h3>Step 2 – Headers</h3>
 
-	<table>
-	  <tr>
-		<th>Key</th>
-		<th>Value</th>
-	  </tr>
-	  <tr>
-		<td>Content-Type</td>
-		<td>application/json</td>
-	  </tr>
-	</table>
+<h1> Bearer Tokens — Explained Clearly</h1>
 
-	<h3>Step 3 – Body</h3>
+<div class="note">
+  <strong>Interview-Ready One-Liner:</strong><br />
+  Bearer token authentication works by issuing a time-limited token after login,
+  which the client sends in the <code class="inline">Authorization: Bearer</code> header
+  for subsequent requests—avoiding repeated credential exposure and enabling
+  stateless, scalable security.
+</div>
 
-	<p>Select: <strong>Body → raw → JSON</strong></p>
+<div class="divider"></div>
 
-	<pre>
-	{
-	  "username": "admin",
-	  "password": "password"
-	}
-	</pre>
+<h2> What Is a Bearer Token?</h2>
 
-	<div class="divider"></div>
+<p>
+A <strong>Bearer Token</strong> is a <strong>temporary credential</strong> issued by the server
+<strong>after successful authentication</strong>.
+</p>
 
-	<h2>3️⃣ Auto-Store Token (IMPORTANT PART)</h2>
+<div class="warning">
+  Whoever <strong>bears the token</strong> can access protected resources —
+  <strong>no password required</strong> on subsequent requests.
+</div>
 
-	<h3>Step 1</h3>
-	<ul>
-	  <li>Open <strong>Scripts</strong> tab</li>
-	  <li>Select <strong>Post-response</strong></li>
-	</ul>
+<div class="divider"></div>
+<h1>Bearer Token Login & Secure API Flow</h1>	
+<p><strong>complete, step-by-step flow</strong> of BOTH:</p>
 
-	<h3>Step 2 – Paste Script</h3>
+<p> <strong>LOGIN FLOW (/login)</strong><br>
+and<br>
+ <strong>SECURE FLOW (/secure)</strong></p>
 
-	<pre>
-	var responseJson = pm.response.json();
-	pm.environment.set("jwt_token", responseJson.token);
-	console.log("JWT saved:", responseJson.token);
-	</pre>
+<p>Shows every step, every method, every class involved — in the exact order executed by Spring Boot, Spring Security, and the custom code.</p>
 
-	<p><strong>Click Save</strong></p>
+<hr class="divider">
 
-	<div class="divider"></div>
+<h2> PART 1 — LOGIN FLOW ( `/login` )</h2>
 
-	<h2>4️⃣ Select Environment (CRITICAL)</h2>
+<h3> <strong>Step 1: Postman Sends Login Request</strong></h3>
 
-	<pre>
-	Bearer-Auth-Env
-	</pre>
+<pre>
+POST http://localhost:8081/login
+Content-Type: application/json
 
-	<div class="warning">
-	  ⚠️ If environment shows <strong>No environment</strong>, the token will NOT be saved.
-	</div>
+{
+  "username": "john",
+  "password": "12345"
+}
+</pre>
 
-	<div class="divider"></div>
+<hr>
 
-	<h2>5️⃣ Send Login Request</h2>
+<h3> <strong>Step 2: Request Enters Spring Security Filter Chain</strong></h3>
 
-	<p>Click <strong>Send</strong></p>
+<p>Spring Security filters run first.</p>
 
-	<h3>Expected Response</h3>
+<p><strong>BUT</strong> your filter (<code class="inline">BearerTokenFilter</code>) defines:</p>
 
-	<pre>
-	{
-	  "token": "eyJhbGciOiJIUzI1NiJ9..."
-	}
-	</pre>
+<pre>
+shouldNotFilter("/login") → true
+</pre>
 
-	<div class="divider"></div>
+<p>So the filter is <strong>skipped</strong>.</p>
 
-	<h2>6️⃣ Verify Token Stored</h2>
+<hr>
 
-	<ul>
-	  <li>Open <strong>Environments</strong></li>
-	  <li>Select <strong>Bearer-Auth-Env</strong></li>
-	</ul>
+<h3> <strong>Step 3: Request Reaches DispatcherServlet</strong></h3>
 
-	<pre>
-	jwt_token = eyJhbGciOiJIUzI1NiJ9...
-	</pre>
+<p>DispatcherServlet decides which controller to call.</p>
 
-	<div class="success">
-	  🎉 Token stored automatically
-	</div>
+<pre>
+/login → AuthController.login()
+</pre>
 
-	<div class="divider"></div>
+<hr>
 
-	<h2>7️⃣ Create Secure Request (<code class="inline">/secure</code>)</h2>
+<h3> <strong>Step 4: Controller Method Starts</strong></h3>
 
-	<ul>
-	  <li>Name: <strong>GET Secure</strong></li>
-	  <li>Method: <strong>GET</strong></li>
-	</ul>
+<pre>
+@PostMapping("/login")
+public Map<String, String> login(@RequestBody Map<String, String> req) {
+    String token = service.login(req.get("username"), req.get("password"));
+    return Map.of("token", token);
+}
+</pre>
 
-	<pre>
-	http://localhost:8080/secure
-	</pre>
+<p>Steps inside this:</p>
+<ol>
+    <li>Extract <code class="inline">username</code> from request body</li>
+    <li>Extract <code class="inline">password</code></li>
+    <li>Call <code class="inline">AuthService.login(username, password)</code></li>
+</ol>
 
-	<div class="divider"></div>
+<hr>
 
-	<h2>8️⃣ Use Stored Token</h2>
+<h3> <strong>Step 5: AuthService.login() is executed</strong></h3>
 
-	<h3>Option A (RECOMMENDED)</h3>
+<pre>
+User user = repository.findByUsername(username)
+</pre>
 
-	<ol>
-	  <li>Authorization tab</li>
-	  <li>Type: <strong>Bearer Token</strong></li>
-	  <li>Token:</li>
-	</ol>
+<p>This triggers:</p>
+<ul>
+    <li>JPA → Hibernate → PostgreSQL</li>
+</ul>
 
-	<pre>
-	{{jwt_token}}
-	</pre>
+<pre>
+SELECT * FROM users WHERE username="john";
+</pre>
 
-	<h3>Option B (Manual Header)</h3>
+<p>User returned → OR exception thrown if missing.</p>
 
-	<pre>
-	Authorization: Bearer {{jwt_token}}
-	</pre>
+<hr>
 
-	<div class="divider"></div>
+<h3> <strong>Step 6: Validate Password</strong></h3>
 
-	<h2>9️⃣ Test Secure API</h2>
+<pre>
+encoder.matches(password, user.getPassword())
+</pre>
 
-	<p>Click <strong>Send</strong></p>
+<p>If wrong:</p>
 
-	<h3>Expected Response</h3>
+<pre>
+throw new RuntimeException("Invalid credentials")
+</pre>
 
-	<pre>
-	You have accessed a SECURED endpoint!
-	</pre>
+<hr>
 
-	<div class="divider"></div>
+<h3> <strong>Step 7: Generate a Token</strong></h3>
 
-	<h2>🔴 Negative Tests (VERY IMPORTANT)</h2>
+<pre>
+String token = UUID.randomUUID().toString();
+</pre>
 
-	<h3>❌ Without Token</h3>
+<p>Example token:</p>
 
-	<ul>
-	  <li>Remove Authorization</li>
-	  <li>Send request</li>
-	</ul>
+<pre>
+0c96e09b-7ed8-43ab-a90e-1aabf0cbfdd8
+</pre>
 
-	<pre>
-	401 Unauthorized
-	</pre>
+<hr>
 
-	<h3>❌ Invalid Token</h3>
+<h3> <strong>Step 8: Store Token in memory tokenStore</strong></h3>
 
-	<pre>
-	Authorization: Bearer abc.xyz.123
-	</pre>
+<pre>
+tokenStore.put(token, username);
+</pre>
 
-	<pre>
-	401 Unauthorized
-	</pre>
+<p>Example:</p>
 
-	<div class="divider"></div>
+<pre>
+tokenStore["0c96e09b"] = "john"
+</pre>
 
-	<h2>🧠 What Happens Internally (Interview Gold)</h2>
+<hr>
 
-	<pre>
-	POST /login
-	 → DB lookup
-	 → BCryptPasswordEncoder.matches()
-	 → JWT issued
-	 → Postman saves token automatically
+<h3> <strong>Step 9: AuthController Returns Token to Client</strong></h3>
 
-	GET /secure
-	 → JwtAuthenticationFilter
-	 → Token validated
-	 → SecurityContext set
-	 → Controller allowed
-	</pre>
+<pre>
+{
+  "token": "0c96e09b-7ed8-43ab-a90e-1aabf0cbfdd8"
+}
+</pre>
 
-	<div class="divider"></div>
+<hr>
 
-	<h2>🎯 Interview-Ready Summary</h2>
+<h3> <strong>LOGIN FLOW SUMMARY</strong></h3>
 
-	<div class="success">
-	  JWT-based authentication is tested by first obtaining a token from a login endpoint,
-	  storing it automatically in a Postman environment via post-response scripts, and
-	  reusing it in secured API calls through the Authorization Bearer header.
-	</div>
+<pre>
+Postman
+  ↓
+SecurityFilter (skipped)
+  ↓
+AuthController.login()
+  ↓
+AuthService.login()
+  ↓
+UserRepository.findByUsername()
+  ↓
+Password check
+  ↓
+Generate token
+  ↓
+Store in map
+  ↓
+Return token
+</pre>
 
-	<h2>✅ Final Checklist</h2>
+<hr class="divider">
 
-	<ul>
-	  <li>✔ Environment created</li>
-	  <li>✔ Token auto-saved</li>
-	  <li>✔ Authorization header injected</li>
-	  <li>✔ 401 without token</li>
-	  <li>✔ 200 with token</li>
-	</ul>
+<h2>🚀 PART 2 — SECURE FLOW ( `/secure` )</h2>
 
-	</div>
+<p>Now user sends:</p>
+
+<pre>
+GET /secure
+Authorization: Bearer &lt;TOKEN&gt;
+</pre>
+
+<hr>
+
+<h3> <strong>Step 1: Postman Sends Secure API Request</strong></h3>
+
+<pre>
+GET http://localhost:8081/secure
+Authorization: Bearer 0c96e09b-7ed8-43ab-a90e-1aabf0cbfdd8
+</pre>
+
+<hr>
+
+<h3> <strong>Step 2: Request Enters Spring Security Filter Chain</strong></h3>
+
+<p>This time <code class="inline">/secure</code> is NOT excluded.</p>
+
+<p>So Security calls:</p>
+
+<h3>FIRST — <code class="inline">shouldNotFilter()</code></h3>
+
+<pre>
+shouldNotFilter("/secure") = false
+</pre>
+
+<p>So filter <strong>will execute</strong>.</p>
+
+<hr>
+
+<h3> <strong>Step 3: BearerTokenFilter.doFilterInternal() is invoked</strong></h3>
+
+<pre>
+doFilterInternal(request, response, chain)
+</pre>
+
+<hr>
+
+<h3> <strong>Step 4: Get Authorization Header</strong></h3>
+
+<pre>
+String header = request.getHeader("Authorization");
+</pre>
+
+<p>Header must be:</p>
+
+<pre>
+Bearer &lt;token&gt;
+</pre>
+
+<p>If missing → respond 401.</p>
+
+<hr>
+
+<h3> <strong>Step 5: Extract Token</strong></h3>
+
+<pre>
+String token = header.substring(7);
+</pre>
+
+<p>Example:</p>
+
+<pre>
+"Bearer 0c96e09b..." → "0c96e09b..."
+</pre>
+
+<hr>
+
+<h3> <strong>Step 6: Validate Token</strong></h3>
+
+<pre>
+String username = authService.validateToken(token);
+</pre>
+
+<p>Inside:</p>
+
+<pre>
+return tokenStore.get(token);
+</pre>
+
+<p>If token exists → username returned<br>
+If not → 401 Unauthorized</p>
+
+<hr>
+
+<h3> <strong>Step 7: Create Authentication Object</strong></h3>
+
+<pre>
+Authentication auth =
+ new UsernamePasswordAuthenticationToken(
+    username,
+    null,
+    List.of(new SimpleGrantedAuthority("ROLE_USER"))
+ );
+</pre>
+
+<hr>
+
+<h3> <strong>Step 8: Store in Spring Security Context</strong></h3>
+
+<pre>
+SecurityContextHolder.getContext().setAuthentication(auth);
+</pre>
+
+<p>This marks request as <strong>authenticated</strong>.</p>
+
+<hr>
+
+<h3> <strong>Step 9: Continue Filter Chain</strong></h3>
+
+<pre>
+chain.doFilter(request, response);
+</pre>
+
+<p>Now <strong>filtering is done</strong>, user is authenticated, control goes to DispatcherServlet.</p>
+
+<hr>
+
+<h3> <strong>Step 10: DispatcherServlet Finds Matching Controller</strong></h3>
+
+<pre>
+/secure → SecureController.secure()
+</pre>
+
+<hr>
+
+<h3> <strong>Step 11: Controller Method Executes</strong></h3>
+
+<pre>
+@GetMapping("/secure")
+public String secure(Authentication authentication)
+</pre>
+
+<p><code class="inline">authentication.getName()</code> returns <strong>"john"</strong>.</p>
+
+<hr>
+
+<h3> <strong>Step 12: Response Returned to Client</strong></h3>
+
+<pre>
+Hello john — Bearer Auth Success!
+</pre>
+
+<hr>
+
+<h3> <strong>SECURE FLOW SUMMARY</strong></h3>
+
+<pre>
+Postman
+  ↓
+SecurityFilterChain
+  ↓
+shouldNotFilter("/secure") = false
+  ↓
+BearerTokenFilter.doFilterInternal()
+  ↓
+Extract header
+  ↓
+Validate token (AuthService)
+  ↓
+Create Authentication
+  ↓
+Set SecurityContext
+  ↓
+chain.doFilter()
+  ↓
+DispatcherServlet
+  ↓
+SecureController.secure()
+  ↓
+Return "Hello &lt;username&gt;"
+</pre>
+<hr class="divider">
+<h2> FINAL SUPER SUMMARY (Both Flows)</h2>
+
+<pre>
+LOGIN FLOW:  
+Postman → /login → AuthController → AuthService → tokenStore.put() → return token
+
+SECURE FLOW:
+Postman → /secure → BearerTokenFilter → validate token → SecurityContext → Controller → return success
+</pre>
+<hr class="divider">
+<h2>✔ BEARER TOKEN PROS</h2>
+
+<table>
+<tr><th>Benefit</th><th>Explanation</th></tr>
+<tr><td>Username/password NOT sent per request</td><td>More secure</td></tr>
+<tr><td>Authentication expensive only once</td><td>Faster subsequent requests</td></tr>
+<tr><td>Token can expire</td><td>Better security</td></tr>
+<tr><td>Token can be revoked</td><td>Logout possible</td></tr>
+<tr><td>Works well with mobile apps</td><td>Store token in app memory */</td></tr>
+</table>
+
+<div class="divider"></div>
+
+<h2>❌ BEARER TOKEN CONS</h2>
+
+<table>
+<tr><th>Problem</th><th>Explanation</th></tr>
+<tr><td>Requires login endpoint</td><td>Needs extra API</td></tr>
+<tr><td>Tokens must be stored somewhere</td><td>Memory / DB / Redis</td></tr>
+<tr><td>Must implement expiration manually</td><td>More logic needed</td></tr>
+<tr><td>Tokens can be stolen</td><td>If intercepted, attacker has access</td></tr>
+</table>
+
+<div class="divider"></div>
+
+<h1> BASIC AUTH VS BEARER TOKEN — SIDE BY SIDE</h1>
+
+<table>
+<tr><th>Concept</th><th>Basic Auth</th><th>Bearer Token</th></tr>
+<tr><td>Credentials sent every request</td><td>Yes</td><td>No</td></tr>
+<tr><td>Token sent every request</td><td>No</td><td>Yes</td></tr>
+<tr><td>Login endpoint</td><td>Not required</td><td>Required</td></tr>
+<tr><td>Performance</td><td>Slow (DB hit every time)</td><td>Fast (DB hit once)</td></tr>
+<tr><td>Token expiration</td><td>Not supported</td><td>Yes, can be added</td></tr>
+<tr><td>Token revocation</td><td>Hard</td><td>Easy</td></tr>
+<tr><td>Security level</td><td>Low</td><td>Medium/High</td></tr>
+<tr><td>Supported by browsers</td><td>Yes</td><td>No</td></tr>
+<tr><td>Session management</td><td>None</td><td>Token based</td></tr>
+</table>
+
+<div class="divider"></div>
+
+<h1> SECURITY DIFFERENCE</h1>
+
+
+<h2> BASIC AUTH SECURITY WEAKNESS</h2>
+
+<p>Every request exposes:</p>
+
+<pre>username:password</pre>
+
+<p>Even though it's Base64 encoded, it is very easy to decode.</p>
+
+<div class="divider"></div>
+
+<h2> BEARER TOKEN SECURITY WEAKNESS</h2>
+
+<p>If token leaks, attacker has full access until:</p>
+
+<ul>
+  <li>token expires</li>
+  <li>or token is revoked</li>
+</ul>
+
+<div class="divider"></div>
+
+<h1> WHEN TO USE BASIC AUTH?</h1>
+
+<p>Use Basic Auth when:</p>
+
+<ul>
+  <li>Internal service talking to another internal service</li>
+  <li>Low-security environments</li>
+  <li>Temporary admin tools</li>
+  <li>Quick prototypes</li>
+  <li>No sessions or tokens needed</li>
+</ul>
+
+<div class="divider"></div>
+
+<h1> WHEN TO USE BEARER TOKEN?</h1>
+
+<p>Use Bearer Token when:</p>
+
+<ul>
+  <li>Secure APIs</li>
+  <li>Mobile apps</li>
+  <li>Microservices</li>
+  <li>Login-based web apps</li>
+  <li>Stateless REST services</li>
+  <li>Need token expiry + logout</li>
+</ul>
+
+<div class="divider"></div>
+
+<h1> BEARER TOKEN IS BETTER THAN BASIC AUTH</h1>
+
+<p>Why?</p>
+
+<ul>
+  <li>Username/password is NOT exposed every time</li>
+  <li>Faster (no DB queries each request)</li>
+  <li>Token can expire</li>
+  <li>Token can be revoked</li>
+  <li>Scalable for distributed apps</li>
+</ul>
+
+<div class="divider"></div>
+
+<h1> IMPORTANT: YOUR IMPLEMENTATION IS <strong>PURE BEARER TOKEN</strong>, NOT JWT</h1>
+
+<p>Your token is a:</p>
+
+<pre>UUID stored in memory</pre>
+
+<p>NOT a self-contained signed JWT.</p>
+
+<div class="divider"></div>
+
+<h1> FINAL SUMMARY</h1>
+
+<h2>Basic Auth</h2>
+
+<pre>Authorization: Basic Base64(username:password)</pre>
+
+<ul>
+  <li>Password sent each request</li>
+  <li>DB lookup every time</li>
+  <li>Weak security</li>
+</ul>
+
+<h2>Bearer Token</h2>
+
+<pre>Authorization: Bearer &lt;token&gt;</pre>
+
+<ul>
+  <li>Password used only once</li>
+  <li>Token used after login</li>
+  <li>More secure and faster</li>
+</ul>
+
+<div class="divider"></div>
+
+</div>
+
 </body>
 </html>
