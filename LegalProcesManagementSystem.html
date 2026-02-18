@@ -1,0 +1,3747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LPMS – Complete Use Cases</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background-color: #f8fafc;
+            color: #1f2937;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px;
+            background: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            color: #0f172a;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #1d4ed8;
+            margin-top: 60px;
+            border-bottom: 3px solid #1d4ed8;
+            padding-bottom: 8px;
+        }
+        h3 {
+            color: #065f46;
+            margin-top: 35px;
+        }
+        h4 {
+            color: #334155;
+            margin-top: 25px;
+        }
+        p {
+            margin: 10px 0;
+        }
+        ul {
+            margin: 10px 0 10px 25px;
+        }
+        li {
+            margin: 6px 0;
+        }
+        .problem {
+            background: #fee2e2;
+            border-left: 6px solid #dc2626;
+            padding: 18px;
+            margin: 30px 0;
+        }
+        .context {
+            background: #e0f2fe;
+            border-left: 6px solid #0284c7;
+            padding: 18px;
+            margin: 30px 0;
+        }
+        .final {
+            background: #f1f5f9;
+            border-left: 6px solid #475569;
+            padding: 18px;
+            margin-top: 35px;
+            font-weight: 600;
+        }
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 60px 0;
+        }
+        .toc {
+            background: #f1f5f9;
+            padding: 25px;
+            border-left: 6px solid #0f172a;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+		
+		/* Back to Top button styling */
+        .back-to-top-btn {
+            display: inline-block;
+            margin: 10px 0 20px;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            color: #2c3e50;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top-btn:hover {
+            background: #e0e0e0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }	
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #e74c3c;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            background: #c0392b;
+        }	
+
+        footer {
+            text-align: center;
+            margin-top: 35px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            font-size: 13px;
+        }		
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+<h1>LPMS – Complete Use Case Documentation</h1>
+<p style="text-align:center;"><strong><em>Detailed Step-by-Step Explanation of All Use Cases</em></strong></p>
+
+<div class="toc" id="features-overview">
+<h2>Table of Contents</h2>
+<ul>
+    <li><a href="#uc1">1. Client Intake & Onboarding</a></li>
+    <li><a href="#uc2">2. Case Management & Tracking</a></li>
+    <li><a href="#uc3">3. Document Collection & Management</a></li>
+    <li><a href="#uc4">4. Managed Paralegal Support</a></li>
+    <li><a href="#uc5">5. AI-Assisted Drafting & Review</a></li>
+    <li><a href="#uc6">6. Workflow Automation</a></li>
+    <li><a href="#uc7">7. Billing & Payments</a></li>
+    <li><a href="#uc8">8. Client Communication Portal</a></li>
+    <li><a href="#uc9">9. Compliance & Security</a></li>
+    <li><a href="#uc10">10. Reporting & Firm Insights</a></li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 1 -->
+<!-- ========================================================= -->
+<h2 id="uc1">1. Client Intake & Onboarding</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Managing new clients efficiently)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without <strong>Legal Practice Management Software (LPMS)</strong>)</strong></p>
+
+<p>An immigration law firm receives a new inquiry:</p>
+
+<ul>
+    <li>Client sends an email → incomplete details</li>
+    <li>Staff replies asking for missing information</li>
+    <li>Client sends documents via email / WhatsApp</li>
+    <li>Paralegal copies data into Excel</li>
+    <li>Attorney reviews later and asks for corrections</li>
+</ul>
+
+<p><strong>Result:</strong></p>
+
+<ul>
+    <li>3–5 days wasted</li>
+    <li>Multiple back-and-forth emails</li>
+    <li>High chance of missing or incorrect data</li>
+</ul>
+</div>
+
+<div class="solution">
+<h2>How <strong>Legal Practice Management Software (LPMS)</strong> Solves This — Step by Step (Real-Time Example)</h2>
+
+<h3>Real-Time Example Context</h3>
+
+<ul>
+    <li>Client: Ravi Kumar (Software Engineer)</li>
+    <li>Visa Type: H-1B</li>
+    <li>Law Firm: ABC Immigration Law, California</li>
+    <li>Goal: Start an H-1B filing quickly and accurately</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>STEP 1: Client Receives a Structured Digital Intake Form</h2>
+
+<h4>What Happens</h4>
+
+<p>Ravi contacts the firm through:</p>
+
+<ul>
+    <li>Website</li>
+    <li>Referral</li>
+    <li>Email</li>
+</ul>
+
+<p>Firm sends a secure intake form link generated by <strong>Legal Practice Management Software (LPMS)</strong></p>
+
+<h4>What the Client Sees</h4>
+
+<p>A clean, guided online form, divided into sections:</p>
+
+<ul>
+    <li>Personal Information</li>
+    <li>Visa Type Selection</li>
+    <li>Employment Details</li>
+    <li>Immigration History</li>
+    <li>Document Upload</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No free-text emails</li>
+    <li>No confusion</li>
+    <li>Client knows exactly what to fill</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 2: Client Enters Personal Details (Once Only)</h2>
+
+<h4>Data Collected</h4>
+
+<ul>
+    <li>Full name (as per passport)</li>
+    <li>Date of birth</li>
+    <li>Nationality</li>
+    <li>Passport number</li>
+    <li>Contact details</li>
+</ul>
+
+<h4>Real-Time Validation</h4>
+
+<ul>
+    <li>Mandatory fields cannot be skipped</li>
+    <li>Passport number format is checked</li>
+    <li>Email and phone format validated</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>If Ravi skips passport number:</p>
+
+<p>❌ “Passport number is required to proceed”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents incomplete applications</li>
+    <li>Reduces follow-up emails</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 3: Client Selects Case Type</h2>
+
+<h4>What Happens</h4>
+
+<p>Ravi selects:</p>
+
+<p>Visa Type → H-1B</p>
+
+<h4>Behind the Scenes (Very Important)</h4>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong> automatically:</p>
+
+<ul>
+    <li>Identifies required USCIS forms</li>
+    <li>Activates H-1B-specific workflow</li>
+    <li>Loads relevant document checklist</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Different visa → different workflow</li>
+    <li>Zero manual configuration by staff</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 4: Employment & Immigration History Capture</h2>
+
+<h4>Employment Details Collected</h4>
+
+<ul>
+    <li>Current employer name</li>
+    <li>Job title</li>
+    <li>Salary</li>
+    <li>Work location</li>
+    <li>Employer contact details</li>
+</ul>
+
+<h4>Immigration History Collected</h4>
+
+<ul>
+    <li>Current visa status</li>
+    <li>Previous US visas</li>
+    <li>Entry/exit dates</li>
+    <li>Any prior RFEs or denials</li>
+</ul>
+
+<h4>Smart Logic Example</h4>
+
+<p>If Ravi selects:</p>
+
+<p>“Currently in the US”</p>
+
+<p>Then system automatically asks:</p>
+
+<ul>
+    <li>I-94 number</li>
+    <li>Last entry date</li>
+    <li>Port of entry</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Conditional questions avoid irrelevant data</li>
+    <li>Higher accuracy and completeness</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 5: Document Upload with Rules</h2>
+
+<h4>Required Documents (Auto-Generated)</h4>
+
+<p>Based on H-1B selection:</p>
+
+<ul>
+    <li>Passport</li>
+    <li>I-94</li>
+    <li>Degree certificate</li>
+    <li>Resume</li>
+    <li>Offer letter</li>
+</ul>
+
+<h4>Real-Time Checks</h4>
+
+<ul>
+    <li>File type validation (PDF/JPG)</li>
+    <li>Size limits</li>
+    <li>Mandatory document enforcement</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>If Ravi uploads a blurry photo:</p>
+
+<p>⚠️ “Document quality may be insufficient for filing”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Better-quality filings</li>
+    <li>Fewer RFEs</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 6: Validation Rules Ensure Nothing Is Missed</h2>
+
+<h4>Before Submission</h4>
+
+<p>The system checks:</p>
+
+<ul>
+    <li>All mandatory fields completed</li>
+    <li>All required documents uploaded</li>
+    <li>Logical consistency (dates, status)</li>
+</ul>
+
+<h4>Example Validation</h4>
+
+<p>If Ravi’s visa expiry date &lt; today:</p>
+
+<p>⚠️ “Visa expiry date cannot be in the past”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents downstream rejection</li>
+    <li>Catches issues early</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 7: Automatic Client Profile Creation</h2>
+
+<h4>What Happens Instantly</h4>
+
+<p>Once Ravi clicks Submit:</p>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong> automatically:</p>
+
+<ul>
+    <li>Creates a Client Profile</li>
+    <li>Stores all personal + case data centrally</li>
+    <li>Links documents to the client record</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual data entry</li>
+    <li>Single source of truth</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 8: Automatic Case Creation</h2>
+
+<h4>Case Generated</h4>
+
+<ul>
+    <li>Case Type: H-1B</li>
+    <li>Case ID: Auto-generated</li>
+    <li>Status: Intake Completed</li>
+</ul>
+
+<h4>Case Includes</h4>
+
+<ul>
+    <li>Client data</li>
+    <li>Document checklist</li>
+    <li>Workflow stages</li>
+    <li>Deadlines framework</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Intake → Case creation in minutes</li>
+    <li>No delay between inquiry and work start</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 9: Automatic Role Assignment</h2>
+
+<h4>How Assignment Works</h4>
+
+<p>Based on firm rules:</p>
+
+<ul>
+    <li>Paralegal: Assigned for drafting & follow-ups</li>
+    <li>Attorney: Assigned for review & approval</li>
+</ul>
+
+<h4>Example</h4>
+
+<ul>
+    <li>Paralegal: Sarah (H-1B specialist)</li>
+    <li>Attorney: Mr. John (Immigration Attorney)</li>
+</ul>
+
+<p>Both receive:</p>
+
+<ul>
+    <li>Email notification</li>
+    <li>Dashboard task alert</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clear ownership</li>
+    <li>No confusion on responsibility</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>STEP 10: Internal Team Starts Work Immediately</h2>
+
+<h4>Paralegal Actions</h4>
+
+<ul>
+    <li>Reviews intake data</li>
+    <li>Starts drafting forms</li>
+    <li>Flags missing or risky information</li>
+</ul>
+
+<h4>Attorney Actions</h4>
+
+<ul>
+    <li>Reviews case summary</li>
+    <li>Sees risk indicators</li>
+    <li>Plans legal strategy</li>
+</ul>
+
+<h4>Client Experience</h4>
+
+<ul>
+    <li>Receives confirmation email</li>
+    <li>Can log in and track progress</li>
+</ul>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without <strong>Legal Practice Management Software (LPMS)</strong></h4>
+
+<ul>
+    <li>3–5 days intake</li>
+    <li>Manual data entry</li>
+    <li>Multiple follow-ups</li>
+    <li>High error risk</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong></h4>
+
+<ul>
+    <li>Intake completed in 30–45 minutes</li>
+    <li>Zero duplicate data entry</li>
+    <li>Structured, accurate case creation</li>
+    <li>Professional client experience</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Client Intake & Onboarding in <strong>Legal Practice Management Software (LPMS)</strong> transforms a messy, manual first interaction into a fast, structured, error-free digital workflow that creates a ready-to-work legal case in minutes.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 2 -->
+<!-- ========================================================= -->
+<h2 id="uc2">2. Case Management & Tracking</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Tracking visa or legal cases end-to-end)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without a system)</strong></p>
+
+<p>An immigration firm handles 100+ active cases.</p>
+
+<ul>
+    <li>Case status tracked in Excel</li>
+    <li>Deadlines noted in calendars</li>
+    <li>Team asks each other:</li>
+</ul>
+
+<ul>
+    <li>“Has this case been filed?”</li>
+    <li>“Who is handling the RFE?”</li>
+</ul>
+
+<p><strong>⛔ Risks:</strong></p>
+
+<ul>
+    <li>Missed USCIS deadlines</li>
+    <li>Duplicate or forgotten work</li>
+    <li>Stress and blame during audits</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Visa Type: H-1B</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Goal: Track the H-1B case from intake → approval</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Case Is Represented as a Workflow</h2>
+
+<h4>What Happens</h4>
+
+<p>Once intake is complete, <strong>Legal Practice Management Software (LPMS)</strong> creates a workflow-based case.</p>
+
+<p>Instead of free-form notes, the case is structured as:</p>
+
+<pre>
+Intake → Drafting → Review → Filed → RFE (if any) → Approved / Closed
+</pre>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Every case follows a predictable path</li>
+    <li>No confusion about “what comes next”</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Case Appears on the Dashboard</h2>
+
+<h4>What the Team Sees</h4>
+
+<p>On login, paralegals and attorneys see a case dashboard:</p>
+
+<ul>
+    <li>Case ID: H1B-2026-045</li>
+    <li>Client Name: Ravi Kumar</li>
+    <li>Current Stage: Drafting</li>
+    <li>Next Deadline: April 15</li>
+</ul>
+
+<h4>Real-Time Benefit</h4>
+
+<p>At a glance:</p>
+
+<p>“This case is currently in Drafting and has not yet moved to Review.”</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Drafting Stage Begins</h2>
+
+<h4>Ownership</h4>
+
+<p>Assigned to: Paralegal (Sarah)</p>
+
+<h4>Tasks Automatically Created</h4>
+
+<ul>
+    <li>Prepare H-1B petition forms</li>
+    <li>Review client documents</li>
+    <li>Draft employer support letter</li>
+</ul>
+
+<h4>System Controls</h4>
+
+<ul>
+    <li>Tasks must be completed before stage change</li>
+    <li>Drafting checklist ensures nothing is skipped</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Structured work</li>
+    <li>No reliance on memory or emails</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Case Moves to Review Stage</h2>
+
+<h4>Trigger</h4>
+
+<p>Paralegal clicks “Submit for Review”</p>
+
+<h4>What Happens Automatically</h4>
+
+<ul>
+    <li>Case status → Review</li>
+    <li>Attorney gets:</li>
+</ul>
+
+<ul>
+    <li>Email notification</li>
+    <li>Dashboard alert</li>
+</ul>
+
+<p>Editing access switches to attorney</p>
+
+<h4>Attorney Actions</h4>
+
+<ul>
+    <li>Reviews drafted forms</li>
+    <li>Checks legal compliance</li>
+    <li>Adds comments or corrections</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clear handoff</li>
+    <li>No “Did you send it?” confusion</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Filing Stage (Critical Deadline Control)</h2>
+
+<h4>Trigger</h4>
+
+<p>Attorney approves and marks case “Ready to File”</p>
+
+<h4>Automatic Actions</h4>
+
+<ul>
+    <li>Case stage → Filed</li>
+    <li>Filing date recorded</li>
+    <li>USCIS clock starts</li>
+    <li>Client receives confirmation</li>
+</ul>
+
+<h4>Deadline Auto-Calculation</h4>
+
+<p>Example:</p>
+
+<ul>
+    <li>Filing date: April 1</li>
+    <li>USCIS response window: 90 days</li>
+</ul>
+
+<p>➡️ <strong>Legal Practice Management Software (LPMS)</strong> auto-calculates:</p>
+
+<ul>
+    <li>Follow-up reminders</li>
+    <li>Expected response timeline</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual deadline calculation</li>
+    <li>Zero chance of forgetting follow-ups</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: RFE Stage (If Applicable)</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>USCIS issues an RFE (Request for Evidence).</p>
+
+<h4>What <strong>Legal Practice Management Software (LPMS)</strong> Does</h4>
+
+<ul>
+    <li>Case automatically moves to RFE</li>
+    <li>RFE deadline highlighted in red</li>
+    <li>Checklist auto-generated:</li>
+</ul>
+
+<ul>
+    <li>Missing documents</li>
+    <li>Employer clarifications</li>
+</ul>
+
+<p>Tasks assigned to:</p>
+
+<ul>
+    <li>Client</li>
+    <li>Paralegal</li>
+    <li>Attorney</li>
+</ul>
+
+<h4>Deadline Example</h4>
+
+<ul>
+    <li>RFE received: June 10</li>
+    <li>Response due: August 8</li>
+</ul>
+
+<p><strong>Automated reminders:</strong></p>
+
+<ul>
+    <li>30 days before</li>
+    <li>14 days before</li>
+    <li>7 days before</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>RFEs are time-critical</li>
+    <li>System enforces urgency</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Approved or Closed Stage</h2>
+
+<h4>Approval Scenario</h4>
+
+<p>USCIS approves Ravi’s H-1B.</p>
+
+<h4>What Happens</h4>
+
+<ul>
+    <li>Case status → Approved</li>
+    <li>Approval notice uploaded</li>
+    <li>Client notified automatically</li>
+    <li>Case archived for records</li>
+</ul>
+
+<h4>Closed Scenario</h4>
+
+<p>If case is withdrawn or denied:</p>
+
+<ul>
+    <li>Status → Closed</li>
+    <li>Reason logged</li>
+    <li>Audit trail preserved</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clean case lifecycle</li>
+    <li>Historical data preserved</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Timelines & Deadlines Are Always Visible</h2>
+
+<h4>What the Dashboard Shows</h4>
+
+<p>For every case:</p>
+
+<ul>
+    <li>Current stage</li>
+    <li>Owner</li>
+    <li>Next deadline</li>
+    <li>Risk flags (⚠️ if overdue)</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>“Ravi Kumar – RFE response due in 12 days”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Proactive management</li>
+    <li>No surprises</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Task Ownership Is Always Clear</h2>
+
+<h4>Ownership Model</h4>
+
+<p>Each task has:</p>
+
+<ul>
+    <li>Owner (paralegal / attorney / client)</li>
+    <li>Due date</li>
+    <li>Status (Pending / In Progress / Completed)</li>
+</ul>
+
+<h4>Example</h4>
+
+<ul>
+    <li>Client task: Upload new experience letter</li>
+    <li>Paralegal task: Review document</li>
+    <li>Attorney task: Final approval</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Accountability</li>
+    <li>No finger-pointing</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Management Visibility & Control</h2>
+
+<h4>Managing Partner Can See</h4>
+
+<ul>
+    <li>All active cases</li>
+    <li>Bottlenecks (e.g., too many in Review)</li>
+    <li>Missed or upcoming deadlines</li>
+</ul>
+
+<h4>Decision Example</h4>
+
+<p>“We need one more paralegal for H-1B season.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Data-driven decisions</li>
+    <li>Scalable operations</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Proper Case Tracking</h4>
+
+<ul>
+    <li>Missed deadlines</li>
+    <li>Confusion on case status</li>
+    <li>Spreadsheet dependency</li>
+    <li>High stress during audits</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Case Management</h4>
+
+<ul>
+    <li>Real-time visibility</li>
+    <li>Automated deadline enforcement</li>
+    <li>Clear accountability</li>
+    <li>Predictable outcomes</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Case Management & Tracking in <strong>Legal Practice Management Software (LPMS)</strong> converts complex legal case lifecycles into a clear, deadline-driven workflow where every stage, task, and owner is visible and enforced by the system.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 3 -->
+<!-- ========================================================= -->
+<h2 id="uc3">3. Document Collection & Management</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Handling large volumes of client documents)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without a system)</strong></p>
+
+<p>An immigration law firm asks a client to send documents.</p>
+
+<ul>
+    <li>Client emails some files</li>
+    <li>Sends remaining documents on WhatsApp</li>
+    <li>Uploads revised documents later with “final_final.pdf”</li>
+    <li>Paralegal downloads, renames, stores in folders</li>
+    <li>Attorney asks:</li>
+</ul>
+
+<ul>
+    <li>“Which passport copy is the latest?”</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>Lost attachments</li>
+    <li>Wrong versions filed</li>
+    <li>Missing or expired documents</li>
+    <li>Weak audit trail</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Visa Type: H-1B</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Documents Required: Passport, I-94, Degree, Experience Letters, Offer Letter</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Secure Client Portal for Document Upload</h2>
+
+<h4>What Happens</h4>
+
+<p>After intake, Ravi receives login access to a secure client portal.</p>
+
+<p>Inside the portal:</p>
+
+<ul>
+    <li>Dedicated “Documents” section</li>
+    <li>Clearly listed required documents</li>
+    <li>Upload buttons next to each document type</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No email or WhatsApp uploads</li>
+    <li>All documents go to one secure place</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: System Generates a Case-Specific Document Checklist</h2>
+
+<h4>How the Checklist Is Created</h4>
+
+<p>Based on:</p>
+
+<ul>
+    <li>Case type → H-1B</li>
+    <li>Client status → In the US</li>
+    <li>Employer details</li>
+</ul>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong> automatically generates a checklist like:</p>
+
+<ul>
+    <li>Passport (mandatory)</li>
+    <li>I-94 (mandatory)</li>
+    <li>Degree certificate</li>
+    <li>Resume</li>
+    <li>Employer offer letter</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual checklist creation</li>
+    <li>No missing required documents</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Document Upload with Built-In Rules</h2>
+
+<h4>Client Action</h4>
+
+<p>Ravi uploads:</p>
+
+<ul>
+    <li><code>Passport.pdf</code></li>
+    <li><code>Degree.jpg</code></li>
+</ul>
+
+<h4>System Checks in Real Time</h4>
+
+<ul>
+    <li>Allowed file formats (PDF/JPG)</li>
+    <li>File size limits</li>
+    <li>Readability / clarity warnings</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>If Ravi uploads a Word file:</p>
+
+<p>❌ “Invalid format. Please upload PDF or JPG.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Filing-ready documents</li>
+    <li>No rework later</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Each Document Is Tagged to the Case Automatically</h2>
+
+<h4>What <strong>Legal Practice Management Software (LPMS)</strong> Does Behind the Scenes</h4>
+
+<p>For every uploaded file:</p>
+
+<ul>
+    <li>Links document to Ravi’s H-1B case</li>
+    <li>Tags document type:</li>
+</ul>
+
+<ul>
+    <li>Passport</li>
+    <li>Degree certificate</li>
+</ul>
+
+<p>Records:</p>
+
+<ul>
+    <li>Upload date</li>
+    <li>Uploaded by (client)</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual sorting</li>
+    <li>Easy retrieval during audits</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Version History Is Maintained Automatically</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>Paralegal notices passport image is unclear.</p>
+
+<p>Ravi uploads a new passport file</p>
+
+<p>System stores:</p>
+
+<ul>
+    <li>Version 1 → Old passport</li>
+    <li>Version 2 → Updated passport</li>
+</ul>
+
+<h4>What the Team Sees</h4>
+
+<ul>
+    <li>Latest version shown by default</li>
+    <li>Previous versions still accessible</li>
+    <li>Clear “Version History” timeline</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No confusion over “latest” document</li>
+    <li>Full historical traceability</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: System Highlights Missing Documents</h2>
+
+<h4>Dashboard View</h4>
+
+<p>Paralegal sees:</p>
+
+<ul>
+    <li>Passport ✅</li>
+    <li>Degree ✅</li>
+    <li>Experience Letter ❌ (Missing)</li>
+</ul>
+
+<h4>Visual Indicators</h4>
+
+<ul>
+    <li>Missing documents marked in red</li>
+    <li>Case cannot move to next stage until resolved</li>
+</ul>
+
+<h4>Automatic Client Reminder</h4>
+
+<p>“Please upload Experience Letter to proceed.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No silent gaps</li>
+    <li>Faster case progression</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Expired Documents Are Automatically Flagged</h2>
+
+<h4>Example</h4>
+
+<p>Ravi’s passport expiry date: 3 months away</p>
+
+<p>System triggers:</p>
+
+<p>⚠️ “Passport expiry approaching. Renewal may be required.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents rejection</li>
+    <li>Reduces RFEs</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Incorrect or Risky Documents Are Highlighted</h2>
+
+<h4>Real-Time Example</h4>
+
+<p>Experience letter uploaded:</p>
+
+<ul>
+    <li>Missing company letterhead</li>
+    <li>No signature</li>
+</ul>
+
+<p>Paralegal flags document as:</p>
+
+<p>❌ “Needs correction”</p>
+
+<p>Client receives:</p>
+
+<ul>
+    <li>Clear comment</li>
+    <li>Upload request for corrected version</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Higher-quality filings</li>
+    <li>Fewer USCIS issues</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Internal Team Access & Permissions</h2>
+
+<h4>Access Control</h4>
+
+<ul>
+    <li>Client → Upload & view own documents</li>
+    <li>Paralegal → Review & comment</li>
+    <li>Attorney → Final approval</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Data security</li>
+    <li>Role-based accountability</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Audit-Ready Document Trail</h2>
+
+<h4>During Audit or RFE</h4>
+
+<p>Firm can instantly show:</p>
+
+<ul>
+    <li>Who uploaded which document</li>
+    <li>When it was updated</li>
+    <li>Which version was used for filing</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Strong compliance posture</li>
+    <li>Enterprise-grade readiness</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Proper Document Management</h4>
+
+<ul>
+    <li>Lost attachments</li>
+    <li>Wrong versions filed</li>
+    <li>High RFE risk</li>
+    <li>Stress during audits</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Document Management</h4>
+
+<ul>
+    <li>Centralized, secure storage</li>
+    <li>Version-controlled documents</li>
+    <li>Real-time validation</li>
+    <li>Audit-ready at all times</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Document Collection & Management in <strong>Legal Practice Management Software (LPMS)</strong> transforms scattered, risky document handling into a secure, version-controlled, compliance-ready system where nothing is lost, outdated, or unclear.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 4 -->
+<!-- ========================================================= -->
+<h2 id="uc4">4. Managed Paralegal Support</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Reducing attorney workload)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without managed support)</strong></p>
+
+<p>An immigration attorney handles:</p>
+
+<ul>
+    <li>Client emails</li>
+    <li>Document checks</li>
+    <li>Form drafting</li>
+    <li>Follow-ups</li>
+    <li>Legal review</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>Attorney spends 60–70% time on non-legal work</li>
+    <li>Burnout during peak seasons (H-1B, PERM)</li>
+    <li>Higher billing rates wasted on admin tasks</li>
+    <li>Limited scalability</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B Visa</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Attorney: Mr. John (Senior Immigration Attorney)</li>
+    <li>Paralegal (via <strong>Legal Practice Management Software (LPMS)</strong>): Sarah (H-1B Specialist)</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: <strong>Legal Practice Management Software (LPMS)</strong> Assigns a Trained Paralegal Automatically</h2>
+
+<h4>What Happens</h4>
+
+<p>Once Ravi’s case moves from Intake → Drafting:</p>
+
+<ul>
+    <li><strong>Legal Practice Management Software (LPMS)</strong> assigns Sarah, a trained immigration paralegal</li>
+    <li>Assignment is based on:</li>
+</ul>
+
+<ul>
+    <li>Case type (H-1B)</li>
+    <li>Current workload</li>
+    <li>Skill specialization</li>
+</ul>
+
+<h4>Notifications</h4>
+
+<ul>
+    <li>Sarah sees the case on her dashboard</li>
+    <li>Attorney John gets visibility (not tasks yet)</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual hiring or coordination</li>
+    <li>Right skill matched to the right case</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Paralegal Handles Data Entry & Verification</h2>
+
+<h4>Paralegal Actions</h4>
+
+<p>Sarah reviews Ravi’s intake data:</p>
+
+<ul>
+    <li>Personal details</li>
+    <li>Employment information</li>
+    <li>Immigration history</li>
+</ul>
+
+<p>She:</p>
+
+<ul>
+    <li>Verifies consistency across fields</li>
+    <li>Flags anomalies (date mismatches, gaps)</li>
+    <li>Corrects formatting issues</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>If Ravi’s job title differs between intake form and resume:</p>
+
+<p>⚠️ Paralegal flags inconsistency and requests clarification</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clean, accurate data before drafting</li>
+    <li>Prevents downstream legal issues</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Paralegal Prepares Drafts</h2>
+
+<h4>Drafting Work Includes</h4>
+
+<ul>
+    <li>USCIS forms (I-129 sections)</li>
+    <li>Employer support letter draft</li>
+    <li>Cover letter template</li>
+</ul>
+
+<h4>How <strong>Legal Practice Management Software (LPMS)</strong> Helps</h4>
+
+<ul>
+    <li>Draft templates preloaded</li>
+    <li>Case data auto-populated</li>
+    <li>Checklists ensure all drafts are created</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Attorney does not type or format</li>
+    <li>Faster turnaround with consistency</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Paralegal Organizes & Reviews Documents</h2>
+
+<h4>Document Work</h4>
+
+<p>Sarah:</p>
+
+<ul>
+    <li>Reviews uploaded documents</li>
+    <li>Ensures:</li>
+</ul>
+
+<ul>
+    <li>Correct document type</li>
+    <li>Latest version</li>
+    <li>Proper naming</li>
+</ul>
+
+<p>Maps documents to USCIS requirements</p>
+
+<h4>Example</h4>
+
+<p>Experience letter missing signature:</p>
+
+<p>❌ Paralegal requests corrected version from client</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Filing-ready document package</li>
+    <li>Fewer RFEs</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Paralegal Manages Follow-Ups</h2>
+
+<h4>Follow-Up Tasks</h4>
+
+<ul>
+    <li>Reminds client to upload missing documents</li>
+    <li>Tracks employer responses</li>
+    <li>Updates case notes</li>
+</ul>
+
+<h4>Automation Support</h4>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong>:</p>
+
+<ul>
+    <li>Sends reminder emails</li>
+    <li>Tracks pending items</li>
+    <li>Escalates delays automatically</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Attorney not chasing clients</li>
+    <li>Case momentum maintained</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: Case Is Submitted to Attorney for Review</h2>
+
+<h4>Trigger</h4>
+
+<p>Paralegal clicks “Ready for Attorney Review”</p>
+
+<h4>What Happens</h4>
+
+<ul>
+    <li>Case stage → Review</li>
+    <li>Attorney John receives:</li>
+</ul>
+
+<ul>
+    <li>Notification</li>
+    <li>Summary view (not raw data)</li>
+</ul>
+
+<h4>Summary Includes</h4>
+
+<ul>
+    <li>Drafts prepared</li>
+    <li>Issues flagged</li>
+    <li>Documents verified</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Attorney sees only what matters</li>
+    <li>No information overload</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Attorney Reviews (Legal Judgment Only)</h2>
+
+<h4>Attorney Actions</h4>
+
+<p>Attorney John:</p>
+
+<ul>
+    <li>Reviews legal strategy</li>
+    <li>Checks compliance and risks</li>
+    <li>Approves or adds comments</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>Attorney adjusts job role description to strengthen specialty occupation argument.</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Attorney focuses on legal reasoning</li>
+    <li>Time spent is high-value</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Paralegal Implements Attorney Feedback</h2>
+
+<h4>What Happens</h4>
+
+<ul>
+    <li>Paralegal receives comments</li>
+    <li>Updates drafts and documents</li>
+    <li>Resubmits for final approval</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Closed feedback loop</li>
+    <li>No direct attorney involvement in edits</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Attorney Gives Final Approval</h2>
+
+<h4>Final Step Before Filing</h4>
+
+<p>Attorney clicks “Approved for Filing”</p>
+
+<h4>System Actions</h4>
+
+<ul>
+    <li>Locks drafts</li>
+    <li>Moves case to Filed</li>
+    <li>Records approval timestamp</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clear accountability</li>
+    <li>Audit-ready approval trail</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Workload Scaling Without Stress</h2>
+
+<h4>Firm-Level Impact</h4>
+
+<p>During H-1B season:</p>
+
+<ul>
+    <li>Firm processes 3× cases</li>
+    <li><strong>Legal Practice Management Software (LPMS)</strong> scales paralegal capacity</li>
+    <li>Attorney workload remains stable</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Predictable workload</li>
+    <li>No emergency hiring</li>
+    <li>Controlled costs</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Managed Paralegal Support</h4>
+
+<ul>
+    <li>Attorney burnout</li>
+    <li>High operational costs</li>
+    <li>Limited growth</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Managed Paralegals</h4>
+
+<ul>
+    <li>Attorneys focus on legal decisions</li>
+    <li>Faster case processing</li>
+    <li>Scalable, cost-effective operations</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Managed Paralegal Support in <strong>Legal Practice Management Software (LPMS)</strong> shifts administrative and preparatory legal work to trained paralegals, allowing attorneys to focus exclusively on review, approval, and legal judgment—maximizing productivity and scalability.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 5 -->
+<!-- ========================================================= -->
+<h2 id="uc5">5. AI-Assisted Drafting & Review</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Speeding up repetitive legal writing)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without AI)</strong></p>
+
+<p>An attorney or paralegal:</p>
+
+<ul>
+    <li>Reads the entire case file manually</li>
+    <li>Refers to old filings for language</li>
+    <li>Drafts from scratch</li>
+    <li>Risks missing evidence or inconsistencies</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>4–6 hours per draft</li>
+    <li>Copy-paste errors</li>
+    <li>Inconsistent language across cases</li>
+    <li>High mental fatigue for attorneys</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B</li>
+    <li>Situation: USCIS issues an RFE (Request for Evidence) asking to justify <em>Specialty Occupation</em></li>
+    <li>Goal: Draft a strong, accurate RFE response quickly</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: AI Analyzes the Complete Case History</h2>
+
+<h4>What AI Reads Automatically</h4>
+
+<ul>
+    <li>Client intake data</li>
+    <li>Job title, salary, duties</li>
+    <li>Employer details</li>
+    <li>Previously uploaded documents</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>AI notes:</p>
+
+<ul>
+    <li>Job Title: <em>Software Engineer</em></li>
+    <li>Salary: $120,000</li>
+    <li>Employer: Mid-size IT consulting firm</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>AI understands context</li>
+    <li>No need for manual summarization</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: AI Analyzes USCIS Notice (RFE)</h2>
+
+<h4>What Happens</h4>
+
+<p>The RFE notice is uploaded to <strong>Legal Practice Management Software (LPMS)</strong>.</p>
+
+<p>AI extracts:</p>
+
+<ul>
+    <li>RFE type: <em>Specialty Occupation</em></li>
+    <li>USCIS concerns:</li>
+</ul>
+
+<ul>
+    <li>Job duties too generic</li>
+    <li>Degree requirement unclear</li>
+</ul>
+
+<h4>Example Output</h4>
+
+<p>“USCIS questions whether the position normally requires a bachelor’s degree in a specific specialty.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Attorney does not need to manually dissect the notice</li>
+    <li>Key issues are highlighted instantly</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: AI Refers to Past Approved Filings</h2>
+
+<h4>Knowledge Source</h4>
+
+<p>AI securely references:</p>
+
+<ul>
+    <li>Past approved H-1B responses</li>
+    <li>Similar job roles</li>
+    <li>Successful legal arguments</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>AI identifies:</p>
+
+<ul>
+    <li>Approved cases for <em>Software Engineer – Java</em></li>
+    <li>Strong wording patterns for specialty occupation</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Proven language reused</li>
+    <li>Consistency across filings</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: AI Drafts the First Version (Not Final)</h2>
+
+<h4>What AI Generates</h4>
+
+<p>Structured RFE response draft:</p>
+
+<ul>
+    <li>Introduction</li>
+    <li>Legal argument</li>
+    <li>Job duties explanation</li>
+    <li>Degree relevance</li>
+</ul>
+
+<p>Uses firm-approved templates</p>
+
+<h4>Example Draft Snippet</h4>
+
+<p>“The offered position of Software Engineer is a specialty occupation as it requires a minimum of a bachelor’s degree in Computer Science or a closely related field…”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>60–70% drafting effort eliminated</li>
+    <li>Attorney starts with substance, not a blank page</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: AI Highlights Missing Evidence</h2>
+
+<h4>AI Cross-Checks Draft vs Case File</h4>
+
+<p>AI notices:</p>
+
+<ul>
+    <li>No detailed employer project description</li>
+    <li>Missing client’s university transcripts</li>
+</ul>
+
+<p>AI Flags:</p>
+
+<p>⚠️ “Employer project details not found. Supporting evidence recommended.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents weak or incomplete responses</li>
+    <li>Reduces RFE rejection risk</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: AI Flags Inconsistencies</h2>
+
+<h4>Example</h4>
+
+<ul>
+    <li>Intake form: Job title → <em>Software Engineer</em></li>
+    <li>Resume: Job title → <em>Senior Developer</em></li>
+</ul>
+
+<p>AI flags:</p>
+
+<p>⚠️ “Job title inconsistency detected. Please align terminology.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Avoids credibility issues</li>
+    <li>Improves accuracy</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Attorney Reviews AI Output (Human Control)</h2>
+
+<h4>Attorney’s Role</h4>
+
+<p>Attorney John:</p>
+
+<ul>
+    <li>Reviews AI-generated draft</li>
+    <li>Refines legal argument</li>
+    <li>Adjusts tone and emphasis</li>
+    <li>Adds firm-specific legal reasoning</li>
+</ul>
+
+<h4>Key Rule</h4>
+
+<p>❗ AI cannot submit anything on its own</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>AI assists, attorney decides</li>
+    <li>Full legal accountability remains human</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Attorney Adds Legal Judgment & Strategy</h2>
+
+<h4>Real-World Example</h4>
+
+<p>Attorney strengthens the response by:</p>
+
+<ul>
+    <li>Adding case law reference</li>
+    <li>Clarifying employer-employee relationship</li>
+    <li>Enhancing specialty occupation argument</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>AI handles repetition</li>
+    <li>Attorney handles strategy</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Final Approval & Locking the Draft</h2>
+
+<h4>What Happens</h4>
+
+<p>Attorney clicks “Approved”</p>
+
+<p>System:</p>
+
+<ul>
+    <li>Locks the draft</li>
+    <li>Records approval timestamp</li>
+    <li>Prepares document for filing</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clear responsibility</li>
+    <li>Audit-ready approval trail</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Filing with Confidence</h2>
+
+<h4>Final Outcome</h4>
+
+<p>Response is:</p>
+
+<ul>
+    <li>Accurate</li>
+    <li>Complete</li>
+    <li>Consistent</li>
+</ul>
+
+<p>Filed well before deadline</p>
+
+<h4>Time Comparison</h4>
+
+<ul>
+    <li>❌ Manual drafting: 5–6 hours</li>
+    <li>AI-assisted drafting: 1–1.5 hours</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without AI Assistance</h4>
+
+<ul>
+    <li>Slow drafting</li>
+    <li>Higher error risk</li>
+    <li>Attorney fatigue</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> AI-Assisted Drafting</h4>
+
+<ul>
+    <li>Faster turnaround</li>
+    <li>Higher accuracy</li>
+    <li>Attorneys focus on legal reasoning</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+AI-Assisted Drafting & Review in <strong>Legal Practice Management Software (LPMS)</strong> accelerates repetitive legal writing by analyzing case data, USCIS notices, and past approvals—while keeping attorneys fully in control of final legal decisions.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 6 -->
+<!-- ========================================================= -->
+<h2 id="uc6">6. Workflow Automation</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Eliminating repetitive manual tasks)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without automation)</strong></p>
+
+<p>An immigration case requires:</p>
+
+<ul>
+    <li>Someone to update status</li>
+    <li>Someone to email the client</li>
+    <li>Someone to set reminders</li>
+    <li>Someone to prepare invoices</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>Tasks forgotten during busy periods</li>
+    <li>Inconsistent communication</li>
+    <li>Heavy dependency on individuals</li>
+    <li>Scaling becomes difficult</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Scenario: Case moves from filing → RFE → response</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Workflow Automation Rules Are Predefined</h2>
+
+<h4>What Happens (Once)</h4>
+
+<p>Before cases start, the firm configures automation rules in <strong>Legal Practice Management Software (LPMS)</strong>.</p>
+
+<h4>Example Rules</h4>
+
+<ul>
+    <li>When case status = Filed → Notify client</li>
+    <li>When status = Approved → Generate invoice</li>
+    <li>When status = RFE → Create document checklist</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Rules are set once</li>
+    <li>Applied consistently to every case</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Status Change Automatically Triggers Actions</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>Attorney marks Ravi’s case as Filed.</p>
+
+<h4>Automatic Actions</h4>
+
+<ul>
+    <li>Case status updates across system</li>
+    <li>Filing date recorded</li>
+    <li>Client receives email:</li>
+</ul>
+
+<ul>
+    <li>“Your H-1B petition has been filed successfully.”</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual emails</li>
+    <li>Immediate, consistent communication</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Document Uploads Trigger Follow-Up Tasks</h2>
+
+<h4>Scenario</h4>
+
+<p>RFE issued asking for:</p>
+
+<ul>
+    <li>Project details</li>
+    <li>Client experience letter</li>
+</ul>
+
+<h4>What Happens</h4>
+
+<p>Paralegal uploads RFE notice</p>
+
+<p>System automatically:</p>
+
+<ul>
+    <li>Creates document tasks</li>
+    <li>Assigns tasks to client</li>
+    <li>Sets due dates</li>
+</ul>
+
+<h4>Client View</h4>
+
+<p>“2 documents required to respond to RFE.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual task creation</li>
+    <li>Faster response cycles</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Deadline-Based Reminders Are Triggered Automatically</h2>
+
+<h4>Example</h4>
+
+<p>RFE response deadline: August 8</p>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong> automatically:</p>
+
+<ul>
+    <li>Sends reminder 30 days before</li>
+    <li>Sends reminder 14 days before</li>
+    <li>Sends reminder 7 days before</li>
+</ul>
+
+<h4>Escalation Logic</h4>
+
+<p>If no response:</p>
+
+<ul>
+    <li>Escalates to attorney</li>
+    <li>Highlights case in red on dashboard</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Deadlines are enforced</li>
+    <li>No dependency on memory</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Approval Automatically Triggers Invoice Generation</h2>
+
+<h4>Scenario</h4>
+
+<p>Attorney approves RFE response.</p>
+
+<h4>What Happens</h4>
+
+<p>System:</p>
+
+<ul>
+    <li>Generates invoice</li>
+    <li>Links invoice to case</li>
+    <li>Sends payment notification</li>
+</ul>
+
+<h4>Example Email</h4>
+
+<p>“Your invoice for RFE response services is ready.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Faster billing</li>
+    <li>No missed revenue</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: RFE Automatically Creates a Checklist</h2>
+
+<h4>Scenario</h4>
+
+<p>Case moves to RFE status.</p>
+
+<h4>Automatic Checklist Created</h4>
+
+<ul>
+    <li>Employer letter update</li>
+    <li>Client transcript</li>
+    <li>Job description clarification</li>
+</ul>
+
+<h4>Assigned To</h4>
+
+<ul>
+    <li>Client → uploads documents</li>
+    <li>Paralegal → reviews</li>
+    <li>Attorney → approves</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Structured response</li>
+    <li>No manual planning</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Cross-Team Coordination Happens Automatically</h2>
+
+<h4>Who Is Involved</h4>
+
+<ul>
+    <li>Client</li>
+    <li>Paralegal</li>
+    <li>Attorney</li>
+</ul>
+
+<h4>System Ensures</h4>
+
+<ul>
+    <li>Everyone sees their tasks</li>
+    <li>Dependencies are enforced</li>
+    <li>No one waits for instructions</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Smooth handoffs</li>
+    <li>Zero coordination overhead</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Exceptions Are Highlighted Automatically</h2>
+
+<h4>Example</h4>
+
+<p>Client delays document upload.</p>
+
+<h4>System Flags</h4>
+
+<ul>
+    <li>Case highlighted in red</li>
+    <li>Risk indicator shown</li>
+    <li>Attorney notified</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Proactive issue handling</li>
+    <li>Prevents last-minute panic</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Audit Trail Is Created Automatically</h2>
+
+<h4>What Is Logged</h4>
+
+<ul>
+    <li>Who changed status</li>
+    <li>When notifications were sent</li>
+    <li>When reminders were triggered</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Compliance readiness</li>
+    <li>Management visibility</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Scaling Without Process Breakdown</h2>
+
+<h4>Firm-Level Impact</h4>
+
+<p>Firm handles:</p>
+
+<p>50 cases → 200 cases/month</p>
+
+<p>Automation ensures:</p>
+
+<ul>
+    <li>Same quality</li>
+    <li>Same timing</li>
+    <li>Same communication</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Scalable operations</li>
+    <li>No chaos during peak season</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Workflow Automation</h4>
+
+<ul>
+    <li>Missed follow-ups</li>
+    <li>Inconsistent client communication</li>
+    <li>Heavy manual coordination</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Workflow Automation</h4>
+
+<ul>
+    <li>Predictable execution</li>
+    <li>Reduced human dependency</li>
+    <li>Scalable legal operations</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Workflow Automation in <strong>Legal Practice Management Software (LPMS)</strong> replaces manual coordination with rule-driven execution, ensuring every case action—status updates, reminders, documents, and billing—happens consistently, on time, and at scale.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 7 -->
+<!-- ========================================================= -->
+<h2 id="uc7">7. Billing & Payments</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Transparent legal billing)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without structured billing)</strong></p>
+
+<ul>
+    <li>Fee discussed verbally or over email</li>
+    <li>Invoice created manually in Excel</li>
+    <li>Client unsure what they are paying for</li>
+    <li>Follow-ups for payment are delayed or forgotten</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>Billing disputes</li>
+    <li>Delayed payments</li>
+    <li>Lost revenue</li>
+    <li>Poor client trust</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B Visa</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Fee Model: Flat fee + milestone-based add-ons</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Billing Structure Is Defined at Case Creation</h2>
+
+<h4>What Happens</h4>
+
+<p>When Ravi’s H-1B case is created, the firm selects a billing model:</p>
+
+<h4>Example Selection</h4>
+
+<ul>
+    <li>Base H-1B Filing: $4,000 (Flat Fee)</li>
+    <li>RFE Response (if required): $1,200 (Milestone)</li>
+    <li>Optional Premium Processing: $2,500 (Installment)</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Fee expectations are set upfront</li>
+    <li>No ambiguity later</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Flat Fee Billing Is Applied Automatically</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>Ravi agrees to a flat fee for H-1B filing.</p>
+
+<h4>What <strong>Legal Practice Management Software (LPMS)</strong> Does</h4>
+
+<ul>
+    <li>Creates a flat-fee invoice</li>
+    <li>Links invoice to Ravi’s case</li>
+    <li>Marks services included:</li>
+</ul>
+
+<ul>
+    <li>Drafting</li>
+    <li>Filing</li>
+    <li>USCIS coordination</li>
+</ul>
+
+<h4>Client View</h4>
+
+<p>“H-1B Filing – Flat Fee – $4,000”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Client knows exactly what is included</li>
+    <li>No surprise charges</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Milestone Billing Is Triggered by Case Status</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>USCIS issues an RFE.</p>
+
+<h4>What Happens Automatically</h4>
+
+<ul>
+    <li>Case status → RFE</li>
+    <li>Milestone billing rule activates</li>
+    <li>Invoice for RFE Response is generated</li>
+</ul>
+
+<h4>Example Invoice Line</h4>
+
+<p>“RFE Response Preparation – $1,200”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Firm never forgets to bill</li>
+    <li>Billing aligns with actual work performed</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Installment Billing Is Managed Seamlessly</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>Ravi opts for Premium Processing with installment payment.</p>
+
+<h4>Payment Plan Example</h4>
+
+<ul>
+    <li>₹1,250 → At filing</li>
+    <li>₹1,250 → After receipt notice</li>
+</ul>
+
+<h4>System Actions</h4>
+
+<ul>
+    <li>Installment schedule created</li>
+    <li>Due dates tracked</li>
+    <li>Partial payments recorded</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Flexible for client</li>
+    <li>Predictable cash inflow for firm</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Invoices Are Generated Automatically</h2>
+
+<h4>What Triggers Invoice Creation</h4>
+
+<ul>
+    <li>Case filed</li>
+    <li>Milestone reached</li>
+    <li>Attorney approval</li>
+</ul>
+
+<h4>Invoice Includes</h4>
+
+<ul>
+    <li>Client name</li>
+    <li>Case ID</li>
+    <li>Services rendered</li>
+    <li>Amount due</li>
+    <li>Due date</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No manual invoice preparation</li>
+    <li>Consistent, professional billing</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: Payment Status Is Tracked in Real Time</h2>
+
+<h4>Dashboard View</h4>
+
+<p>For Ravi’s case:</p>
+
+<ul>
+    <li>Invoice 1024 – Paid ✅</li>
+    <li>Invoice 1027 – Pending ⏳</li>
+</ul>
+
+<h4>Status Indicators</h4>
+
+<ul>
+    <li>Paid</li>
+    <li>Partially Paid</li>
+    <li>Overdue</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Clear financial visibility</li>
+    <li>No guesswork for finance teams</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Automated Payment Reminders Are Sent</h2>
+
+<h4>Real-Time Scenario</h4>
+
+<p>Invoice due in 7 days.</p>
+
+<h4>System Actions</h4>
+
+<ul>
+    <li>Reminder email sent automatically</li>
+    <li>Friendly, non-intrusive message</li>
+    <li>Escalation if overdue</li>
+</ul>
+
+<h4>Example Reminder</h4>
+
+<p>“This is a reminder that your invoice for RFE response is due on July 20.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Faster collections</li>
+    <li>No uncomfortable manual follow-ups</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Payments Are Tied Directly to the Case</h2>
+
+<h4>What This Means</h4>
+
+<p>Every payment:</p>
+
+<ul>
+    <li>Is linked to Ravi’s H-1B case</li>
+    <li>Appears in case financial summary</li>
+    <li>Can be audited anytime</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Easy reconciliation</li>
+    <li>Accurate reporting</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Client Sees Full Billing Transparency</h2>
+
+<h4>Client Portal View</h4>
+
+<p>Ravi can see:</p>
+
+<ul>
+    <li>Total fees</li>
+    <li>Paid amount</li>
+    <li>Outstanding balance</li>
+    <li>Invoice history</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Builds trust</li>
+    <li>Reduces billing-related queries</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Firm Gains Predictable Cash Flow</h2>
+
+<h4>Firm-Level Impact</h4>
+
+<ul>
+    <li>No missed invoices</li>
+    <li>Faster payments</li>
+    <li>Accurate revenue forecasting</li>
+</ul>
+
+<h4>Management Insight</h4>
+
+<p>“RFE-related revenue increased 20% due to automated milestone billing.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Financial stability</li>
+    <li>Scalable billing operations</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Structured Billing</h4>
+
+<ul>
+    <li>Manual invoices</li>
+    <li>Missed payments</li>
+    <li>Client disputes</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Billing & Payments</h4>
+
+<ul>
+    <li>Automated, transparent billing</li>
+    <li>Clear case-linked payments</li>
+    <li>Improved cash flow</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Billing & Payments in <strong>Legal Practice Management Software (LPMS)</strong> delivers transparent, automated, case-linked billing that improves client trust, eliminates revenue leakage, and ensures predictable cash flow for law firms.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 8 -->
+<!-- ========================================================= -->
+<h2 id="uc8">8. Client Communication Portal</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Reducing client emails and calls)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without a portal)</strong></p>
+
+<p>Clients frequently send messages like:</p>
+
+<ul>
+    <li>“What’s the status of my visa?”</li>
+    <li>“Did you receive my document?”</li>
+    <li>“What should I do next?”</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>Staff spends hours replying to repetitive questions</li>
+    <li>Information shared via email becomes outdated</li>
+    <li>Clients feel anxious and uninformed</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B Visa</li>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Goal: Keep the client informed without manual follow-ups</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Client Receives Secure Portal Access</h2>
+
+<h4>What Happens</h4>
+
+<p>After intake, Ravi receives:</p>
+
+<ul>
+    <li>A secure login link</li>
+    <li>Username and password</li>
+    <li>Portal access instructions</li>
+</ul>
+
+<h4>Security Features</h4>
+
+<ul>
+    <li>Encrypted login</li>
+    <li>Role-based access</li>
+    <li>Only Ravi can see his case</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Confidential information stays protected</li>
+    <li>No case details shared over email</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Client Logs In and Sees Case Status Instantly</h2>
+
+<h4>Client Dashboard Shows</h4>
+
+<ul>
+    <li>Case ID</li>
+    <li>Case type: H-1B</li>
+    <li>Current status: Filed</li>
+    <li>Last updated date</li>
+</ul>
+
+<h4>Real-Time Benefit</h4>
+
+<p>Instead of emailing:</p>
+
+<p>“Has my case been filed?”</p>
+
+<p>Ravi sees:</p>
+
+<p>Status: Filed (April 1)</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Eliminates repetitive status inquiries</li>
+    <li>Client confidence improves</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Client Views Pending Tasks Clearly</h2>
+
+<h4>Task Section Shows</h4>
+
+<ul>
+    <li>Upload Experience Letter (Pending)</li>
+    <li>Confirm Employer Details (Pending)</li>
+</ul>
+
+<h4>Color Coding</h4>
+
+<ul>
+    <li>Green → Completed</li>
+    <li>Yellow → In Progress</li>
+    <li>Red → Action Required</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Client knows exactly what to do</li>
+    <li>No confusion or back-and-forth</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Client Can View Uploaded Documents</h2>
+
+<h4>Document Section Includes</h4>
+
+<ul>
+    <li>Passport (Uploaded)</li>
+    <li>Degree Certificate (Uploaded)</li>
+    <li>Resume (Uploaded)</li>
+</ul>
+
+<h4>Features</h4>
+
+<ul>
+    <li>View/download documents</li>
+    <li>See upload date</li>
+    <li>See approval status</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No “Did you receive my file?” emails</li>
+    <li>Full transparency</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Notices and Case Updates Are Visible</h2>
+
+<h4>Example Scenario</h4>
+
+<p>USCIS issues an RFE.</p>
+
+<h4>What Ravi Sees</h4>
+
+<ul>
+    <li>RFE notice uploaded</li>
+    <li>Explanation note from firm</li>
+    <li>Next steps outlined</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Client is informed immediately</li>
+    <li>Reduced anxiety and follow-up calls</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: Automated Notifications Direct Clients to the Portal</h2>
+
+<h4>Example Notification</h4>
+
+<p>“Your case status has been updated. Please log in to view details.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No detailed info in email</li>
+    <li>Single source of truth remains the portal</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Two-Way Communication (Structured, Not Email Chaos)</h2>
+
+<h4>Client Can</h4>
+
+<ul>
+    <li>Respond to requests</li>
+    <li>Add comments to tasks</li>
+    <li>Ask questions related to a specific case</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>Ravi adds a comment:</p>
+
+<p>“I have uploaded the updated experience letter.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Contextual communication</li>
+    <li>No lost email threads</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Internal Team Sees Client Activity Instantly</h2>
+
+<h4>Staff Dashboard Shows</h4>
+
+<ul>
+    <li>Client viewed update</li>
+    <li>Client uploaded document</li>
+    <li>Client completed task</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No need to confirm receipt</li>
+    <li>Faster case progression</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Communication History Is Preserved</h2>
+
+<h4>What Is Stored</h4>
+
+<ul>
+    <li>All messages</li>
+    <li>All notifications</li>
+    <li>All document submissions</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Audit-ready communication</li>
+    <li>Clear historical record</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Staff Workload Drops Significantly</h2>
+
+<h4>Firm-Level Impact</h4>
+
+<ul>
+    <li>60–70% reduction in routine emails</li>
+    <li>Fewer phone calls</li>
+    <li>Staff focuses on actual legal work</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>“Our support inbox dropped from 200 emails/day to 70.”</p>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Client Portal</h4>
+
+<ul>
+    <li>Endless email threads</li>
+    <li>Client anxiety</li>
+    <li>Staff overload</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Client Communication Portal</h4>
+
+<ul>
+    <li>Self-service updates</li>
+    <li>Informed clients</li>
+    <li>Reduced staff workload</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+The Client Communication Portal in <strong>Legal Practice Management Software (LPMS)</strong> replaces repetitive emails and calls with a secure, self-service experience where clients always know their case status, tasks, and next steps.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 9 -->
+<!-- ========================================================= -->
+<h2 id="uc9">9. Compliance & Security</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Protecting sensitive legal data)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without strong controls)</strong></p>
+
+<ul>
+    <li>Client documents shared over email or WhatsApp</li>
+    <li>Files stored on personal laptops</li>
+    <li>No clear record of who accessed data</li>
+    <li>High risk of accidental leaks or misuse</li>
+</ul>
+
+<p><strong>⛔ Risks:</strong></p>
+
+<ul>
+    <li>Legal liability</li>
+    <li>Loss of client trust</li>
+    <li>Regulatory penalties</li>
+    <li>Reputational damage</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Client: Ravi Kumar</li>
+    <li>Case Type: H-1B Visa</li>
+    <li>Sensitive Data Involved: Passport, SSN, salary details</li>
+    <li>Law Firm: ABC Immigration Law</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Role-Based Access Control (RBAC)</h2>
+
+<h4>What Happens</h4>
+
+<p>Every user in <strong>Legal Practice Management Software (LPMS)</strong> is assigned a role:</p>
+
+<ul>
+    <li>Client</li>
+    <li>Paralegal</li>
+    <li>Attorney</li>
+    <li>Admin</li>
+</ul>
+
+<p>Each role has explicit permissions.</p>
+
+<h4>Example</h4>
+
+<ul>
+    <li>Ravi (Client): Can view/upload own documents only</li>
+    <li>Sarah (Paralegal): Can review documents, cannot approve filings</li>
+    <li>John (Attorney): Can approve and submit filings</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No unauthorized access</li>
+    <li>Least-privilege principle enforced</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Secure Authentication & Login Controls</h2>
+
+<h4>Security Measures</h4>
+
+<ul>
+    <li>Encrypted login</li>
+    <li>Session timeout</li>
+    <li>Access logging</li>
+</ul>
+
+<h4>Real-World Example</h4>
+
+<p>If Ravi logs in from a new device:</p>
+
+<p>⚠️ System logs the device and timestamp</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents unauthorized account use</li>
+    <li>Detects suspicious access</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Encrypted Storage of All Documents</h2>
+
+<h4>How Data Is Stored</h4>
+
+<ul>
+    <li>Documents encrypted at rest</li>
+    <li>Stored in secure data centers</li>
+    <li>Access requires proper authorization</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>Even system administrators cannot read raw passport files without permission.</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Protects data even if storage is compromised</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Encrypted Data Transmission</h2>
+
+<h4>How Data Moves</h4>
+
+<ul>
+    <li>All data transfers use secure encryption</li>
+    <li>Applies to:</li>
+</ul>
+
+<ul>
+    <li>File uploads</li>
+    <li>Downloads</li>
+    <li>Portal access</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>When Ravi uploads his passport:</p>
+
+<p>Data is encrypted end-to-end in transit</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents interception or data theft</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Full Audit Trail Is Automatically Recorded</h2>
+
+<h4>What Is Tracked</h4>
+
+<ul>
+    <li>Who accessed Ravi’s passport</li>
+    <li>When it was viewed</li>
+    <li>Whether it was downloaded</li>
+    <li>Who modified or replaced it</li>
+</ul>
+
+<h4>Example Audit Entry</h4>
+
+<p>“Sarah (Paralegal) viewed Passport.pdf on July 12 at 10:32 AM”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Complete accountability</li>
+    <li>Required for compliance audits</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: Change History Is Preserved</h2>
+
+<h4>Scenario</h4>
+
+<p>Paralegal uploads a corrected document.</p>
+
+<h4>System Records</h4>
+
+<ul>
+    <li>Old version retained</li>
+    <li>New version timestamped</li>
+    <li>User identity recorded</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No data loss</li>
+    <li>Full traceability</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Access Revocation & Lifecycle Control</h2>
+
+<h4>Example</h4>
+
+<p>Paralegal leaves the firm.</p>
+
+<h4>What Happens</h4>
+
+<ul>
+    <li>Access disabled immediately</li>
+    <li>No residual access to client data</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents insider threats</li>
+    <li>Protects client confidentiality</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Compliance-Ready Architecture</h2>
+
+<h4>Designed To Meet</h4>
+
+<ul>
+    <li>Data protection regulations</li>
+    <li>Legal industry security standards</li>
+    <li>Audit and reporting requirements</li>
+</ul>
+
+<h4>Example</h4>
+
+<p>Firm can demonstrate:</p>
+
+<ul>
+    <li>Data access controls</li>
+    <li>Security policies</li>
+    <li>Audit logs</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Easier regulatory compliance</li>
+    <li>Lower legal risk</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Secure Client Confidence</h2>
+
+<h4>Client Perspective</h4>
+
+<p>Ravi knows:</p>
+
+<ul>
+    <li>Who can see his data</li>
+    <li>That his documents are protected</li>
+    <li>That every action is tracked</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Builds long-term trust</li>
+    <li>Reduces client anxiety</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Incident Prevention & Response Readiness</h2>
+
+<h4>Proactive Controls</h4>
+
+<ul>
+    <li>Access monitoring</li>
+    <li>Alerting on unusual activity</li>
+    <li>Historical logs for investigation</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Faster response to security incidents</li>
+    <li>Reduced damage impact</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Compliance & Security Controls</h4>
+
+<ul>
+    <li>High breach risk</li>
+    <li>No accountability</li>
+    <li>Loss of trust</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Compliance & Security</h4>
+
+<ul>
+    <li>End-to-end data protection</li>
+    <li>Full auditability</li>
+    <li>Client confidence</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Compliance & Security in <strong>Legal Practice Management Software (LPMS)</strong> protects sensitive legal data through role-based access, encryption, and full audit trails—ensuring regulatory compliance, accountability, and client trust.
+</div>
+
+<div class="divider"></div>
+
+<!-- ========================================================= -->
+<!-- USE CASE 10 -->
+<!-- ========================================================= -->
+<h2 id="uc10">10. Reporting & Firm Insights</h2>
+<a href="#features-overview" class="back-to-top-btn">↑ Back to Features</a>	
+<p><em>(Business and operational visibility)</em></p>
+
+<div class="problem">
+<h2>What This Use Case Solves (Real-World Problem)</h2>
+
+<p><strong>Traditional scenario (without reporting tools)</strong></p>
+
+<p>Managing partners often rely on:</p>
+
+<ul>
+    <li>Weekly meetings</li>
+    <li>Excel reports</li>
+    <li>Verbal updates from staff</li>
+</ul>
+
+<p><strong>⛔ Problems:</strong></p>
+
+<ul>
+    <li>No real-time view of case progress</li>
+    <li>Hard to identify bottlenecks</li>
+    <li>Revenue visibility is delayed</li>
+    <li>Decisions are reactive, not proactive</li>
+</ul>
+</div>
+
+<div class="context">
+<h2>Real-Time Example Context</h2>
+
+<ul>
+    <li>Law Firm: ABC Immigration Law</li>
+    <li>Cases handled/month: 150+</li>
+    <li>Practice areas: H-1B, L-1, PERM, Green Card</li>
+    <li>Goal: Understand performance, workload, and revenue in real time</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 1: Leadership Accesses a Centralized Dashboard</h2>
+
+<h4>What Happens</h4>
+
+<p>Managing partner logs into <strong>Legal Practice Management Software (LPMS)</strong> and opens the Firm Dashboard.</p>
+
+<h4>Dashboard Shows at a Glance</h4>
+
+<ul>
+    <li>Total active cases</li>
+    <li>Cases filed this month</li>
+    <li>Cases pending review</li>
+    <li>Revenue generated</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No waiting for reports</li>
+    <li>One source of truth</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 2: Case Volume Metrics Are Displayed Clearly</h2>
+
+<h4>Real-Time Data Example</h4>
+
+<ul>
+    <li>Active cases: 312</li>
+    <li>New cases this month: 48</li>
+    <li>Cases closed: 35</li>
+</ul>
+
+<h4>Breakdown by Type</h4>
+
+<ul>
+    <li>H-1B: 120</li>
+    <li>L-1: 55</li>
+    <li>Green Card: 137</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Leadership understands demand trends</li>
+    <li>Helps plan future workload</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 3: Processing Time Is Tracked Automatically</h2>
+
+<h4>What the System Measures</h4>
+
+<ul>
+    <li>Average intake → filing time</li>
+    <li>Drafting duration</li>
+    <li>Review duration</li>
+    <li>RFE response turnaround</li>
+</ul>
+
+<h4>Example Insight</h4>
+
+<p>“H-1B drafting time increased from 3 days to 5 days this month.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Identifies inefficiencies</li>
+    <li>Prevents silent delays</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 4: Team Workload Visibility (Paralegals & Attorneys)</h2>
+
+<h4>Dashboard View</h4>
+
+<ul>
+    <li>Paralegal Sarah: 28 active cases</li>
+    <li>Paralegal John: 14 active cases</li>
+    <li>Attorney Mr. Smith: 42 cases under review</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Prevents overload</li>
+    <li>Ensures fair task distribution</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 5: Bottlenecks Are Highlighted Automatically</h2>
+
+<h4>Real-World Example</h4>
+
+<p>Dashboard highlights:</p>
+
+<p>18 cases stuck in Review for more than 5 days</p>
+
+<h4>Leadership Action</h4>
+
+<p>“We need one more attorney reviewer this week.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Bottlenecks are visible early</li>
+    <li>Prevents deadline risk</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 6: Revenue Metrics Are Tied to Cases</h2>
+
+<h4>What Is Shown</h4>
+
+<ul>
+    <li>Revenue by case type</li>
+    <li>Paid vs pending invoices</li>
+    <li>RFE-related revenue</li>
+</ul>
+
+<h4>Example Insight</h4>
+
+<ul>
+    <li>H-1B filings generated $180,000</li>
+    <li>RFE responses generated $24,000</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Financial clarity</li>
+    <li>Better profitability analysis</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 7: Forecasting Future Workload & Revenue</h2>
+
+<h4>Using Historical Data</h4>
+
+<p><strong>Legal Practice Management Software (LPMS)</strong> analyzes:</p>
+
+<ul>
+    <li>Previous H-1B season trends</li>
+    <li>Average cases per month</li>
+    <li>Revenue growth patterns</li>
+</ul>
+
+<h4>Example Forecast</h4>
+
+<p>“Expected 30% increase in cases next quarter.”</p>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Advance preparation</li>
+    <li>No last-minute chaos</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 8: Resource Planning Based on Real Data</h2>
+
+<h4>Leadership Decision Example</h4>
+
+<p>Based on dashboard insights:</p>
+
+<ul>
+    <li>Hire 1 temporary paralegal</li>
+    <li>Reassign attorney from L-1 to H-1B</li>
+    <li>Extend working hours for drafting team</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Data-backed staffing decisions</li>
+    <li>Controlled operational costs</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 9: Process Improvement Through Trend Analysis</h2>
+
+<h4>Example Observation</h4>
+
+<ul>
+    <li>RFEs increased for a specific employer type</li>
+    <li>Drafting errors common in certain job roles</li>
+</ul>
+
+<h4>Action Taken</h4>
+
+<ul>
+    <li>Update drafting templates</li>
+    <li>Add extra review step for risky cases</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>Continuous improvement</li>
+    <li>Reduced RFE rates over time</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<div class="step">
+<h2>STEP 10: Management Reporting Without Manual Effort</h2>
+
+<h4>What Happens Automatically</h4>
+
+<ul>
+    <li>Weekly performance reports</li>
+    <li>Monthly revenue summaries</li>
+    <li>Compliance-ready metrics</li>
+</ul>
+
+<h4>Who Uses This</h4>
+
+<ul>
+    <li>Managing partners</li>
+    <li>Finance heads</li>
+    <li>Operations managers</li>
+</ul>
+
+<h4>Why This Matters</h4>
+
+<ul>
+    <li>No Excel dependency</li>
+    <li>Leadership stays informed at all times</li>
+</ul>
+</div>
+
+<div class="divider"></div>
+
+<h2>Final Outcome (Before vs After)</h2>
+
+<h4>❌ Without Reporting & Insights</h4>
+
+<ul>
+    <li>Guess-based decisions</li>
+    <li>Delayed reaction to issues</li>
+    <li>Unclear profitability</li>
+</ul>
+
+<h4>With <strong>Legal Practice Management Software (LPMS)</strong> Reporting & Insights</h4>
+
+<ul>
+    <li>Real-time visibility</li>
+    <li>Predictable operations</li>
+    <li>Higher profitability</li>
+</ul>
+
+<div class="final">
+One-Line Summary<br><br>
+Reporting & Firm Insights in <strong>Legal Practice Management Software (LPMS)</strong> give law firm leadership real-time visibility into cases, teams, and revenue—enabling data-driven decisions, better resource planning, and improved operational control.
+</div>
+    <!-- Footer -->
+    <footer>
+        Prepared By Akhil Kotti • 2026
+    </footer>
+</div>
+<a href="#" class="back-to-top">↑</a>
+</body>
+</html>
+
