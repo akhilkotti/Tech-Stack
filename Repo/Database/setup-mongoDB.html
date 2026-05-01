@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MongoDB Setup Guide</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            margin-top: 30px;
+            border-left: 5px solid #3498db;
+            padding-left: 10px;
+        }
+        h3 {
+            margin-top: 20px;
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+code {
+    background: #eef1f5;
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Fix for code inside pre */
+pre {
+    background: #1e1e1e;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+/* IMPORTANT FIX */
+pre code {
+    background: transparent;  /* removes white box */
+    color: #ffffff;           /* ensures visibility */
+    padding: 0;               /* removes extra spacing */
+}
+        .note {
+            background: #e8f4fd;
+            border-left: 5px solid #3498db;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .success {
+            background: #e9f7ef;
+            border-left: 5px solid #2ecc71;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .divider {
+            height: 1px;
+            background: #ddd;
+            margin: 25px 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>MongoDB Setup Guide</h1>
+
+    <p>
+        To set up MongoDB for your project, you can follow these steps. This guide will cover both installing MongoDB locally and connecting your Node.js backend to it.
+    </p>
+
+    <h2>Installing MongoDB Locally</h2>
+
+    <h3>Step 1: Download and Install MongoDB</h3>
+
+    <ol>
+        <li><strong>Download MongoDB:</strong>
+            <ul>
+                <li>
+                    Go to the 
+                    <a href="https://www.mongodb.com/try/download/community" target="_blank">
+                        MongoDB Download Center
+                    </a> 
+                    and download the Community Server version suitable for your operating system.
+                </li>
+            </ul>
+        </li>
+
+        <li><strong>Install MongoDB:</strong>
+            <ul>
+                <li>Follow the installation instructions specific to your operating system:</li>
+                <ul>
+                    <li><strong>Windows:</strong> Run the downloaded .msi file and follow the installation wizard.</li>
+                    <li><strong>macOS:</strong> Use Homebrew: <code>brew tap mongodb/brew && brew install mongodb-community</code></li>
+                    <li><strong>Linux:</strong> Follow the instructions provided for your distribution on the MongoDB installation page.</li>
+                </ul>
+            </ul>
+        </li>
+    </ol>
+
+    <h3>Step 2: Run MongoDB</h3>
+
+    <ol>
+        <li><strong>Start MongoDB:</strong>
+            <ul>
+                <li><strong>Windows:</strong>
+                    <ul>
+                        <li>
+                            MongoDB is typically installed in 
+                            <code>C:\Program Files\MongoDB\Server&lt;version&gt;\bin</code>. 
+                            Navigate to this directory and run <code>mongod.exe</code>.
+                        </li>
+                    </ul>
+                </li>
+                <li><strong>macOS and Linux:</strong>
+                    <ul>
+                        <li>Start MongoDB using the terminal:</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <pre><code>sudo mongod</code></pre>
+
+            <p>Alternatively, you can use the MongoDB service command:</p>
+
+            <pre><code>brew services start mongodb/brew/mongodb-community</code></pre>
+        </li>
+
+        <li><strong>Verify MongoDB is Running:</strong>
+            <ul>
+                <li>Open a new terminal or command prompt and run:</li>
+            </ul>
+
+            <pre><code>mongo</code></pre>
+
+            <p>This should start the MongoDB shell if the server is running correctly.</p>
+        </li>
+    </ol>
+
+    <div class="divider"></div>
+
+    <h2>Connecting Node.js Backend to MongoDB</h2>
+
+    <h3>Step 1: Set Up Environment Variables</h3>
+
+    <ol>
+        <li>Create a <code>.env</code> file in your backend directory if you haven't already.</li>
+        <li>Add the MongoDB URI to the <code>.env</code> file:</li>
+    </ol>
+
+    <pre><code>MONGO_URI=mongodb://localhost:27017/mycrudapp</code></pre>
+
+    <h3>Step 2: Install Mongoose</h3>
+
+    <p>
+        In your backend directory, install Mongoose, an ODM (Object Data Modeling) library for MongoDB and Node.js:
+    </p>
+
+    <pre><code>npm install mongoose</code></pre>
+
+    <h3>Step 3: Connect to MongoDB in Your Application</h3>
+
+    <p>Update your <code>server.js</code> file to include the connection logic:</p>
+
+    <pre><code>// server.js
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() =&gt; console.log('MongoDB connected'))
+  .catch(err =&gt; console.log(err));
+
+// Routes
+app.use('/api/items', require('./routes/items'));
+
+app.listen(port, () =&gt; console.log(`Server running on port ${port}`));
+</code></pre>
+
+    <div class="divider"></div>
+
+    <h2>Verifying the Setup</h2>
+
+    <ol>
+        <li>Start MongoDB if it’s not already running.</li>
+        <li>Run the Backend Server:</li>
+    </ol>
+
+    <pre><code>node server.js</code></pre>
+
+    <ol start="3">
+        <li>Check the Console:</li>
+    </ol>
+
+    <div class="success">
+        You should see a message saying <code>MongoDB connected</code>.
+    </div>
+
+    <div class="divider"></div>
+
+    <h2>Additional Tools</h2>
+
+    <ul>
+        <li><strong>MongoDB Compass:</strong>
+            <ul>
+                <li>
+                    MongoDB Compass is a GUI for MongoDB. It allows you to visualize and interact with your data easily.
+                </li>
+                <li>
+                    Download it from the 
+                    <a href="https://www.mongodb.com/products/compass" target="_blank">
+                        MongoDB Compass page
+                    </a> 
+                    and connect it to your local MongoDB server using 
+                    <code>mongodb://localhost:27017</code>.
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="note">
+        By following these steps, you will have MongoDB set up locally and connected to your Node.js backend. This setup allows you to perform CRUD operations from your application to the MongoDB database.
+    </div>
+
+    <footer>
+        MongoDB Setup Guide | Clean Documentation Format
+    </footer>
+
+</div>
+
+</body>
+</html>
