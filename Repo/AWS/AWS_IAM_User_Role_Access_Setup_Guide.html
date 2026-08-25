@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS IAM User, Group, Policy & Role Setup Guide</title>
+<style>
+    :root {
+        --bg: #f4f7fb;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #5b6575;
+        --primary: #1f4e79;
+        --primary-light: #eaf2f8;
+        --border: #d9e1ea;
+        --success: #237a57;
+        --warning: #9a6700;
+        --code: #17202a;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+    }
+    .container {
+        width: min(1180px, 94%);
+        margin: 0 auto;
+    }
+    header {
+        background: linear-gradient(135deg, #163a5c, #2874a6);
+        color: white;
+        padding: 46px 0 38px;
+        box-shadow: 0 4px 18px rgba(0,0,0,.12);
+    }
+    header h1 {
+        margin: 0 0 10px;
+        font-size: 34px;
+        letter-spacing: .2px;
+    }
+    header p {
+        margin: 0;
+        max-width: 850px;
+        color: #e8f1f8;
+        font-size: 16px;
+    }
+    .layout {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        gap: 26px;
+        align-items: start;
+        margin: 28px auto 60px;
+    }
+    nav {
+        position: sticky;
+        top: 18px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 18px;
+        box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    }
+    nav h3 {
+        margin: 0 0 12px;
+        color: var(--primary);
+        font-size: 16px;
+    }
+    nav a {
+        display: block;
+        color: #334e68;
+        text-decoration: none;
+        padding: 7px 8px;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+    nav a:hover {
+        background: var(--primary-light);
+        color: var(--primary);
+    }
+    main section {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 28px;
+        margin-bottom: 22px;
+        box-shadow: 0 3px 12px rgba(0,0,0,.045);
+    }
+    h2 {
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 25px;
+        border-bottom: 2px solid var(--primary-light);
+        padding-bottom: 9px;
+    }
+    h3 {
+        color: #274c77;
+        margin-top: 25px;
+    }
+    .intro {
+        background: #edf6ff;
+        border-left: 5px solid #2874a6;
+        padding: 15px 18px;
+        border-radius: 8px;
+        margin: 15px 0 20px;
+    }
+    .steps {
+        counter-reset: step;
+        list-style: none;
+        padding: 0;
+    }
+    .steps li {
+        counter-increment: step;
+        position: relative;
+        padding: 12px 15px 12px 52px;
+        margin: 8px 0;
+        background: #f8fafc;
+        border: 1px solid #e6ebf0;
+        border-radius: 8px;
+    }
+    .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 14px;
+        top: 11px;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        text-align: center;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        font-weight: 700;
+        font-size: 13px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 18px 0;
+        font-size: 14px;
+    }
+    th, td {
+        border: 1px solid var(--border);
+        padding: 11px 12px;
+        text-align: left;
+        vertical-align: top;
+    }
+    th {
+        background: #eaf2f8;
+        color: #234e70;
+        font-weight: 700;
+    }
+    tr:nth-child(even) td { background: #fbfcfe; }
+    code {
+        background: #eef2f7;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: Consolas, monospace;
+        font-size: 90%;
+    }
+    pre {
+        background: var(--code);
+        color: #e9eef5;
+        padding: 18px;
+        border-radius: 9px;
+        overflow-x: auto;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+    .badge {
+        display: inline-block;
+        padding: 4px 9px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        margin-right: 5px;
+    }
+    .badge.aws { background: #e8f2ff; color: #145da0; }
+    .badge.customer { background: #eef8ee; color: #237a57; }
+    .badge.direct { background: #fff5dc; color: #8a5a00; }
+    .badge.group { background: #eeeafe; color: #5b42a6; }
+    .callout {
+        padding: 16px 18px;
+        border-radius: 9px;
+        margin: 16px 0;
+        border-left: 5px solid;
+    }
+    .callout.warning {
+        background: #fff8e6;
+        border-color: #d99a00;
+    }
+    .callout.success {
+        background: #edf9f3;
+        border-color: #2d8a60;
+    }
+    .callout.info {
+        background: #edf6ff;
+        border-color: #2874a6;
+    }
+    ul.clean { padding-left: 21px; }
+    .role-tree {
+        background: #17202a;
+        color: #e8eef5;
+        padding: 22px;
+        border-radius: 10px;
+        font-family: Consolas, monospace;
+        white-space: pre-wrap;
+        overflow-x: auto;
+    }
+    .top-link {
+        display: inline-block;
+        margin-top: 15px;
+        font-size: 13px;
+        color: #2874a6;
+        text-decoration: none;
+    }
+    footer {
+        background: #163a5c;
+        color: #dce8f2;
+        padding: 25px 0;
+        text-align: center;
+        font-size: 13px;
+    }
+    @media (max-width: 850px) {
+        .layout { grid-template-columns: 1fr; }
+        nav { position: static; }
+        header h1 { font-size: 28px; }
+        main section { padding: 21px; }
+        table { display: block; overflow-x: auto; }
+    }
+</style>
+</head>
+
+<body id="top">
+
+<header>
+    <div class="container">
+        <h1>AWS IAM User, Group, Policy &amp; Role Setup Guide</h1>
+        <p>
+            A practical step-by-step guide for creating IAM users, groups, customer-managed policies,
+            inline policies, and Elastic Beanstalk service roles based on the current API-Dev,
+            MyShift, SQS, S3, SNS, API Gateway, Cognito, Lambda, and Elastic Beanstalk permissions.
+        </p>
+    </div>
+</header>
+
+<div class="container layout">
+
+<nav>
+    <h3>Quick Navigation</h3>
+    <a href="#overview">1. Overview</a>
+    <a href="#group">2. Create API-Dev Group</a>
+    <a href="#ajay">3. Create Ajay</a>
+    <a href="#prajwal">4. Create Prajwal</a>
+    <a href="#hitoshi">5. Create Hitoshi</a>
+    <a href="#policy">6. Customer-Managed Policy</a>
+    <a href="#role">7. Elastic Beanstalk Role</a>
+    <a href="#environment">8. Configure Beanstalk</a>
+    <a href="#structure">9. Recommended Structure</a>
+    <a href="#concepts">10. User vs Group vs Role</a>
+    <a href="#best-practices">11. Best Practices</a>
+</nav>
+
+<main>
+
+<section id="overview">
+    <h2>1. Overview</h2>
+
+    <div class="intro">
+        <strong>Objective:</strong> Set up AWS IAM access for Ajay, Prajwal, Hitoshi, the
+        <code>API-Dev</code> group, and the Elastic Beanstalk service role while keeping permissions
+        organized and as close to least privilege as practical.
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>IAM Object</th>
+                <th>Purpose</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>User</strong></td>
+                <td>Individual human or application identity</td>
+                <td>Ajay</td>
+            </tr>
+            <tr>
+                <td><strong>Group</strong></td>
+                <td>Common permissions shared by multiple users</td>
+                <td>API-Dev</td>
+            </tr>
+            <tr>
+                <td><strong>Policy</strong></td>
+                <td>Defines allowed or denied AWS actions</td>
+                <td>AmazonSNSFullAccess</td>
+            </tr>
+            <tr>
+                <td><strong>Role</strong></td>
+                <td>Identity that can be assumed by AWS services or applications</td>
+                <td>Elastic Beanstalk service role</td>
+            </tr>
+            <tr>
+                <td><strong>Inline Policy</strong></td>
+                <td>Policy embedded directly into one IAM identity</td>
+                <td>Prajwal's S3 inline policy</td>
+            </tr>
+            <tr>
+                <td><strong>Customer-Managed Policy</strong></td>
+                <td>Reusable custom policy created and maintained by your organization</td>
+                <td>all-sqs-beanstalk-access</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="group">
+    <h2>2. Create the IAM Group: API-Dev</h2>
+
+    <p>The <code>API-Dev</code> group should contain permissions that are common to developers who work
+    with the API/application platform.</p>
+
+    <h3>Step-by-step</h3>
+    <ol class="steps">
+        <li>Sign in to the <strong>AWS Management Console</strong>.</li>
+        <li>Open <strong>IAM</strong>.</li>
+        <li>Select <strong>User groups</strong> from the left navigation.</li>
+        <li>Click <strong>Create group</strong>.</li>
+        <li>Enter the group name: <code>API-Dev</code>.</li>
+        <li>Select the required policies.</li>
+        <li>Review the permissions and click <strong>Create group</strong>.</li>
+    </ol>
+
+    <h3>Policies for API-Dev</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Policy</th>
+                <th>Policy Type</th>
+                <th>Purpose / Area</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>AmazonCognitoPowerUser</code></td><td>AWS Managed</td><td>Cognito administration</td></tr>
+            <tr><td><code>AmazonCognitoReadOnly</code></td><td>AWS Managed</td><td>Cognito read access</td></tr>
+            <tr><td><code>AmazonESCognitoAccess</code></td><td>AWS Managed</td><td>Elasticsearch/Cognito integration</td></tr>
+            <tr><td><code>AmazonOpenSearchServiceCognitoAccess</code></td><td>AWS Managed</td><td>OpenSearch Cognito integration</td></tr>
+            <tr><td><code>AmazonS3ObjectLambdaExecutionRolePolicy</code></td><td>AWS Managed</td><td>S3 Object Lambda permissions</td></tr>
+            <tr><td><code>AWSLambda_ReadOnlyAccess</code></td><td>AWS Managed</td><td>Lambda read access</td></tr>
+            <tr><td><code>s3-access-to-image-bucket</code></td><td>Customer Managed</td><td>Application image bucket access</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout info">
+        <strong>Why use a group?</strong><br>
+        If multiple developers need the same set of permissions, adding them to <code>API-Dev</code>
+        is easier to maintain than attaching the same policies individually to every user.
+    </div>
+</section>
+
+<section id="ajay">
+    <h2>3. Create Ajay's IAM User</h2>
+
+    <h3>Create the user</h3>
+    <ol class="steps">
+        <li>Go to <strong>IAM → Users</strong>.</li>
+        <li>Click <strong>Create user</strong>.</li>
+        <li>Enter username: <code>Ajay</code>.</li>
+        <li>Configure the required AWS Console and/or programmatic access according to your organization's access model.</li>
+        <li>Add Ajay to the <code>API-Dev</code> group.</li>
+        <li>Review and create the user.</li>
+    </ol>
+
+    <h3>Ajay's Group Permissions</h3>
+    <p>Because Ajay belongs to <code>API-Dev</code>, he automatically receives:</p>
+
+    <ul class="clean">
+        <li><code>AmazonCognitoPowerUser</code></li>
+        <li><code>AmazonCognitoReadOnly</code></li>
+        <li><code>AmazonESCognitoAccess</code></li>
+        <li><code>AmazonOpenSearchServiceCognitoAccess</code></li>
+        <li><code>AmazonS3ObjectLambdaExecutionRolePolicy</code></li>
+        <li><code>AWSLambda_ReadOnlyAccess</code></li>
+        <li><code>s3-access-to-image-bucket</code></li>
+    </ul>
+
+    <h3>Add Ajay's Direct Permissions</h3>
+    <ol class="steps">
+        <li>Open <strong>IAM → Users → Ajay</strong>.</li>
+        <li>Open the <strong>Permissions</strong> tab.</li>
+        <li>Click <strong>Add permissions</strong>.</li>
+        <li>Select the option to attach policies.</li>
+        <li>Attach <code>AmazonSNSFullAccess</code>.</li>
+        <li>Attach <code>IAMUserChangePassword</code>.</li>
+    </ol>
+
+    <table>
+        <thead>
+            <tr><th>Permission</th><th>Assignment</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>API-Dev policies</td><td><span class="badge group">GROUP</span> API-Dev</td></tr>
+            <tr><td><code>AmazonSNSFullAccess</code></td><td><span class="badge direct">DIRECT</span></td></tr>
+            <tr><td><code>IAMUserChangePassword</code></td><td><span class="badge direct">DIRECT</span></td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="prajwal">
+    <h2>4. Create Prajwal's IAM User</h2>
+
+    <h3>Create the user</h3>
+    <ol class="steps">
+        <li>Go to <strong>IAM → Users → Create user</strong>.</li>
+        <li>Enter username: <code>Prajwal</code>.</li>
+        <li>Configure the required AWS Console and/or programmatic access.</li>
+        <li>Create the user.</li>
+    </ol>
+
+    <h3>Attach Prajwal's Direct Policies</h3>
+    <ol class="steps">
+        <li>Open <strong>IAM → Users → Prajwal → Permissions</strong>.</li>
+        <li>Click <strong>Add permissions</strong>.</li>
+        <li>Attach <code>AmazonSNSFullAccess</code>.</li>
+        <li>Attach the customer-managed policy <code>apigatewayfullaccess2024</code>.</li>
+        <li>Attach <code>IAMUserChangePassword</code>.</li>
+    </ol>
+
+    <h3>S3 Inline Policy</h3>
+    <p>Prajwal currently has the customer inline policy:</p>
+
+    <p><code>s3-full-access-myshift-profile-images</code></p>
+
+    <ol class="steps">
+        <li>Open <strong>Prajwal → Permissions</strong>.</li>
+        <li>Select <strong>Add permissions</strong>.</li>
+        <li>Select <strong>Create inline policy</strong>.</li>
+        <li>Select <strong>S3</strong> as the service.</li>
+        <li>Specify the required actions.</li>
+        <li>Restrict the resource to the MyShift profile-images bucket.</li>
+        <li>Name the inline policy <code>s3-full-access-myshift-profile-images</code>.</li>
+        <li>Review and create the policy.</li>
+    </ol>
+
+    <div class="callout warning">
+        <strong>Recommendation:</strong> If Prajwal only needs access to one S3 bucket, avoid granting
+        unrestricted access to all S3 buckets. Scope the policy to the specific bucket and objects required.
+    </div>
+
+    <h3>Prajwal's Final Permissions</h3>
+    <table>
+        <thead>
+            <tr><th>Policy</th><th>Type</th><th>Assignment</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>AmazonSNSFullAccess</code></td><td>AWS Managed</td><td>Direct</td></tr>
+            <tr><td><code>apigatewayfullaccess2024</code></td><td>Customer Managed</td><td>Direct</td></tr>
+            <tr><td><code>IAMUserChangePassword</code></td><td>AWS Managed</td><td>Direct</td></tr>
+            <tr><td><code>s3-full-access-myshift-profile-images</code></td><td>Customer Inline</td><td>Inline</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="hitoshi">
+    <h2>5. Create Hitoshi's IAM User</h2>
+
+    <h3>Create the user</h3>
+    <ol class="steps">
+        <li>Go to <strong>IAM → Users → Create user</strong>.</li>
+        <li>Enter username: <code>Hitoshi</code>.</li>
+        <li>Configure the required AWS Console and/or programmatic access.</li>
+        <li>Create the user.</li>
+    </ol>
+
+    <h3>Attach Permissions</h3>
+    <ol class="steps">
+        <li>Open <strong>Hitoshi → Permissions</strong>.</li>
+        <li>Click <strong>Add permissions</strong>.</li>
+        <li>Select <strong>Attach policies directly</strong>.</li>
+        <li>Select customer-managed policy <code>all-sqs-beanstalk-access</code>.</li>
+        <li>Attach <code>IAMUserChangePassword</code>.</li>
+        <li>Review and save.</li>
+    </ol>
+
+    <table>
+        <thead>
+            <tr><th>Policy</th><th>Type</th><th>Assignment</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>all-sqs-beanstalk-access</code></td><td>Customer Managed</td><td>Direct</td></tr>
+            <tr><td><code>IAMUserChangePassword</code></td><td>AWS Managed</td><td>Direct</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="policy">
+    <h2>6. Create a Customer-Managed Policy</h2>
+
+    <p>Use a customer-managed policy when you need a reusable, organization-specific permission set.</p>
+
+    <h3>Example: S3 Image Bucket Policy</h3>
+
+    <ol class="steps">
+        <li>Go to <strong>IAM → Policies</strong>.</li>
+        <li>Click <strong>Create policy</strong>.</li>
+        <li>Select <strong>S3</strong>.</li>
+        <li>Choose only the required actions, such as List, Get, Put, or Delete.</li>
+        <li>Specify the exact image bucket as the resource.</li>
+        <li>Review the policy.</li>
+        <li>Give it a meaningful name, for example <code>s3-access-to-image-bucket</code>.</li>
+        <li>Click <strong>Create policy</strong>.</li>
+        <li>Attach the policy to the <code>API-Dev</code> group.</li>
+    </ol>
+
+    <div class="callout success">
+        <strong>Preferred approach:</strong> Create reusable customer-managed policies for permissions
+        that need to be shared by multiple users or groups.
+    </div>
+
+    <h3>Typical Policy Design</h3>
+    <pre>{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::YOUR-BUCKET-NAME/*"
+    }
+  ]
+}</pre>
+
+    <p><strong>Note:</strong> Replace the bucket ARN with your actual bucket and include only the actions
+    that the application genuinely requires.</p>
+</section>
+
+<section id="role">
+    <h2>7. Create the Elastic Beanstalk IAM Role</h2>
+
+    <p>An IAM role is different from a user. The Elastic Beanstalk service can assume the role to perform
+    AWS operations required to manage the environment.</p>
+
+    <h3>Create the Role</h3>
+    <ol class="steps">
+        <li>Go to <strong>IAM → Roles</strong>.</li>
+        <li>Click <strong>Create role</strong>.</li>
+        <li>Select <strong>AWS service</strong> as the trusted entity type.</li>
+        <li>Select <strong>Elastic Beanstalk</strong> as the service/use case.</li>
+        <li>Attach the required Elastic Beanstalk policies.</li>
+        <li>Name the role <code>aws-elasticbeanstalk-service-role</code>.</li>
+        <li>Review the trust relationship and permissions.</li>
+        <li>Click <strong>Create role</strong>.</li>
+    </ol>
+
+    <h3>Policies Currently Associated with the Role</h3>
+
+    <table>
+        <thead>
+            <tr><th>Policy</th><th>Type</th><th>Area</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><code>AmazonEC2FullAccess</code></td><td>AWS Managed</td><td>EC2</td></tr>
+            <tr><td><code>AWSElasticBeanstalkEnhancedHealth</code></td><td>AWS Managed</td><td>Enhanced Health</td></tr>
+            <tr><td><code>AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy</code></td><td>AWS Managed</td><td>Managed Updates</td></tr>
+            <tr><td><code>AWSElasticBeanstalkMulticontainerDocker</code></td><td>AWS Managed</td><td>Multicontainer/Docker</td></tr>
+            <tr><td><code>AWSElasticBeanstalkWebTier</code></td><td>AWS Managed</td><td>Web Tier</td></tr>
+            <tr><td><code>AWSElasticBeanstalkWorkerTier</code></td><td>AWS Managed</td><td>Worker Tier</td></tr>
+        </tbody>
+    </table>
+
+    <div class="callout warning">
+        <strong>Important:</strong> Review whether <code>AmazonEC2FullAccess</code> is actually required.
+        Broad permissions should be replaced with narrower permissions where operationally possible.
+    </div>
+</section>
+
+<section id="environment">
+    <h2>8. Configure the Elastic Beanstalk Environment</h2>
+
+    <ol class="steps">
+        <li>Open the <strong>AWS Elastic Beanstalk</strong> console.</li>
+        <li>Select your application.</li>
+        <li>Select the required environment.</li>
+        <li>Open <strong>Configuration</strong>.</li>
+        <li>Locate the environment's IAM/service-role configuration.</li>
+        <li>Select or configure <code>aws-elasticbeanstalk-service-role</code> where appropriate.</li>
+        <li>Save the configuration.</li>
+    </ol>
+
+    <div class="callout info">
+        <strong>Important distinction:</strong> Elastic Beanstalk can involve more than one IAM role.
+        The <strong>Elastic Beanstalk service role</strong> and the <strong>EC2 instance profile</strong>
+        have different purposes and should not automatically be treated as interchangeable.
+    </div>
+
+    <div class="role-tree">Elastic Beanstalk
+│
+├── Service Role
+│   ├── Beanstalk management permissions
+│   ├── Enhanced health
+│   ├── Managed updates
+│   └── Environment management
+│
+└── EC2 Instance Profile
+    └── Permissions used by application EC2 instances</div>
+</section>
+
+<section id="structure">
+    <h2>9. Recommended IAM Structure</h2>
+
+    <div class="role-tree">AWS Account
+│
+├── IAM Group: API-Dev
+│   │
+│   ├── AmazonCognitoPowerUser
+│   ├── AmazonCognitoReadOnly
+│   ├── AmazonESCognitoAccess
+│   ├── AmazonOpenSearchServiceCognitoAccess
+│   ├── AmazonS3ObjectLambdaExecutionRolePolicy
+│   ├── AWSLambda_ReadOnlyAccess
+│   └── s3-access-to-image-bucket
+│
+├── IAM User: Ajay
+│   │
+│   ├── Member of API-Dev
+│   ├── AmazonSNSFullAccess
+│   └── IAMUserChangePassword
+│
+├── IAM User: Prajwal
+│   │
+│   ├── AmazonSNSFullAccess
+│   ├── apigatewayfullaccess2024
+│   ├── IAMUserChangePassword
+│   └── s3-full-access-myshift-profile-images
+│
+├── IAM User: Hitoshi
+│   │
+│   ├── all-sqs-beanstalk-access
+│   └── IAMUserChangePassword
+│
+└── IAM Role: aws-elasticbeanstalk-service-role
+    │
+    ├── AmazonEC2FullAccess
+    ├── AWSElasticBeanstalkEnhancedHealth
+    ├── AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy
+    ├── AWSElasticBeanstalkMulticontainerDocker
+    ├── AWSElasticBeanstalkWebTier
+    └── AWSElasticBeanstalkWorkerTier</div>
+</section>
+
+<section id="concepts">
+    <h2>10. User vs Group vs Policy vs Role</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Object</th>
+                <th>Think of it as</th>
+                <th>Example in this setup</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>User</strong></td>
+                <td>A person/identity</td>
+                <td>Ajay, Prajwal, Hitoshi</td>
+            </tr>
+            <tr>
+                <td><strong>Group</strong></td>
+                <td>A permission bundle for people</td>
+                <td>API-Dev</td>
+            </tr>
+            <tr>
+                <td><strong>Policy</strong></td>
+                <td>Rules describing allowed AWS actions</td>
+                <td>AmazonSNSFullAccess</td>
+            </tr>
+            <tr>
+                <td><strong>Role</strong></td>
+                <td>An identity assumed by a service/application</td>
+                <td>Elastic Beanstalk service role</td>
+            </tr>
+            <tr>
+                <td><strong>Customer-Managed Policy</strong></td>
+                <td>Reusable policy created by your organization</td>
+                <td>all-sqs-beanstalk-access</td>
+            </tr>
+            <tr>
+                <td><strong>Inline Policy</strong></td>
+                <td>Policy embedded in one identity</td>
+                <td>Prajwal's profile-image S3 policy</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Simple Mental Model</h3>
+
+    <pre>User
+  ↓
+Group
+  ↓
+Policies
+
+AWS Service / Application
+  ↓
+Role
+  ↓
+Policies</pre>
+</section>
+
+<section id="best-practices">
+    <h2>11. IAM Best Practices</h2>
+
+    <ol class="steps">
+        <li><strong>Prefer groups for common user permissions.</strong> Avoid repeatedly attaching the same policies directly to multiple users.</li>
+        <li><strong>Follow least privilege.</strong> Grant only the AWS actions and resources actually required.</li>
+        <li><strong>Restrict S3 policies to specific buckets and objects.</strong> Avoid <code>Resource: *</code> when it is not necessary.</li>
+        <li><strong>Review full-access policies.</strong> Policies such as <code>AmazonSNSFullAccess</code> and <code>AmazonEC2FullAccess</code> may be broader than necessary.</li>
+        <li><strong>Prefer customer-managed policies for reusable application-specific permissions.</strong></li>
+        <li><strong>Use roles for AWS services and applications.</strong> Do not use long-lived IAM user credentials for workloads when a role can be used.</li>
+        <li><strong>Review inline policies carefully.</strong> If the same inline policy is needed by several identities, consider converting it into a customer-managed policy.</li>
+        <li><strong>Separate development and production access.</strong> Developers should not automatically receive unrestricted production permissions.</li>
+        <li><strong>Review IAM Access Advisor and CloudTrail data periodically.</strong> Remove permissions that are no longer required.</li>
+        <li><strong>Use MFA and your organization's preferred centralized identity/access-management approach.</strong></li>
+    </ol>
+
+    <div class="callout success">
+        <strong>Recommended pattern:</strong>
+        <br><br>
+        <code>User → Group → Reusable Policies</code>
+        <br>
+        <code>AWS Service/Application → Role → Least-Privilege Policies</code>
+        <br><br>
+        This structure makes access easier to understand, audit, maintain, and revoke.
+    </div>
+
+    <a class="top-link" href="#top">↑ Back to Top</a>
+</section>
+
+</main>
+</div>
+
+<footer>
+    AWS IAM Setup Guide · API-Dev / MyShift Environment · Prepared for operational reference
+</footer>
+
+</body>
+</html>

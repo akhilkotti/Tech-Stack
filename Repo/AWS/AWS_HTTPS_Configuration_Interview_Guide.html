@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS HTTPS Configuration - Interview Guide</title>
+<style>
+:root {
+    --navy:#17324d;
+    --blue:#246b9e;
+    --blue2:#eaf4fb;
+    --bg:#f4f7fa;
+    --card:#fff;
+    --text:#263442;
+    --muted:#607080;
+    --border:#d9e2ea;
+    --green:#287a55;
+    --green-bg:#edf8f2;
+    --orange:#a66a00;
+    --orange-bg:#fff7e5;
+    --code:#17212b;
+    --shadow:0 5px 18px rgba(23,50,77,.07);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+header{background:linear-gradient(135deg,#17324d,#286f9f);color:#fff;padding:42px 0}
+.container{width:min(1250px,94%);margin:auto}
+header h1{margin:0 0 8px;font-size:34px}
+header p{margin:0;color:#e4eff7;max-width:950px}
+.layout{display:grid;grid-template-columns:275px minmax(0,1fr);gap:26px;margin:28px auto 60px;align-items:start}
+.sidebar{position:sticky;top:18px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
+.sidebar h3{margin:0 0 12px;color:var(--navy)}
+.sidebar a{display:block;text-decoration:none;color:#425466;padding:8px 10px;margin:2px 0;border-radius:7px;font-size:14px}
+.sidebar a:hover{background:var(--blue2);color:var(--blue)}
+.content section{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:29px;margin-bottom:22px;box-shadow:var(--shadow)}
+h2{color:var(--navy);margin-top:0;font-size:26px;border-bottom:2px solid var(--blue2);padding-bottom:10px}
+h3{color:#28577c;margin-top:25px}
+.intro,.quote,.warning,.success{padding:17px 19px;border-radius:9px;margin:16px 0}
+.intro{background:var(--blue2);border-left:5px solid var(--blue)}
+.quote{background:var(--green-bg);border-left:5px solid var(--green)}
+.warning{background:var(--orange-bg);border-left:5px solid #d39218}
+.success{background:#edf8f2;border-left:5px solid var(--green)}
+.scenario{background:#f8fafc;border:1px solid #e3eaf0;border-radius:10px;padding:18px;margin:17px 0}
+.scenario-title{display:block;color:var(--blue);font-weight:700;margin-bottom:8px}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0}
+.flow span{background:var(--blue2);color:var(--navy);padding:9px 13px;border-radius:7px;font-weight:600;font-size:14px}
+.flow b{color:var(--blue)}
+pre{background:var(--code);color:#eaf1f7;border-radius:9px;padding:18px;overflow-x:auto;font-family:Consolas,"Courier New",monospace;font-size:13px;line-height:1.55}
+code{background:#eef2f6;padding:2px 6px;border-radius:4px;font-family:Consolas,monospace}
+pre code{background:none;padding:0}
+ol.steps{counter-reset:item;list-style:none;padding:0}
+ol.steps li{counter-increment:item;position:relative;padding:10px 12px 10px 43px;margin:7px 0;background:#f8fafc;border-radius:7px}
+ol.steps li:before{content:counter(item);position:absolute;left:11px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;text-align:center;line-height:24px;font-size:12px;font-weight:bold}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px}
+th,td{border:1px solid var(--border);padding:11px 12px;text-align:left;vertical-align:top}
+th{background:var(--blue2);color:#234e70}
+tr:nth-child(even) td{background:#fbfcfe}
+.highlight{background:#f0f6fa;border:1px solid #d7e5ee;padding:19px;border-radius:10px;font-size:18px;text-align:center;margin:18px 0}
+.keyword{display:inline-block;background:#edf3f7;color:#28577c;padding:4px 9px;border-radius:15px;margin:3px;font-size:13px}
+.top{display:inline-block;margin-top:12px;color:var(--blue);text-decoration:none;font-size:13px}
+footer{background:var(--navy);color:#dce8f1;text-align:center;padding:24px;font-size:13px}
+@media(max-width:850px){
+.layout{grid-template-columns:1fr}
+.sidebar{position:static}
+header h1{font-size:27px}
+.content section{padding:21px}
+table{display:block;overflow-x:auto}
+}
+</style>
+</head>
+
+<body id="top">
+
+<header>
+<div class="container">
+<h1>Configuring HTTPS in AWS</h1>
+<p>Interview-ready explanation of why HTTPS is required, what each AWS service does, the end-to-end architecture, real-time scenarios, troubleshooting, and a strong 2–3 minute interview answer.</p>
+</div>
+</header>
+
+<div class="container layout">
+
+<aside class="sidebar">
+<h3>Navigation</h3>
+<a href="#purpose">1. Why HTTPS?</a>
+<a href="#certificate">2. Why TLS Certificate?</a>
+<a href="#acm">3. Why AWS ACM?</a>
+<a href="#domains">4. Domain &amp; Subdomain</a>
+<a href="#validation">5. DNS Validation</a>
+<a href="#route53">6. Why Route 53?</a>
+<a href="#cloudfront">7. Why CloudFront?</a>
+<a href="#redirect">8. HTTP → HTTPS</a>
+<a href="#alternate">9. Alternate Domain Name</a>
+<a href="#s3">10. Why S3?</a>
+<a href="#correction">11. Important S3 Correction</a>
+<a href="#distributions">12. CloudFront Distributions</a>
+<a href="#alias">13. Route 53 Alias</a>
+<a href="#architecture">14. Complete Architecture</a>
+<a href="#scenario">15. Real-Time Scenario</a>
+<a href="#troubleshooting">16. Troubleshooting</a>
+<a href="#interview">17. Interview Answer</a>
+<a href="#one-line">18. One-Line Explanations</a>
+</aside>
+
+<main class="content">
+
+<section id="purpose">
+<h2>1. Why Do We Need to Configure HTTPS?</h2>
+
+<div class="intro">
+<strong>Interview mindset:</strong> Don't start by explaining AWS console clicks. Start with the business and technical reason for configuring HTTPS.
+</div>
+
+<div class="quote">
+“My responsibility was to expose the application through a secure HTTPS URL rather than allowing users to access it through plain HTTP. HTTPS protects communication between the end user and the application using TLS encryption and also allows the browser to verify the server's identity through a trusted certificate.”
+</div>
+
+<h3>HTTP vs HTTPS</h3>
+
+<div class="flow">
+<span>User</span><b>→</b><span>HTTP : 80</span><b>→</b><span>Application</span>
+</div>
+
+<p>With plain HTTP, the connection is not encrypted. Sensitive information could potentially be exposed while travelling across the network.</p>
+
+<p>With HTTPS:</p>
+
+<div class="flow">
+<span>User</span><b>→</b><span>HTTPS / TLS : 443</span><b>→</b><span>Secure Endpoint</span>
+</div>
+
+<p>HTTPS provides:</p>
+<ul>
+<li><strong>Encryption</strong> – protects data while it travels over the network.</li>
+<li><strong>Authentication</strong> – the certificate helps prove the server's identity.</li>
+<li><strong>Integrity</strong> – helps prevent traffic from being altered in transit.</li>
+<li><strong>User trust</strong> – browsers recognize a valid certificate and secure connection.</li>
+</ul>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="certificate">
+<h2>2. Why Do We Need an SSL/TLS Certificate?</h2>
+
+<p>A TLS certificate is required for a trusted HTTPS connection.</p>
+
+<div class="scenario">
+<span class="scenario-title">Example</span>
+<p>User enters:</p>
+<pre><code>https://www.equitek.net</code></pre>
+
+<p>The browser needs to determine whether the endpoint is legitimately authorized for <code>www.equitek.net</code>.</p>
+
+<p>A certificate contains information such as:</p>
+<ul>
+<li>Domain name(s)</li>
+<li>Certificate authority / issuer</li>
+<li>Validity period</li>
+<li>Public-key information</li>
+</ul>
+</div>
+
+<div class="quote">
+“The certificate allows the browser to establish trust with the HTTPS endpoint. If the certificate is invalid, expired, or doesn't match the hostname, the browser can display a security warning.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="acm">
+<h2>3. Why AWS Certificate Manager?</h2>
+
+<div class="quote">
+“Instead of manually purchasing, installing and managing certificates on individual servers, AWS Certificate Manager allows us to request, validate and manage certificates within AWS and integrate them with supported AWS services.”
+</div>
+
+<h3>ACM's Role</h3>
+
+<div class="flow">
+<span>AWS Certificate Manager</span><b>→</b><span>TLS Certificate</span><b>→</b><span>CloudFront</span>
+</div>
+
+<p>ACM helps with:</p>
+<ul>
+<li>Certificate provisioning</li>
+<li>Domain validation</li>
+<li>Certificate management</li>
+<li>Certificate renewal</li>
+<li>Integration with AWS services</li>
+</ul>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="domains">
+<h2>4. Why Add Both equitek.net and www.equitek.net?</h2>
+
+<p>These are separate hostnames:</p>
+
+<div class="flow">
+<span>equitek.net</span><span>www.equitek.net</span>
+</div>
+
+<p>If users can access the application through both URLs, the certificate should cover both names.</p>
+
+<div class="scenario">
+<span class="scenario-title">Certificate coverage</span>
+<pre><code>Certificate
+ ├── equitek.net
+ └── www.equitek.net</code></pre>
+</div>
+
+<div class="quote">
+“We included both the root domain and the www subdomain in the certificate because we wanted HTTPS to work for both hostnames.”
+</div>
+
+<h3>Alternative: Wildcard Certificate</h3>
+
+<p>For appropriate architectures, a wildcard certificate can cover subdomains:</p>
+
+<pre><code>*.equitek.net</code></pre>
+
+<p>This can cover hostnames such as:</p>
+
+<pre><code>www.equitek.net
+api.equitek.net
+test.equitek.net</code></pre>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="validation">
+<h2>5. Why Does ACM Create CNAME Records?</h2>
+
+<p>ACM needs to verify that you control the domain. This is called <strong>domain validation</strong>.</p>
+
+<div class="flow">
+<span>ACM</span><b>→</b><span>DNS Validation CNAME</span><b>→</b><span>Route 53</span><b>→</b><span>ACM Validation</span><b>→</b><span>Certificate Issued</span>
+</div>
+
+<h3>Typical Flow</h3>
+
+<ol class="steps">
+<li>Request a public certificate in ACM.</li>
+<li>Enter the required fully qualified domain names.</li>
+<li>Select DNS validation.</li>
+<li>ACM generates validation CNAME records.</li>
+<li>Create the records in Route 53.</li>
+<li>ACM checks the DNS records.</li>
+<li>The certificate changes from <code>Pending validation</code> to <code>Issued</code>.</li>
+</ol>
+
+<div class="quote">
+“ACM uses DNS validation to verify domain ownership. Since the domain is hosted in Route 53, we can create the validation records there. Once ACM validates the records, the certificate becomes Issued.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="route53">
+<h2>6. Why Do We Need Route 53?</h2>
+
+<p>Route 53 is being used primarily as the <strong>DNS service</strong>.</p>
+
+<div class="flow">
+<span>www.equitek.net</span><b>→</b><span>Route 53</span><b>→</b><span>CloudFront</span>
+</div>
+
+<p>DNS translates a human-friendly domain name into the AWS destination where traffic should be routed.</p>
+
+<div class="scenario">
+<span class="scenario-title">Without a custom DNS name</span>
+<pre><code>d1sw29gbt5oue5.cloudfront.net</code></pre>
+
+<span class="scenario-title">Business-friendly URL</span>
+<pre><code>www.equitek.net</code></pre>
+</div>
+
+<div class="warning">
+<strong>Important distinction:</strong> Route 53 does not provide the HTTPS encryption itself. Route 53 handles DNS. ACM provides the certificate, and CloudFront can terminate the HTTPS connection.
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="cloudfront">
+<h2>7. Why Do We Need CloudFront?</h2>
+
+<div class="quote">
+“We used CloudFront as the public HTTPS endpoint and CDN in front of the S3 website.”
+</div>
+
+<div class="flow">
+<span>Internet User</span><b>→</b><span>Route 53</span><b>→</b><span>CloudFront</span><b>→</b><span>S3 Origin</span>
+</div>
+
+<h3>CloudFront Responsibilities</h3>
+
+<table>
+<thead><tr><th>Capability</th><th>Why It Matters</th></tr></thead>
+<tbody>
+<tr><td>HTTPS termination</td><td>CloudFront presents the ACM certificate to the browser.</td></tr>
+<tr><td>CDN</td><td>Caches content closer to users.</td></tr>
+<tr><td>Performance</td><td>Reduces latency for static content.</td></tr>
+<tr><td>Security integration</td><td>Can integrate with AWS WAF and other controls.</td></tr>
+<tr><td>Custom domain</td><td>Supports alternate domain names such as www.equitek.net.</td></tr>
+</tbody>
+</table>
+
+<h3>Example</h3>
+<p>Instead of every user going directly to S3:</p>
+
+<pre><code>User → S3</code></pre>
+
+<p>the architecture becomes:</p>
+
+<pre><code>User → Nearest CloudFront Edge → S3</code></pre>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="redirect">
+<h2>8. Why Configure “Redirect HTTP to HTTPS”?</h2>
+
+<p>Suppose a user enters:</p>
+
+<pre><code>http://www.equitek.net</code></pre>
+
+<p>We want the user to automatically move to the secure URL:</p>
+
+<pre><code>https://www.equitek.net</code></pre>
+
+<div class="flow">
+<span>HTTP Request</span><b>→</b><span>CloudFront</span><b>→</b><span>HTTP → HTTPS Redirect</span><b>→</b><span>Secure HTTPS Request</span>
+</div>
+
+<div class="quote">
+“We configure the viewer protocol policy to redirect HTTP to HTTPS so that users are automatically moved to the secure version instead of continuing to use an unencrypted HTTP connection.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="alternate">
+<h2>9. Why Configure an Alternate Domain Name?</h2>
+
+<p>CloudFront automatically provides a distribution domain:</p>
+
+<pre><code>d1sw29gbt5oue5.cloudfront.net</code></pre>
+
+<p>But users should access the business domain:</p>
+
+<pre><code>www.equitek.net</code></pre>
+
+<p>Therefore, the CloudFront distribution is configured with an <strong>Alternate Domain Name (CNAME)</strong>.</p>
+
+<div class="flow">
+<span>CloudFront</span><b>→</b><span>Default Domain</span>
+<span>CloudFront</span><b>→</b><span>www.equitek.net</span>
+</div>
+
+<div class="quote">
+“CloudFront needs to know that traffic arriving for www.equitek.net belongs to this distribution. The alternate domain name provides that mapping.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="s3">
+<h2>10. Why Is S3 Used as the Origin?</h2>
+
+<p>In this architecture, S3 stores the static website content.</p>
+
+<pre><code>index.html
+css/
+js/
+images/
+fonts/</code></pre>
+
+<p>CloudFront retrieves that content from S3 when it is not already cached.</p>
+
+<div class="flow">
+<span>Browser</span><b>→</b><span>CloudFront</span><b>→</b><span>S3</span><b>→</b><span>Static Content</span>
+</div>
+
+<p>S3 is useful for static content because it provides durable object storage without requiring us to maintain web servers for the static assets.</p>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="correction">
+<h2>11. Important Technical Correction About the S3 HTTPS Step</h2>
+
+<div class="warning">
+<strong>Do not repeat this part of the original notes exactly in an interview.</strong>
+</div>
+
+<p>
+The notes say to change S3 Static Website Hosting from HTTP to HTTPS. The S3 static website endpoint itself is HTTP-only.
+If CloudFront is configured to use an S3 website endpoint as the origin, HTTPS is not used between CloudFront and that website endpoint.
+</p>
+
+<h3>Important Architecture Distinction</h3>
+
+<pre><code>Browser
+   |
+   | HTTPS
+   ↓
+CloudFront
+   |
+   | HTTP when using S3 website endpoint
+   ↓
+S3 Static Website Endpoint</code></pre>
+
+<p>
+The important security point in this architecture is that the <strong>viewer-facing connection is HTTPS</strong>.
+If HTTPS is required from CloudFront to the origin, use the appropriate S3 REST endpoint and CloudFront/S3 configuration rather than the S3 static website endpoint.
+</p>
+
+<div class="quote">
+<strong>Interview-safe wording:</strong><br>
+“The important HTTPS termination point in this architecture is CloudFront. The viewer connects to CloudFront over HTTPS using the ACM certificate, while S3 provides the static content as the origin.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="distributions">
+<h2>12. Do We Need Two CloudFront Distributions?</h2>
+
+<div class="warning">
+<strong>Important:</strong> Two hostnames do not automatically require two CloudFront distributions.
+</div>
+
+<p>A single CloudFront distribution can support multiple alternate domain names when the architecture allows it.</p>
+
+<pre><code>CloudFront Distribution
+       |
+       ├── equitek.net
+       └── www.equitek.net
+       |
+       ↓
+      S3</code></pre>
+
+<p>Separate distributions may make sense when domains require different:</p>
+
+<ul>
+<li>Origins</li>
+<li>Cache behaviors</li>
+<li>Security policies</li>
+<li>WAF configurations</li>
+<li>Deployment lifecycles</li>
+<li>Application architectures</li>
+</ul>
+
+<div class="quote">
+<strong>Interview recommendation:</strong><br>
+“We can use CloudFront with alternate domain names for the required hostnames. Separate distributions may be used when the domains require different origins, behaviors or security configurations.”
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="alias">
+<h2>13. Why Configure Route 53 Alias Records?</h2>
+
+<p>After CloudFront is created, AWS provides a domain such as:</p>
+
+<pre><code>d1sw29gbt5oue5.cloudfront.net</code></pre>
+
+<p>But users should access:</p>
+
+<pre><code>https://equitek.net
+https://www.equitek.net</code></pre>
+
+<p>Therefore, Route 53 maps the custom domain to the CloudFront distribution.</p>
+
+<div class="flow">
+<span>equitek.net</span><b>→</b><span>Route 53 A/AAAA Alias</span><b>→</b><span>CloudFront</span>
+</div>
+
+<div class="flow">
+<span>www.equitek.net</span><b>→</b><span>Route 53 A/AAAA Alias</span><b>→</b><span>CloudFront</span>
+</div>
+
+<p>An AWS Alias record allows supported AWS resources, including CloudFront distributions, to be targeted from DNS records.</p>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="architecture">
+<h2>14. Complete AWS HTTPS Architecture</h2>
+
+<pre><code>                         INTERNET
+                            |
+                            |
+                    https://equitek.net
+                            |
+                            ↓
+                       Route 53
+                         DNS
+                            |
+                            ↓
+                     CloudFront
+                ┌───────────┴───────────┐
+                |                       |
+        ACM TLS Certificate        HTTPS Redirect
+                |                       |
+                └───────────┬───────────┘
+                            |
+                            ↓
+                       S3 Origin
+                            |
+                            ↓
+                  Static Website Content</code></pre>
+
+<table>
+<thead><tr><th>AWS Service</th><th>Primary Responsibility</th></tr></thead>
+<tbody>
+<tr><td><strong>Route 53</strong></td><td>DNS resolution and routing the domain toward the CloudFront distribution.</td></tr>
+<tr><td><strong>ACM</strong></td><td>Provides and manages the TLS certificate.</td></tr>
+<tr><td><strong>CloudFront</strong></td><td>HTTPS endpoint, CDN, caching and edge delivery.</td></tr>
+<tr><td><strong>S3</strong></td><td>Stores the static website/content.</td></tr>
+<tr><td><strong>WAF</strong></td><td>Optional web application security protection.</td></tr>
+<tr><td><strong>Browser</strong></td><td>Establishes the HTTPS/TLS connection with CloudFront.</td></tr>
+</tbody>
+</table>
+
+<div class="highlight">
+<strong>Remember the responsibilities:</strong><br>
+Route 53 = DNS &nbsp; | &nbsp; ACM = Certificate &nbsp; | &nbsp; CloudFront = HTTPS/CDN &nbsp; | &nbsp; S3 = Content
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="scenario">
+<h2>15. Real-Time Scenario You Can Give the Interviewer</h2>
+
+<div class="quote">
+“For example, suppose we had a static web application hosted in an S3 bucket and the business wanted users to access it through https://www.equitek.net instead of the S3 URL.”
+</div>
+
+<h3>Step 1 – Domain</h3>
+<p>The company owns:</p>
+<pre><code>equitek.net</code></pre>
+
+<p>and wants:</p>
+<pre><code>www.equitek.net</code></pre>
+
+<h3>Step 2 – Certificate</h3>
+<p>Request an ACM public certificate covering:</p>
+<pre><code>equitek.net
+www.equitek.net</code></pre>
+
+<h3>Step 3 – Domain Validation</h3>
+<p>ACM generates DNS validation CNAME records. Route 53 creates those records. ACM validates the domain and the certificate becomes <code>Issued</code>.</p>
+
+<h3>Step 4 – CloudFront</h3>
+<p>Configure the S3 content as the origin and set:</p>
+<pre><code>Viewer Protocol Policy:
+Redirect HTTP to HTTPS</code></pre>
+
+<p>Add:</p>
+<pre><code>Alternate Domain:
+www.equitek.net</code></pre>
+
+<p>Associate the ACM certificate.</p>
+
+<h3>Step 5 – Route 53</h3>
+<p>Create an Alias record:</p>
+<pre><code>www.equitek.net
+       ↓
+CloudFront Distribution</code></pre>
+
+<p>Configure the root domain similarly if required.</p>
+
+<h3>Step 6 – Test</h3>
+<p>Test:</p>
+<pre><code>http://www.equitek.net</code></pre>
+
+<p>Expected behavior:</p>
+<pre><code>HTTP
+  ↓
+Redirect
+  ↓
+https://www.equitek.net</code></pre>
+
+<p>Then verify:</p>
+<ul>
+<li>Certificate is valid.</li>
+<li>Correct domain is displayed.</li>
+<li>No browser certificate warning is shown.</li>
+<li>Website loads successfully.</li>
+<li>Static content loads correctly.</li>
+<li>CloudFront distribution is deployed.</li>
+<li>DNS resolves correctly.</li>
+</ul>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="troubleshooting">
+<h2>16. HTTPS Troubleshooting Scenarios</h2>
+
+<h3>Scenario 1 – ACM Certificate Stays Pending Validation</h3>
+
+<div class="flow">
+<span>ACM</span><b>→</b><span>Validation CNAME</span><b>→</b><span>Route 53</span>
+</div>
+
+<p>Verify that the DNS validation CNAME exists and is correct.</p>
+
+<h3>Scenario 2 – Certificate Issued but CloudFront Rejects It</h3>
+
+<ul>
+<li>Confirm the certificate covers the required hostname.</li>
+<li>Confirm the CloudFront alternate domain name matches.</li>
+<li>Confirm the certificate is available in the required region.</li>
+</ul>
+
+<div class="warning">
+<strong>Important CloudFront fact:</strong> ACM certificates used with CloudFront must be requested or imported in <strong>US East (N. Virginia), us-east-1</strong>.
+</div>
+
+<h3>Scenario 3 – CloudFront Domain Works but Custom Domain Does Not</h3>
+
+<p>If this works:</p>
+<pre><code>https://d1sw29gbt5oue5.cloudfront.net</code></pre>
+
+<p>but this doesn't:</p>
+<pre><code>https://www.equitek.net</code></pre>
+
+<p>check:</p>
+
+<div class="flow">
+<span>Route 53</span><b>→</b><span>A/AAAA Alias</span><b>→</b><span>Correct CloudFront Distribution</span>
+</div>
+
+<p>Also verify that the custom hostname is configured as a CloudFront alternate domain name.</p>
+
+<h3>Scenario 4 – Browser Shows Certificate Error</h3>
+
+<ul>
+<li>Check domain name.</li>
+<li>Check certificate SANs.</li>
+<li>Check certificate status.</li>
+<li>Check certificate expiration.</li>
+<li>Check CloudFront certificate association.</li>
+</ul>
+
+<p>For example, a certificate covering <code>www.equitek.net</code> does not automatically cover <code>api.equitek.net</code>.</p>
+
+<h3>Scenario 5 – CloudFront Returns 403</h3>
+
+<p>Don't automatically assume HTTPS is the problem.</p>
+
+<pre><code>CloudFront
+    ↓
+Origin
+    ↓
+S3
+    ↓
+Bucket / Object Access</code></pre>
+
+<p>Possible causes include:</p>
+<ul>
+<li>Incorrect origin</li>
+<li>S3 access configuration</li>
+<li>Incorrect object path</li>
+<li>Missing default root object</li>
+<li>Incorrect origin configuration</li>
+</ul>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="interview">
+<h2>17. Strong 2–3 Minute Interview Answer</h2>
+
+<div class="quote">
+<p>
+“Sure. The objective was to expose the application through a secure HTTPS URL rather than allowing users to access it through plain HTTP or an AWS-generated endpoint.
+</p>
+
+<p>
+In our architecture, Route 53 handled DNS, AWS Certificate Manager handled the TLS certificate, CloudFront acted as the public HTTPS and CDN layer, and S3 hosted the static website content.
+</p>
+
+<p>
+First, we requested a public certificate through ACM for the required domain names, such as equitek.net and www.equitek.net. ACM generated DNS validation records. Since the domain was hosted in Route 53, we created those CNAME validation records there. Once ACM verified domain ownership, the certificate status changed from Pending Validation to Issued.
+</p>
+
+<p>
+Next, we configured CloudFront with the S3 content as the origin. We configured the viewer protocol policy to redirect HTTP requests to HTTPS. We also configured the required alternate domain name, such as www.equitek.net, and associated the ACM certificate with the CloudFront distribution.
+</p>
+
+<p>
+After the CloudFront distribution was deployed, we configured Route 53 so that the application's domain name resolved to the CloudFront distribution using an Alias record. This allowed users to access the application using https://www.equitek.net instead of the CloudFront-generated domain name.
+</p>
+
+<p>
+From a troubleshooting perspective, if HTTPS wasn't working, I would check the issue layer by layer — first DNS and Route 53, then the ACM certificate and domain validation, then CloudFront alternate domain configuration and certificate association, and finally the CloudFront-to-origin and S3 configuration.
+</p>
+
+<p>
+The key point is that each service has a different responsibility: Route 53 provides DNS, ACM provides the certificate, CloudFront provides the secure public entry point and content delivery, and S3 provides the static content.”
+</p>
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+<section id="one-line">
+<h2>18. One-Line Explanation for Each AWS Service</h2>
+
+<table>
+<thead><tr><th>Service</th><th>Interview Explanation</th></tr></thead>
+<tbody>
+<tr><td><strong>Route 53</strong></td><td>“Where should this domain name go?”</td></tr>
+<tr><td><strong>ACM</strong></td><td>“Can I establish a trusted TLS certificate for this domain?”</td></tr>
+<tr><td><strong>CloudFront</strong></td><td>“Can I provide a secure, performant public entry point and CDN?”</td></tr>
+<tr><td><strong>S3</strong></td><td>“Where is the static application content stored?”</td></tr>
+<tr><td><strong>WAF</strong></td><td>“Can I protect the web application from common web attacks?”</td></tr>
+</tbody>
+</table>
+
+<div class="highlight">
+<strong>Complete one-line flow:</strong><br><br>
+“Route 53 resolves the domain, CloudFront receives the HTTPS request, ACM provides the TLS certificate,
+CloudFront retrieves the content from S3, and the browser receives the application securely.”
+</div>
+
+<div class="success">
+<strong>Interview tip:</strong> Focus on the architecture and purpose first, then explain the AWS console steps as evidence of hands-on experience. This makes your answer sound like an engineer who understands the solution rather than someone who only followed a deployment checklist.
+</div>
+
+<a class="top" href="#top">↑ Back to Top</a>
+</section>
+
+</main>
+</div>
+
+<footer>
+AWS HTTPS Configuration · Interview Preparation Guide
+</footer>
+
+</body>
+</html>
